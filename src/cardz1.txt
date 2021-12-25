@@ -1,0 +1,37 @@
+POST /auth/tokens                                   # Login
+ DEL /auth/tokens                                   # LogoutAll
+ DEL /auth/token                                    # Logout
+
+POST /users                                         # Register user
+ GET /user                                          # Get auth user
+PTCH /user                                          # Update auth user
+
+ GET /business/companies                            # Get companies
+POST /business/companies                            # Found company
+PTCH /business/companies/{company}                  # Update company
+ GET /business/companies/{company}                  # Get company
+
+ GET /team/companies/{company}/invites              # Get invites
+POST /team/companies/{company}/invites              # Make invite
+ DEL /team/invites/{invite}                         # Remove invite
+PTCH /team/invites/{invite}/accept                  # Accept invite
+ GET /team/invites/{invite}                         # Get invite
+ GET /team/companies/{company}/mates                # Get company mates
+ DEL /team/companies/{company}/mate                 # Cancel company mate
+ DEL /team/mate/{mate}                              # Remove mate
+
+ GET /collect/companies/{company}/cards             # Get company cards
+POST /collect/companies/{company}/cards             # Issue company card
+ GET /collect/cards/{card}                          # Get card
+POST /collect/cards/{card}                          # Issue card copy
+PTCH /collect/cards/{card}                          # Update card
+PTCH /collect/cards/{card}/balance                  # Change card balance
+PTCH /collect/cards/{card}/reward                   # Reward card
+PTCH /collect/cards/{card}/reject                   # Reject card
+PTCH /collect/cards/{card}/refuse                   # Refuse card
+
+ GET /reference/companies                           # Get reference companies
+ GET /reference/companies/{company}                 # Get reference company
+
+ GET /wallet/cards                                  # Get wallet cards
+ GET /wallet/cards/{card}                           # Get wallet card
