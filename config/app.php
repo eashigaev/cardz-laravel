@@ -1,5 +1,7 @@
 <?php
 
+use CardzApp\CardzAppServiceProvider;
+
 return [
 
     /*
@@ -39,7 +41,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -165,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+        ...CardzAppServiceProvider::providers(),
 
         /*
          * Application Service Providers...

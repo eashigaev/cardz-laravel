@@ -2,37 +2,36 @@ POST /auth/tokens                                   # Login
  DEL /auth/tokens                                   # LogoutAll
  DEL /auth/token                                    # Logout
 
-POST /users                                         # Register user
- GET /user                                          # Get auth user
-PTCH /user                                          # Update auth user
+POST /account/users                                 # Register user
+ GET /account/user                                  # Get auth user
+PTCH /account/user                                  # Update auth user
 
- GET /companies                                     # Get companies
-POST /companies                                     # Found company
-PTCH /company/{company}                             # Update company
- GET /company/{company}                             # Get company
+ GET /business/companies                            # Get companies
+POST /business/companies                            # Found company
+PTCH /business/company/id/{company}                 # Update company
+ GET /business/company/id/{company}                 # Get company
 
- GET /company/{company}/invites                     # Get invites
-POST /company/{company}/invites                     # Make invite
- DEL /invite/{invite}                               # Remove invite
-PTCH /invite/{invite}/accept                        # Accept invite
- GET /invite/{invite}                               # Get invite
+POST /team/invites/company/id/{company}             # Make company invite
+ GET /team/invites ?filter                          # Get company invites
+ DEL /team/invite/id/{invite}                       # Remove invite
+PTCH /team/invite/id/{invite}/accept                # Accept invite
+ GET /team/invite/id/{invite}                       # Get invite
+ GET /team/mates/company/id/{company}/              # Get mates
+ DEL /team/mate/company/id/{company}                # Cancel mate
+ DEL /team/mate/id/{mate}                           # Remove mate
 
- GET /company/{company}/teammates                   # Get company teammates
- DEL /company/{company}/teammate                    # Cancel company teammate
- DEL /teammate/{teammate}                           # Remove teammate
-
- GET /company/{company}/cards                       # Get company cards
-POST /company/{company}/cards                       # Issue company card
- GET /card/{card}                                   # Get card
-POST /card/{card}                                   # Issue card copy
-PTCH /card/{card}                                   # Update card
-PTCH /card/{card}/balance                           # Change card balance
-PTCH /card/{card}/reward                            # Reward card
-PTCH /card/{card}/reject                            # Reject card
-PTCH /card/{card}/refuse                            # Refuse card
+POST /collect/cards/company/id/{company}            # Make company card
+ PUT /collect/card/id/{card}                        # Issue card
+ GET /collect/cards ?filter                         # Get cards
+ GET /collect/card/id/{card}                        # Get card
+PTCH /collect/card/id/{card}                        # Update card
+PTCH /collect/card/id/{card}/balance                # Change card balance
+PTCH /collect/card/id/{card}/reward                 # Reward card
+PTCH /collect/card/id/{card}/reject                 # Reject card
+PTCH /collect/card/id/{card}/refuse                 # Refuse card
 
  GET /reference/companies                           # Get reference companies
- GET /reference/company/{company}                   # Get reference company
+ GET /reference/company/id/{company}                # Get reference company
 
  GET /wallet/cards                                  # Get wallet cards
- GET /wallet/card/{card}                            # Get wallet card
+ GET /wallet/card/id/{card}                         # Get wallet card
