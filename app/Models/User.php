@@ -39,6 +39,13 @@ class User extends Authenticatable
         $this->attributes['password'] = Hash::make($password);
     }
 
+    // Relations
+
+    public function companies()
+    {
+        return $this->hasMany(Company::class, 'founder_id');
+    }
+
     // Queries
 
     public static function findByCredentialsOrFail(string $username, string $password)

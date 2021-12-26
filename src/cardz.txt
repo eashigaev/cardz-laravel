@@ -3,11 +3,11 @@ POST /auth/tokens                                   # Login
  DEL /auth/token                                    # Logout
 
 POST /account/users                                 # Register user
- GET /account/user                                  # Get auth user
 PTCH /account/user                                  # Update auth user
+ GET /account/user                                  # Get auth user
 
- GET /business/companies                            # Get companies
 POST /business/companies                            # Found company
+ GET /business/companies                            # Get companies
 PTCH /business/company/id/{company}                 # Update company
  GET /business/company/id/{company}                 # Get company
 
