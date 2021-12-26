@@ -20,7 +20,13 @@ class RegisterUserController extends Controller
 
     public function __invoke(Request $request)
     {
-        $user = new User($request->all());
+        $attrs = [
+            'username' => $request->username,
+            'password' => $request->password,
+            'email' => $request->email,
+        ];
+
+        $user = new User($attrs);
         $user->id = $this->uuidGenerator->getNextValue();
         $user->save();
 
