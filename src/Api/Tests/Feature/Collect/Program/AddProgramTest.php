@@ -1,16 +1,16 @@
 <?php
 
-namespace CardzApp\Api\Tests\Feature\Business;
+namespace CardzApp\Api\Tests\Feature\Collect\Program;
 
-use App\Models\Company;
+use App\Models\Collect\Program;
 use App\Models\User;
 use CardzApp\Api\Shared\Presentation\Routes;
 use CardzApp\Api\Tests\Support\ModuleTestTrait;
 use Tests\TestCase;
 
-class FoundCompanyTest extends TestCase
+class AddProgramTest extends TestCase
 {
-    private const ROUTE = Routes::BUSINESS_FOUND_COMPANY;
+    private const ROUTE = Routes::COLLECT_ADD_PROGRAM;
 
     use ModuleTestTrait;
 
@@ -21,23 +21,25 @@ class FoundCompanyTest extends TestCase
 
     public function test_action()
     {
+        $fixture = Program::factory()->make();
         $user = User::factory()->create();
-        $this->actingAsSanctum($user);
 
-        $fixture = Company::factory()->make();
+        $this->actingAsSanctum($user);
 
         $response = $this->callJsonRoute(self::ROUTE, [
             'title' => $fixture->title,
             'description' => $fixture->description,
-            'about' => $fixture->about
+        ], [
+            'company' => $fixture->tenant->id
         ]);
         $response->assertStatus(200);
 
-        $result = Company::query()->findOrFail($response['id']);
+        $result = Program::query()->findOrFail($response['id']);
         $this->assertArraySubset([
+            'tenant_id' => $fixture->tenant->id,
             'title' => $fixture->title,
             'description' => $fixture->description,
-            'about' => $fixture->about
+            'available' => false
         ], $result->toArray());
     }
 }

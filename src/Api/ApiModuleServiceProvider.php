@@ -15,8 +15,9 @@ class ApiModuleServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->loadRoutesFrom(__DIR__ . '/Presentation/Auth/auth.routes.php');
-        $this->loadRoutesFrom(__DIR__ . '/Presentation/Account/account.routes.php');
-        $this->loadRoutesFrom(__DIR__ . '/Presentation/Business/business.routes.php');
+        $this->loadRoutesFrom(__DIR__ . '/Auth/Presentation/auth.routes.php');
+        $this->loadRoutesFrom(__DIR__ . '/Account/Presentation/account.routes.php');
+        $this->loadRoutesFrom(__DIR__ . '/Business/Presentation/business.routes.php');
+        $this->loadRoutesFrom(__DIR__ . '/Collect/Presentation/collect.routes.php');
     }
 }

@@ -4,7 +4,7 @@ namespace CardzApp\Api\Tests\Feature\Business;
 
 use App\Models\Company;
 use App\Models\User;
-use CardzApp\Api\Presentation\Routes;
+use CardzApp\Api\Shared\Presentation\Routes;
 use CardzApp\Api\Tests\Support\ModuleTestTrait;
 use Tests\TestCase;
 
