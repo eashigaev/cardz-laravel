@@ -1,13 +1,14 @@
 <?php
 
-namespace CardzApp\Api\Business\Presentation\Controllers;
+namespace CardzApp\Api\Collect\Presentation\Controllers\Program;
 
 use App\Http\Controllers\Controller;
+use App\Models\Collect\Program;
 use CardzApp\Api\Shared\Presentation\ControllerTrait;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
 use Illuminate\Http\Request;
 
-class UpdateCompanyController extends Controller
+class UpdateProgramController extends Controller
 {
     use ControllerTrait;
 
@@ -22,12 +23,11 @@ class UpdateCompanyController extends Controller
         $attrs = [
             'title' => $request->title,
             'description' => $request->description,
-            'about' => $request->about
         ];
 
-        $company = $this->user()->companies()->findOrFail($request->company);
+        $program = Program::query()->findOrFail($request->program);
 
-        $company->fill($attrs)->save();
+        $program->fill($attrs)->save();
 
         return $this->successResponse();
     }
