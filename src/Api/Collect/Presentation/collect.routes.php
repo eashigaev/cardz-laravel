@@ -16,7 +16,7 @@ Route::prefix(Routes::URL_PREFIX)->middleware([Routes::API_MIDDLEWARE])->group(f
     Route::prefix('/collect/program')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
         Route::post('/id/{program}')
             ->name(Actions::COLLECT_UPDATE_PROGRAM)->uses(UpdateProgramController::class);
-        Route::patch('/id/{program}/availability')
+        Route::patch('/id/{program}/available')
             ->name(Actions::COLLECT_UPDATE_PROGRAM_AVAILABILITY)->uses(UpdateProgramAvailabilityController::class);
     });
 });

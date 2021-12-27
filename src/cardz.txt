@@ -22,8 +22,8 @@ PTCH /business/company/id/{company}                 # Update company +
 POST /collect/programs/company/id/{company}         # Add collect program +
  GET /collect/programs ?filter                      # Get collect programs
  GET /collect/program/id/{program}                  # Get collect program
-PTCH /collect/program/id/{program}                  # Update collect program
-PTCH /collect/program/id/{program}/available        # Update collect program availability
+PTCH /collect/program/id/{program}                  # Update collect program +
+PTCH /collect/program/id/{program}/available        # Update collect program availability +
 
 POST /collect/program/id/{program}/tasks            # Make program task
 PTCH /collect/program/task/id/{task}                # Update program task
