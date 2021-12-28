@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Collect\Program;
 use App\Models\Company;
 use CardzApp\Api\Collect\Presentation\Controllers\Program\AddProgramController;
 use CardzApp\Api\Collect\Presentation\Controllers\Program\UpdateProgramAvailabilityController;
@@ -18,8 +19,10 @@ Route::prefix(Routes::URL_PREFIX)->middleware([Routes::API_MIDDLEWARE,])->group(
 
     Route::prefix('/collect/program')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
         Route::post('/id/{program}')
-            ->name(Routes::COLLECT_UPDATE_PROGRAM)->uses(UpdateProgramController::class);
+            ->name(Routes::COLLECT_UPDATE_PROGRAM)->uses(UpdateProgramController::class)
+            ->middleware(Authorize::for(Actions::COLLECT_UPDATE_PROGRAM, ['program' => Program::class]));
         Route::patch('/id/{program}/available')
-            ->name(Routes::COLLECT_UPDATE_PROGRAM_AVAILABILITY)->uses(UpdateProgramAvailabilityController::class);
+            ->name(Routes::COLLECT_UPDATE_PROGRAM_AVAILABILITY)->uses(UpdateProgramAvailabilityController::class)
+            ->middleware(Authorize::for(Actions::COLLECT_UPDATE_PROGRAM_AVAILABILITY, ['program' => Program::class]));
     });
 });
