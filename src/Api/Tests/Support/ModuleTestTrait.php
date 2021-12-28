@@ -2,8 +2,8 @@
 
 namespace CardzApp\Api\Tests\Support;
 
-use Codderz\YokoLite\Application\Auth\GateTestTrait;
-use Codderz\YokoLite\Application\Auth\SanctumTestTrait;
+use Codderz\YokoLite\Application\Authentication\SanctumTestTrait;
+use Codderz\YokoLite\Application\Authorization\GateTestTrait;
 use Codderz\YokoLite\Tests\Support\ExceptionTestTrait;
 use Codderz\YokoLite\Tests\Support\HttpTestTrait;
 use Codderz\YokoLite\Tests\Support\PhpUnitTestTrait;

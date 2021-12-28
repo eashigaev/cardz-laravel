@@ -46,7 +46,7 @@ PTCH /collect/card/task/id/{task}/relevance         # Update card task relevance
  GET /collect/wallet/cards                          # Get wallet cards
  GET /collect/wallet/card/id/{card}                 # Get wallet card
 
-//...
+//
 
  GET /reference/companies                           # Get reference companies
  GET /reference/company/id/{company}                # Get reference company

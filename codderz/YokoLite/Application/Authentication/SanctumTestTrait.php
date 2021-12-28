@@ -1,6 +1,6 @@
 <?php
 
-namespace Codderz\YokoLite\Application\Auth;
+namespace Codderz\YokoLite\Application\Authentication;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
@@ -27,7 +27,7 @@ trait SanctumTestTrait
 
     public function assertAuthenticatedRoute(string $routeName)
     {
-        $this->assertRouteContainsMiddleware($routeName, Auth::SANCTUM_MIDDLEWARE);
+        $this->assertRouteContainsMiddleware($routeName, Authentication::MIDDLEWARE);
         return $this;
     }
 }

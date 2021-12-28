@@ -3,7 +3,7 @@
 namespace CardzApp\Api\Tests\Feature\Collect\Program;
 
 use App\Models\Collect\Program;
-use App\Models\User;
+use CardzApp\Api\Shared\Application\Actions;
 use CardzApp\Api\Shared\Presentation\Routes;
 use CardzApp\Api\Tests\Support\ModuleTestTrait;
 use Tests\TestCase;
@@ -17,12 +17,13 @@ class AddProgramTest extends TestCase
     public function test_access()
     {
         $this->assertAuthenticatedRoute(self::ROUTE);
+        $this->assertAuthorizedRoute(self::ROUTE, Actions::COLLECT_ADD_PROGRAM);
     }
 
     public function test_action()
     {
         $fixture = Program::factory()->make();
-        $user = User::factory()->create();
+        $user = $fixture->company->founder;
 
         $this->actingAsSanctum($user);
 
