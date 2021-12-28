@@ -17,7 +17,7 @@ class ProgramFactory extends Factory
     {
         return [
             'id' => $this->uuidGenerator()->getNextValue(),
-            'tenant_id' => Company::factory(),
+            'company_id' => Company::factory(),
             'title' => $this->faker->company(),
             'description' => $this->faker->sentence(),
             'available' => $this->faker->boolean()
@@ -41,12 +41,5 @@ class ProgramFactory extends Factory
         return $this->state(function (array $attributes) {
             return ['available' => true];
         });
-    }
-
-    //
-
-    public function forTenant(Company $model)
-    {
-        return $this->for($model, 'tenant');
     }
 }

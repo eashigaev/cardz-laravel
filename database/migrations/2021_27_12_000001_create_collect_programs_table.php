@@ -15,7 +15,7 @@ class CreateCollectProgramsTable extends Migration
     {
         Schema::create('collect_programs', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('tenant_id')->index();
+            $table->foreignUuid('company_id')->index();
             $table->string('title');
             $table->string('description');
             $table->boolean('available');

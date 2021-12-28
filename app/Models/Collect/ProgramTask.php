@@ -19,8 +19,8 @@ class ProgramTask extends Model
         'repeatable'
     ];
 
-    public function tenant()
+    public function company()
     {
-        return $this->belongsTo(Company::class, 'tenant_id');
+        return $this->belongsTo(Company::class);
     }
 }

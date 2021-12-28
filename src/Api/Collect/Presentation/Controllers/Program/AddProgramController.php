@@ -26,12 +26,12 @@ class AddProgramController extends Controller
             'description' => $request->description,
         ];
 
-        $tenant = Company::query()->findOrFail($request->company);
+        $company = Company::query()->findOrFail($request->company);
 
         $program = new Program($attrs);
         $program->id = $this->uuidGenerator->getNextValue();
         $program->available = false;
-        $program->tenant()->associate($tenant);
+        $program->company()->associate($company);
         $program->save();
 
         return $this->successResponse([

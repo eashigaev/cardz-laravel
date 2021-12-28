@@ -19,18 +19,18 @@ class Program extends Model
         'description'
     ];
 
-    public function tenant()
+    public function company()
     {
-        return $this->belongsTo(Company::class, 'tenant_id');
+        return $this->belongsTo(Company::class);
     }
 
     public function tasks()
     {
-        return $this->hasMany(ProgramTask::class, 'program_id');
+        return $this->hasMany(ProgramTask::class);
     }
 
     public function rewards()
     {
-        return $this->hasMany(ProgramReward::class, 'program_id');
+        return $this->hasMany(ProgramReward::class);
     }
 }

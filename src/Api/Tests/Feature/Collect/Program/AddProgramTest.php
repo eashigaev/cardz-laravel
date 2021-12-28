@@ -30,13 +30,13 @@ class AddProgramTest extends TestCase
             'title' => $fixture->title,
             'description' => $fixture->description,
         ], [
-            'company' => $fixture->tenant->id
+            'company' => $fixture->company->id
         ]);
         $response->assertStatus(200);
 
         $result = Program::query()->findOrFail($response['id']);
         $this->assertArraySubset([
-            'tenant_id' => $fixture->tenant->id,
+            'company_id' => $fixture->company->id,
             'title' => $fixture->title,
             'description' => $fixture->description,
             'available' => false
