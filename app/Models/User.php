@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Codderz\YokoLite\Shared\Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -59,5 +60,17 @@ class User extends Authenticatable
         }
 
         return $user;
+    }
+
+    //
+
+    public static function query(): Builder|UserBuilder
+    {
+        return parent::query();
+    }
+
+    public function newEloquentBuilder($query)
+    {
+        return new UserBuilder($query);
     }
 }

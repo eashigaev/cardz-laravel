@@ -3,6 +3,7 @@
 namespace App\Models\Collect;
 
 use App\Models\Company;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,5 +33,17 @@ class Program extends Model
     public function rewards()
     {
         return $this->hasMany(ProgramReward::class);
+    }
+
+    //
+
+    public static function query(): Builder|ProgramBuilder
+    {
+        return parent::query();
+    }
+
+    public function newEloquentBuilder($query)
+    {
+        return new ProgramBuilder($query);
     }
 }

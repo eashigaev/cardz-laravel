@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,5 +23,17 @@ class Company extends Model
     public function founder()
     {
         return $this->belongsTo(User::class, 'founder_id');
+    }
+
+    //
+
+    public static function query(): Builder|CompanyBuilder
+    {
+        return parent::query();
+    }
+
+    public function newEloquentBuilder($query)
+    {
+        return new CompanyBuilder($query);
     }
 }
