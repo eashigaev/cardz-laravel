@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserBuilder extends Builder
 {
-    public function findOrFailWhereCredentials(string $username, string $password)
+    public function firstOrFailWhereCredentials(string $username, string $password)
     {
         $user = $this
             ->where('username', $username)

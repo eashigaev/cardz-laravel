@@ -25,7 +25,7 @@ class RegisterUserTest extends TestCase
         ]);
         $response->assertStatus(200);
 
-        $result = User::query()->findOrFailWhereCredentials(
+        $result = User::query()->firstOrFailWhereCredentials(
             $user->username, UserFactory::$password
         );
         $this->assertArraySubset([
