@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Codderz\YokoLite\Shared\Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -33,33 +32,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // Attributes
+    //
 
     public function setPasswordAttribute(string $password)
     {
         $this->attributes['password'] = Hash::make($password);
     }
 
-    // Relations
-
     public function companies()
     {
         return $this->hasMany(Company::class, 'founder_id');
-    }
-
-    // Queries
-
-    public static function findByCredentialsOrFail(string $username, string $password)
-    {
-        $user = User::query()
-            ->where('username', $username)
-            ->firstOrFail();
-
-        if (!Hash::check($password, $user->password)) {
-            throw Exception::of('Unknown credentials');
-        }
-
-        return $user;
     }
 
     //

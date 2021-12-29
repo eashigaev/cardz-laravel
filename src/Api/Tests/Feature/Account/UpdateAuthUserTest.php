@@ -25,13 +25,13 @@ class UpdateAuthUserTest extends TestCase
         $this->actingAsSanctum($user);
 
         $response = $this->callJsonRoute(self::ROUTE, [
-            'username' => $user->username . 'new',
-            'password' => UserFactory::$password . 'new'
+            'username' => $user->username . '!',
+            'password' => UserFactory::$password . '!'
         ]);
         $response->assertStatus(200);
 
-        $result = User::findByCredentialsOrFail(
-            $user->username . 'new', UserFactory::$password . 'new'
+        $result = User::query()->findOrFailWhereCredentials(
+            $user->username . '!', UserFactory::$password . '!'
         );
         $this->assertArraySubset([
             'id' => $user->id,

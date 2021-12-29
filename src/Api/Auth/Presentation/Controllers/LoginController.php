@@ -13,7 +13,7 @@ class LoginController extends Controller
 
     public function __invoke(Request $request)
     {
-        $user = User::findByCredentialsOrFail(
+        $user = User::query()->findOrFailWhereCredentials(
             $request->username, $request->password
         );
 

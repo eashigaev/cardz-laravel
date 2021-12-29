@@ -20,6 +20,8 @@ class Company extends Model
         'about',
     ];
 
+    //
+
     public function founder()
     {
         return $this->belongsTo(User::class, 'founder_id');

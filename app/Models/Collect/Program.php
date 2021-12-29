@@ -20,6 +20,8 @@ class Program extends Model
         'description'
     ];
 
+    //
+
     public function company()
     {
         return $this->belongsTo(Company::class);
