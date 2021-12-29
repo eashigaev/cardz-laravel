@@ -20,10 +20,7 @@ class UpdateProgramController extends Controller
 
     public function __invoke(Request $request)
     {
-        $attrs = [
-            'title' => $request->title,
-            'description' => $request->description,
-        ];
+        $attrs = $request->only(['title', 'description']);
 
         $program = Program::query()->findOrFail($request->program);
 

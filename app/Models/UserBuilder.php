@@ -10,14 +10,14 @@ class UserBuilder extends Builder
 {
     public function firstOrFailWhereCredentials(string $username, string $password)
     {
-        $user = $this
+        $self = $this
             ->where('username', $username)
             ->firstOrFail();
 
-        if (!Hash::check($password, $user->password)) {
+        if (!Hash::check($password, $self->password)) {
             throw Exception::of('Unknown credentials');
         }
 
-        return $user;
+        return $self;
     }
 }

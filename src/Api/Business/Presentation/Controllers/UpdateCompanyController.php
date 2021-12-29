@@ -19,11 +19,7 @@ class UpdateCompanyController extends Controller
 
     public function __invoke(Request $request)
     {
-        $attrs = [
-            'title' => $request->title,
-            'description' => $request->description,
-            'about' => $request->about
-        ];
+        $attrs = $request->only(['title', 'description', 'about']);
 
         $company = $this->user()->companies()->findOrFail($request->company);
 

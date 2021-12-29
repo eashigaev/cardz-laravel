@@ -20,11 +20,7 @@ class FoundCompanyController extends Controller
 
     public function __invoke(Request $request)
     {
-        $attrs = [
-            'title' => $request->title,
-            'description' => $request->description,
-            'about' => $request->about
-        ];
+        $attrs = $request->only(['title', 'description', 'about']);
 
         $company = new Company($attrs);
         $company->id = $this->uuidGenerator->getNextValue();

@@ -12,10 +12,7 @@ class UpdateAuthUserController extends Controller
 
     public function __invoke(Request $request)
     {
-        $attrs = [
-            'username' => $request->username,
-            'password' => $request->password
-        ];
+        $attrs = $request->only(['username', 'password']);
 
         $this->user()->fill($attrs)->save();
 

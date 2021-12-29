@@ -21,10 +21,7 @@ class AddProgramController extends Controller
 
     public function __invoke(Request $request)
     {
-        $attrs = [
-            'title' => $request->title,
-            'description' => $request->description,
-        ];
+        $attrs = $request->only(['title', 'description']);
 
         $company = Company::query()->findOrFail($request->company);
 
