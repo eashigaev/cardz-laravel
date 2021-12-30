@@ -3,8 +3,9 @@
 namespace CardzApp\Api\Business\Presentation\Controllers;
 
 use App\Http\Controllers\Controller;
+use CardzApp\Api\Business\Application\CompanyService;
+use CardzApp\Api\Business\Domain\CompanyProfile;
 use CardzApp\Api\Shared\Presentation\ControllerTrait;
-use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
 use Illuminate\Http\Request;
 
 class UpdateCompanyController extends Controller
@@ -12,18 +13,22 @@ class UpdateCompanyController extends Controller
     use ControllerTrait;
 
     public function __construct(
-        private UuidGenerator $uuidGenerator
+        private CompanyService $companyService
     )
     {
     }
 
     public function __invoke(Request $request)
     {
-        $attrs = $request->only(['title', 'description', 'about']);
+        $profile = CompanyProfile::of(
+            $request->title,
+            $request->description,
+            $request->about,
+        );
 
-        $company = $this->user()->companies()->findOrFail($request->company);
-
-        $company->fill($attrs)->save();
+        $this->companyService->updateCompany(
+            $request->user()->id, $request->company, $profile
+        );
 
         return $this->successResponse();
     }
