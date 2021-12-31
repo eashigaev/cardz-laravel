@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use CardzApp\Api\Account\Domain\UserCredentials;
 use Codderz\YokoLite\Domain\Uuid\UuidTestTrait;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class UserFactory extends Factory
@@ -23,7 +23,7 @@ class UserFactory extends Factory
         return [
             'id' => $this->uuidGenerator()->getNextValue(),
             'username' => $this->faker->unique()->name(),
-            'password' => UserCredentials::hashPassword(self::$password),
+            'password' => Hash::make(self::$password),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),

@@ -6,6 +6,8 @@ use App\Models\User;
 use CardzApp\Api\Account\Domain\UserCredentials;
 use CardzApp\Api\Account\Domain\UserProfile;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
+use Codderz\YokoLite\Shared\Exception;
+use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
@@ -40,5 +42,18 @@ class UserService
     public function getOwnerUser(string $id)
     {
         return User::query()->findOrFail($id);
+    }
+
+    public function getUserByCredentials(string $username, string $password)
+    {
+        $user = User::query()
+            ->where('username', $username)
+            ->firstOrFail();
+
+        if (!Hash::check($password, $user->password)) {
+            throw Exception::of('Unknown credentials');
+        }
+
+        return $user;
     }
 }

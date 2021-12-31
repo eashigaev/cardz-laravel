@@ -3,7 +3,7 @@
 namespace CardzApp\Api\Auth\Presentation\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use CardzApp\Api\Account\Application\Services\UserService;
 use CardzApp\Api\Shared\Presentation\ControllerTrait;
 use Illuminate\Http\Request;
 
@@ -11,9 +11,15 @@ class LoginController extends Controller
 {
     use ControllerTrait;
 
+    public function __construct(
+        private UserService $userService
+    )
+    {
+    }
+
     public function __invoke(Request $request)
     {
-        $user = User::query()->firstOrFailWhereCredentials(
+        $user = $this->userService->getUserByCredentials(
             $request->username, $request->password
         );
 

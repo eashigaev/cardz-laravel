@@ -6,6 +6,7 @@ use App\Models\User;
 use CardzApp\Api\Shared\Presentation\Routes;
 use CardzApp\Api\Tests\Support\ModuleTestTrait;
 use Database\Factories\UserFactory;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class UpdateOwnUserTest extends TestCase
@@ -30,11 +31,11 @@ class UpdateOwnUserTest extends TestCase
         ]);
         $response->assertStatus(200);
 
-        $result = User::query()->firstOrFailWhereCredentials(
-            $user->username . '!', UserFactory::$password . '!'
+        $result = User::query()->findOrFail($user->id);
+        $this->assertTrue(
+            Hash::check(UserFactory::$password . '!', $result->password)
         );
-        $this->assertArraySubset([
-            'id' => $user->id,
-        ], $result->toArray());
+        $this->assertEquals($user->username . '!', $result->username);
+
     }
 }

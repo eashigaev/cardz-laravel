@@ -12,21 +12,8 @@ class UserCredentials
     public static function ofPlain(string $username, string $password)
     {
         return self::of(
-            $username,
-            self::hashPassword($password)
+            $username, Hash::make($password)
         );
-    }
-
-    public function checkPassword(string $password)
-    {
-        return Hash::check($password, $this->password);
-    }
-
-    //
-
-    public static function hashPassword(string $password)
-    {
-        return Hash::make($password);
     }
 
     //
