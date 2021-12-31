@@ -1,8 +1,8 @@
 <?php
 
-use CardzApp\Api\Account\Presentation\Controllers\GetAuthUserController;
+use CardzApp\Api\Account\Presentation\Controllers\GetOwnUserController;
 use CardzApp\Api\Account\Presentation\Controllers\RegisterUserController;
-use CardzApp\Api\Account\Presentation\Controllers\UpdateAuthUserController;
+use CardzApp\Api\Account\Presentation\Controllers\UpdateOwnUserController;
 use CardzApp\Api\Shared\Presentation\Routes;
 
 Route::prefix(Routes::URL_PREFIX)->middleware([Routes::API_MIDDLEWARE])->group(function () {
@@ -14,8 +14,8 @@ Route::prefix(Routes::URL_PREFIX)->middleware([Routes::API_MIDDLEWARE])->group(f
 
     Route::prefix('/account/user')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
         Route::get('/')
-            ->name(Routes::ACCOUNT_GET_AUTH_USER_ACTION)->uses(GetAuthUserController::class);
+            ->name(Routes::ACCOUNT_GET_OWN_USER_ACTION)->uses(GetOwnUserController::class);
         Route::patch('/')
-            ->name(Routes::ACCOUNT_UPDATE_AUTH_USER_ACTION)->uses(UpdateAuthUserController::class);
+            ->name(Routes::ACCOUNT_UPDATE_OWN_USER_ACTION)->uses(UpdateOwnUserController::class);
     });
 });

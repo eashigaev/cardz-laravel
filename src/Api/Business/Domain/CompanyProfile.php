@@ -4,9 +4,9 @@ namespace CardzApp\Api\Business\Domain;
 
 class CompanyProfile
 {
-    public $title;
-    public $description;
-    public $about;
+    public string $title;
+    public string $description;
+    public string $about;
 
     public static function of(string $title, string $description, string $about)
     {

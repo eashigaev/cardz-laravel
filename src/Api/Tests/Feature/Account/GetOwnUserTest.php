@@ -7,9 +7,9 @@ use CardzApp\Api\Shared\Presentation\Routes;
 use CardzApp\Api\Tests\Support\ModuleTestTrait;
 use Tests\TestCase;
 
-class GetAuthUserTest extends TestCase
+class GetOwnUserTest extends TestCase
 {
-    private const ROUTE = Routes::ACCOUNT_GET_AUTH_USER_ACTION;
+    private const ROUTE = Routes::ACCOUNT_GET_OWN_USER_ACTION;
 
     use ModuleTestTrait;
 

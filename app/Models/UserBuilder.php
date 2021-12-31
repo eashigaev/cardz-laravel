@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use CardzApp\Api\Account\Domain\UserCredentials;
 use Codderz\YokoLite\Shared\Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Hash;

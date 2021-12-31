@@ -7,8 +7,8 @@ POST /auth/tokens                                   # Login +
 // Account
 
 POST /account/users                                 # Register user +
-PTCH /account/user                                  # Update auth user +
- GET /account/user                                  # Get auth user +
+PTCH /account/user                                  # Update own user +
+ GET /account/user                                  # Get own user +
 
 // Business
 

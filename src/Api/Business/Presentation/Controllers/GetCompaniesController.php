@@ -3,7 +3,7 @@
 namespace CardzApp\Api\Business\Presentation\Controllers;
 
 use App\Http\Controllers\Controller;
-use CardzApp\Api\Business\Application\CompanyService;
+use CardzApp\Api\Business\Application\Services\CompanyService;
 use CardzApp\Api\Business\Presentation\Transformers\CompanyTransformer;
 use CardzApp\Api\Shared\Presentation\ControllerTrait;
 use Illuminate\Http\Request;

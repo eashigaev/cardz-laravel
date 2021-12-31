@@ -5,11 +5,10 @@ namespace CardzApp\Api\Account\Presentation\Controllers;
 use App\Http\Controllers\Controller;
 use CardzApp\Api\Account\Application\Services\UserService;
 use CardzApp\Api\Account\Domain\UserCredentials;
-use CardzApp\Api\Account\Domain\UserProfile;
 use CardzApp\Api\Shared\Presentation\ControllerTrait;
 use Illuminate\Http\Request;
 
-class RegisterUserController extends Controller
+class UpdateOwnUserController extends Controller
 {
     use ControllerTrait;
 
@@ -25,16 +24,11 @@ class RegisterUserController extends Controller
             $request->username,
             $request->password
         );
-        $profile = UserProfile::of(
-            $request->email
+
+        $this->userService->updateOwnUser(
+            $request->user()->id, $credentials
         );
 
-        $userId = $this->userService->registerUser(
-            $credentials, $profile
-        );
-
-        return $this->successResponse([
-            'id' => $userId
-        ]);
+        return $this->successResponse();
     }
 }

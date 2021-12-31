@@ -8,9 +8,9 @@ use CardzApp\Api\Tests\Support\ModuleTestTrait;
 use Database\Factories\UserFactory;
 use Tests\TestCase;
 
-class UpdateAuthUserTest extends TestCase
+class UpdateOwnUserTest extends TestCase
 {
-    private const ROUTE = Routes::ACCOUNT_UPDATE_AUTH_USER_ACTION;
+    private const ROUTE = Routes::ACCOUNT_UPDATE_OWN_USER_ACTION;
 
     use ModuleTestTrait;
 

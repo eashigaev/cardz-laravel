@@ -9,8 +9,8 @@ abstract class Actions
     const AUTH_LOGOUT_ALL_ACTION = 'api.v1.auth.logoutAll';
 
     const ACCOUNT_REGISTER_USER_ACTION = 'api.v1.account.registerUser';
-    const ACCOUNT_GET_AUTH_USER_ACTION = 'api.v1.account.getUser';
-    const ACCOUNT_UPDATE_AUTH_USER_ACTION = 'api.v1.account.changeUser';
+    const ACCOUNT_GET_OWN_USER_ACTION = 'api.v1.account.getOwnUser';
+    const ACCOUNT_UPDATE_OWN_USER_ACTION = 'api.v1.account.changeOwnUser';
 
     const BUSINESS_GET_COMPANIES = 'api.v1.business.getCompanies';
     const BUSINESS_FOUND_COMPANY = 'api.v1.business.foundCompany';

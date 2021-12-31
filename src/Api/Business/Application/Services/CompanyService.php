@@ -1,6 +1,6 @@
 <?php
 
-namespace CardzApp\Api\Business\Application;
+namespace CardzApp\Api\Business\Application\Services;
 
 use App\Http\Controllers\Controller;
 use App\Models\Company;
@@ -17,7 +17,7 @@ class CompanyService extends Controller
 
     public function foundCompany(string $founderId, CompanyProfile $profile)
     {
-        $company = new Company($profile->toArray());
+        $company = Company::query()->make($profile->toArray());
         $company->id = $this->uuidGenerator->getNextValue();
         $company->founder()->associate($founderId);
         $company->save();
