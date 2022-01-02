@@ -3,10 +3,9 @@
 namespace CardzApp\Api\Collect\Presentation\Controllers\Program;
 
 use App\Http\Controllers\Controller;
-use App\Models\Collect\Program;
-use App\Models\Company;
+use CardzApp\Api\Collect\Application\Services\ProgramService;
+use CardzApp\Api\Collect\Domain\ProgramProfile;
 use CardzApp\Api\Shared\Presentation\ControllerTrait;
-use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
 use Illuminate\Http\Request;
 
 class AddProgramController extends Controller
@@ -14,25 +13,23 @@ class AddProgramController extends Controller
     use ControllerTrait;
 
     public function __construct(
-        private UuidGenerator $uuidGenerator
+        private ProgramService $programService
     )
     {
     }
 
     public function __invoke(Request $request)
     {
-        $attrs = $request->only(['title', 'description']);
+        $profile = ProgramProfile::of(
+            $request->title, $request->description
+        );
 
-        $company = Company::query()->findOrFail($request->company);
-
-        $program = new Program($attrs);
-        $program->id = $this->uuidGenerator->getNextValue();
-        $program->available = false;
-        $program->company()->associate($company);
-        $program->save();
+        $programId = $this->programService->addProgram(
+            $request->company, $profile
+        );
 
         return $this->successResponse([
-            'id' => $program->id
+            'id' => $programId
         ]);
     }
 }

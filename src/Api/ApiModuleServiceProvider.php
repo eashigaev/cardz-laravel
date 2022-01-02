@@ -5,7 +5,6 @@ namespace CardzApp\Api;
 use CardzApp\Api\Collect\Application\CollectBootstrap;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
 use Codderz\YokoLite\Domain\Uuid\UuidRamseyGenerator;
-use Codderz\YokoLite\Presentation\Route;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 

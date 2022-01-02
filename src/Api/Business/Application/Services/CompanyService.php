@@ -30,8 +30,7 @@ class CompanyService extends Controller
         return Company::query()
             ->ofFounder($founderId)
             ->findOrFail($companyId)
-            ->fill($profile->toArray())
-            ->save();
+            ->update($profile->toArray());
     }
 
     //

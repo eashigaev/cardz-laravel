@@ -8,7 +8,6 @@ use CardzApp\Api\Account\Domain\UserProfile;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
 use Codderz\YokoLite\Shared\Exception;
 use Illuminate\Contracts\Hashing\Hasher;
-use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
@@ -34,10 +33,9 @@ class UserService
     public function updateUser(string $id, UserCredentials $credentials)
     {
         $user = User::query()->findOrFail($id);
-        $user->fill(
+        return $user->update(
             $credentials->toHashedArray($this->hasher)
         );
-        $user->save();
     }
 
     //
@@ -53,7 +51,7 @@ class UserService
             ->where('username', $credentials->username)
             ->firstOrFail();
 
-        if (!Hash::check($credentials->password, $user->password)) {
+        if (!$this->hasher->check($credentials->password, $user->password)) {
             throw Exception::of('Unknown credentials');
         }
 

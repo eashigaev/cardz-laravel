@@ -3,9 +3,9 @@
 namespace CardzApp\Api\Collect\Presentation\Controllers\Program;
 
 use App\Http\Controllers\Controller;
-use App\Models\Collect\Program;
+use CardzApp\Api\Collect\Application\Services\ProgramService;
+use CardzApp\Api\Collect\Domain\ProgramProfile;
 use CardzApp\Api\Shared\Presentation\ControllerTrait;
-use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
 use Illuminate\Http\Request;
 
 class UpdateProgramController extends Controller
@@ -13,18 +13,20 @@ class UpdateProgramController extends Controller
     use ControllerTrait;
 
     public function __construct(
-        private UuidGenerator $uuidGenerator
+        private ProgramService $programService
     )
     {
     }
 
     public function __invoke(Request $request)
     {
-        $attrs = $request->only(['title', 'description']);
+        $profile = ProgramProfile::of(
+            $request->title, $request->description
+        );
 
-        $program = Program::query()->findOrFail($request->program);
-
-        $program->fill($attrs)->save();
+        $this->programService->updateProgram(
+            $request->program, $profile
+        );
 
         return $this->successResponse();
     }
