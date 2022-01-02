@@ -34,7 +34,8 @@ class ProgramService extends Controller
     {
         return Program::query()
             ->findOrFail($programId)
-            ->update($profile->toArray());
+            ->fill($profile->toArray())
+            ->save();
     }
 
     public function updateProgramAvailability(string $programId, bool $value)

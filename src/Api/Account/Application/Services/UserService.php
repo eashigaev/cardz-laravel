@@ -33,9 +33,10 @@ class UserService
     public function updateUser(string $id, UserCredentials $credentials)
     {
         $user = User::query()->findOrFail($id);
-        return $user->update(
-            $credentials->toHashedArray($this->hasher)
-        );
+
+        return $user
+            ->fill($credentials->toHashedArray($this->hasher))
+            ->save();
     }
 
     //
