@@ -7,12 +7,14 @@ use CardzApp\Api\Account\Domain\UserCredentials;
 use CardzApp\Api\Account\Domain\UserProfile;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
 use Codderz\YokoLite\Shared\Exception;
+use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
     public function __construct(
-        private UuidGenerator $uuidGenerator
+        private UuidGenerator $uuidGenerator,
+        private Hasher        $hasher
     )
     {
     }
@@ -20,7 +22,7 @@ class UserService
     public function registerUser(UserCredentials $credentials, UserProfile $profile)
     {
         $user = User::query()->make([
-            ...$credentials->hash()->toArray(),
+            ...$credentials->toHashedArray($this->hasher),
             ...$profile->toArray()
         ]);
         $user->id = $this->uuidGenerator->getNextValue();
@@ -32,7 +34,7 @@ class UserService
     public function updateOwnUser(string $id, UserCredentials $credentials)
     {
         $user = User::query()->findOrFail($id);
-        $user->fill($credentials->hash()->toArray());
+        $user->fill($credentials->toHashedArray($this->hasher));
         $user->save();
     }
 
