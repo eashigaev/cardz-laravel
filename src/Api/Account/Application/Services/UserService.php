@@ -31,16 +31,18 @@ class UserService
         return $user->id;
     }
 
-    public function updateOwnUser(string $id, UserCredentials $credentials)
+    public function updateUser(string $id, UserCredentials $credentials)
     {
         $user = User::query()->findOrFail($id);
-        $user->fill($credentials->toHashedArray($this->hasher));
+        $user->fill(
+            $credentials->toHashedArray($this->hasher)
+        );
         $user->save();
     }
 
     //
 
-    public function getOwnerUser(string $id)
+    public function getUser(string $id)
     {
         return User::query()->findOrFail($id);
     }

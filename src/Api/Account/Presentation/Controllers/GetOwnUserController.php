@@ -21,7 +21,7 @@ class GetOwnUserController extends Controller
 
     public function __invoke(Request $request)
     {
-        $user = $this->userService->getOwnerUser(
+        $user = $this->userService->getUser(
             $request->user()->id
         );
 

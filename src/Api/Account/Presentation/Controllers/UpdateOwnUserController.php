@@ -25,7 +25,7 @@ class UpdateOwnUserController extends Controller
             $request->password
         );
 
-        $this->userService->updateOwnUser(
+        $this->userService->updateUser(
             $request->user()->id, $credentials
         );
 
