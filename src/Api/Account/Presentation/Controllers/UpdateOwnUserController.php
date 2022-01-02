@@ -20,7 +20,7 @@ class UpdateOwnUserController extends Controller
 
     public function __invoke(Request $request)
     {
-        $credentials = UserCredentials::ofPlain(
+        $credentials = UserCredentials::of(
             $request->username,
             $request->password
         );

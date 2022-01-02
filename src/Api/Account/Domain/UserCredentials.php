@@ -2,28 +2,26 @@
 
 namespace CardzApp\Api\Account\Domain;
 
-use Hash;
+use Illuminate\Support\Facades\Hash;
 
 class UserCredentials
 {
     public string $username;
     public string $password;
+    public bool $hashed = false;
 
-    public static function ofPlain(string $username, string $password)
-    {
-        return self::of(
-            $username, Hash::make($password)
-        );
-    }
-
-    //
-
-    public static function of(string $username, string $password)
+    public static function of(string $username, string $password, bool $hashed = false)
     {
         $self = new self();
         $self->username = $username;
         $self->password = $password;
+        $self->hashed = $hashed;
         return $self;
+    }
+
+    public function hash()
+    {
+        return self::of($this->username, Hash::make($this->password), true);
     }
 
     public function toArray()

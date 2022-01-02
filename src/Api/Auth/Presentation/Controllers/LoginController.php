@@ -3,7 +3,8 @@
 namespace CardzApp\Api\Auth\Presentation\Controllers;
 
 use App\Http\Controllers\Controller;
-use CardzApp\Api\Account\Application\Services\UserService;
+use CardzApp\Api\Account\Domain\UserCredentials;
+use CardzApp\Api\Auth\Application\Services\TokenService;
 use CardzApp\Api\Shared\Presentation\ControllerTrait;
 use Illuminate\Http\Request;
 
@@ -12,22 +13,25 @@ class LoginController extends Controller
     use ControllerTrait;
 
     public function __construct(
-        private UserService $userService
+        private TokenService $tokenService
     )
     {
     }
 
     public function __invoke(Request $request)
     {
-        $user = $this->userService->getUserByCredentials(
+        $credentials = UserCredentials::of(
             $request->username, $request->password
         );
 
-        $tokenName = $request->tokenName ?? 'API_TOKEN';
-        $token = $user->createToken($tokenName)->plainTextToken;
+        $token = $this->tokenService->login(
+            $credentials, $request->tokenName ?? 'API_TOKEN'
+        );
 
         return $this->successResponse([
             'token' => $token
         ]);
     }
+
+
 }

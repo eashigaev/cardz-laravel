@@ -19,11 +19,10 @@ class UserService
 
     public function registerUser(UserCredentials $credentials, UserProfile $profile)
     {
-        $user = User::query()->make(
-            collect($credentials->toArray())
-                ->merge($profile->toArray())
-                ->toArray()
-        );
+        $user = User::query()->make([
+            ...$credentials->hash()->toArray(),
+            ...$profile->toArray()
+        ]);
         $user->id = $this->uuidGenerator->getNextValue();
         $user->save();
 
@@ -33,7 +32,7 @@ class UserService
     public function updateOwnUser(string $id, UserCredentials $credentials)
     {
         $user = User::query()->findOrFail($id);
-        $user->fill($credentials->toArray());
+        $user->fill($credentials->hash()->toArray());
         $user->save();
     }
 
@@ -44,13 +43,13 @@ class UserService
         return User::query()->findOrFail($id);
     }
 
-    public function getUserByCredentials(string $username, string $password)
+    public function getUserByCredentials(UserCredentials $credentials)
     {
         $user = User::query()
-            ->where('username', $username)
+            ->where('username', $credentials->username)
             ->firstOrFail();
 
-        if (!Hash::check($password, $user->password)) {
+        if (!Hash::check($credentials->password, $user->password)) {
             throw Exception::of('Unknown credentials');
         }
 
