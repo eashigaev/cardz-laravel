@@ -20,8 +20,6 @@ class GetCompanyTest extends TestCase
 
     public function test_action()
     {
-        //$user = User::factory()->has(Company::factory()->count(3))->create();
-
         $company = Company::factory()->create();
         $this->actingAsSanctum($company->founder);
 

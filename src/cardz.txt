@@ -20,14 +20,15 @@ PTCH /business/company/id/{company}                 # Update company +
 // Collect
 
 POST /collect/programs/company/id/{company}         # Add collect program +
- GET /collect/programs ?filter                      # Get collect programs
- GET /collect/program/id/{program}                  # Get collect program
+ GET /collect/programs/company/id/{company} ?filter # Get company programs +
 PTCH /collect/program/id/{program}                  # Update collect program +
+ GET /collect/program/id/{program}                  # Get collect program +
 PTCH /collect/program/id/{program}/available        # Update collect program availability +
 
 POST /collect/program/id/{program}/tasks            # Make program task
 PTCH /collect/program/task/id/{task}                # Update program task
 PTCH /collect/program/task/id/{task}/available      # Update program task availability
+
 POST /collect/program/id/{program}/rewards          # Make program rewards
 PTCH /collect/program/reward/id/{reward}            # Update program reward
 PTCH /collect/program/reward/id/{reward}/available  # Update program task availability
@@ -38,7 +39,7 @@ POST /collect/cards/program/id/{program}            # Issue program card
 PTCH /collect/card/id/{card}                        # Update card
 PTCH /collect/card/id/{card}/reward                 # Reward card
 PTCH /collect/card/id/{card}/reject                 # Reject card
-PTCH /collect/card/id/{card}/refuse                 # Refuse card
+PTCH /collect/card/id/{card}/cancel                 # Cancel card
 
  PUT /collect/card/id/{card}/tasks                  # Add completed card task
 PTCH /collect/card/task/id/{task}/relevance         # Update card task relevance

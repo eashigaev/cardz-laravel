@@ -4,6 +4,7 @@ namespace CardzApp\Api\Collect\Application\Services;
 
 use App\Http\Controllers\Controller;
 use App\Models\Collect\Program;
+use App\Models\Collect\ProgramBuilder;
 use App\Models\Company;
 use CardzApp\Api\Collect\Domain\ProgramProfile;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
@@ -48,4 +49,21 @@ class ProgramService extends Controller
     }
 
     //
+
+    public function getPrograms(string $companyId, array $filter = [])
+    {
+        return Program::query()
+            ->ofCompany($companyId)
+            ->when(in_array('available', $filter),
+                fn(ProgramBuilder $builder, bool $value) => $builder->where('available', $value)
+            )
+            ->limit(1000)
+            ->get();
+    }
+
+    public function getProgram(string $programId)
+    {
+        return Program::query()
+            ->findOrFail($programId);
+    }
 }

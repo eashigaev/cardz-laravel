@@ -23,7 +23,7 @@ class GetCompaniesController extends Controller
     {
         $companies = $this->companyService
             ->getCompanies($request->user()->id)
-            ->map(fn($u) => $this->companyTransformer->preview($u));
+            ->map(fn($i) => $this->companyTransformer->preview($i));
 
         return $this->successResponse($companies);
     }

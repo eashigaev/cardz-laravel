@@ -21,13 +21,13 @@ class GetCompaniesTest extends TestCase
 
     public function test_action()
     {
-        $user = User::factory()->has(Company::factory()->count(3))->create();
-        $this->actingAsSanctum($user);
+        $companies = Company::factory()->for(User::factory(), 'founder')->count(3)->create();
+        $this->actingAsSanctum($companies->first()->founder);
 
         $response = $this->callJsonRoute(self::ROUTE);
         $response->assertStatus(200);
 
-        foreach ($user->companies as $company) {
+        foreach ($companies as $company) {
             $response->assertJsonFragment([
                 'id' => $company->id,
                 'title' => $company->title,
