@@ -14,10 +14,14 @@ class CollectBootstrap
         return [
             Actions::COLLECT_ADD_PROGRAM =>
                 fn(User $sub, Company $res) => $sub->id === $res->founder_id,
+            Actions::COLLECT_GET_PROGRAMS =>
+                fn(User $sub, Company $res) => $sub->id === $res->founder_id,
             Actions::COLLECT_UPDATE_PROGRAM =>
                 fn(User $sub, Program $res) => $sub->id === $res->company->founder_id,
             Actions::COLLECT_UPDATE_PROGRAM_AVAILABILITY =>
                 fn(User $sub, Program $res) => $sub->id === $res->company->founder_id,
+            Actions::COLLECT_GET_PROGRAM =>
+                fn(User $sub, Program $res) => $sub->id === $res->company->founder_id
         ];
     }
 }

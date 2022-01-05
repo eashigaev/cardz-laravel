@@ -4,6 +4,7 @@ namespace CardzApp\Api\Tests\Feature\Collect\Program;
 
 use App\Models\Collect\Program;
 use App\Models\Company;
+use CardzApp\Api\Shared\Application\Actions;
 use CardzApp\Api\Shared\Presentation\Routes;
 use CardzApp\Api\Tests\Support\ModuleTestTrait;
 use Tests\TestCase;
@@ -14,10 +15,18 @@ class GetProgramsTest extends TestCase
 
     use ModuleTestTrait;
 
+    public function test_access()
+    {
+        $this->assertAuthenticatedRoute(self::ROUTE);
+        $this->assertAuthorizedRoute(self::ROUTE, Actions::COLLECT_GET_PROGRAMS);
+    }
+
     public function test_action()
     {
         $company = Company::factory()->create();
         $programs = Program::factory()->for($company)->count(3)->create();
+
+        $this->actingAsSanctum($company->founder);
 
         $response = $this->callJsonRoute(self::ROUTE, parameters: [
             'company' => $company->id
@@ -39,6 +48,8 @@ class GetProgramsTest extends TestCase
         $company = Company::factory()->create();
         $available = Program::factory()->for($company)->available()->count(3)->create();
         Program::factory()->for($company)->notAvailable()->count(2)->create();
+
+        $this->actingAsSanctum($company->founder);
 
         $response = $this->callJsonRoute(self::ROUTE,
             ['available' => true],

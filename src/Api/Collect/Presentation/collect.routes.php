@@ -19,7 +19,7 @@ Route::prefix(Routes::URL_PREFIX)->middleware([Routes::API_MIDDLEWARE,])->group(
             ->middleware(Authorize::for(Actions::COLLECT_ADD_PROGRAM, ['company' => Company::class]));
         Route::get('/company/id/{company}')
             ->name(Routes::COLLECT_GET_PROGRAMS)->uses(GetProgramsController::class)
-            ->withoutMiddleware(Routes::AUTHENTICATE_MIDDLEWARE);
+            ->middleware(Authorize::for(Actions::COLLECT_GET_PROGRAMS, ['company' => Company::class]));
     });
 
     Route::prefix('/collect/program')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
@@ -28,7 +28,7 @@ Route::prefix(Routes::URL_PREFIX)->middleware([Routes::API_MIDDLEWARE,])->group(
             ->middleware(Authorize::for(Actions::COLLECT_UPDATE_PROGRAM, ['program' => Program::class]));
         Route::get('/id/{program}')
             ->name(Routes::COLLECT_GET_PROGRAM)->uses(GetProgramController::class)
-            ->withoutMiddleware(Routes::AUTHENTICATE_MIDDLEWARE);
+            ->middleware(Authorize::for(Actions::COLLECT_GET_PROGRAM, ['program' => Program::class]));
         Route::patch('/id/{program}/available')
             ->name(Routes::COLLECT_UPDATE_PROGRAM_AVAILABILITY)->uses(UpdateProgramAvailabilityController::class)
             ->middleware(Authorize::for(Actions::COLLECT_UPDATE_PROGRAM_AVAILABILITY, ['program' => Program::class]));
