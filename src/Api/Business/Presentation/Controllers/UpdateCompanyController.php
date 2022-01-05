@@ -23,7 +23,7 @@ class UpdateCompanyController extends Controller
         $profile = CompanyProfile::of(
             $request->title,
             $request->description,
-            $request->about
+            $request->summary
         );
 
         $this->companyService->updateCompany(

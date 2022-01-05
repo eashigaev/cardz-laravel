@@ -20,7 +20,7 @@ class CompanyTransformer
     {
         return [
             ...$this->preview($model),
-            'about' => $model->about
+            'summary' => $model->summary
         ];
     }
 }

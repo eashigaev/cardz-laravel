@@ -27,7 +27,7 @@ class UpdateCompanyTest extends TestCase
         $response = $this->callJsonRoute(self::ROUTE, [
             'title' => $fixture->title,
             'description' => $fixture->description,
-            'about' => $fixture->about
+            'summary' => $fixture->summary
         ], [
             'company' => $company->id
         ]);
@@ -37,7 +37,7 @@ class UpdateCompanyTest extends TestCase
         $this->assertArraySubset([
             'title' => $fixture->title,
             'description' => $fixture->description,
-            'about' => $fixture->about
+            'summary' => $fixture->summary
         ], $result->toArray());
     }
 }

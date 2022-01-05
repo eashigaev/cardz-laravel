@@ -29,7 +29,7 @@ class FoundCompanyTest extends TestCase
         $response = $this->callJsonRoute(self::ROUTE, [
             'title' => $fixture->title,
             'description' => $fixture->description,
-            'about' => $fixture->about
+            'summary' => $fixture->summary
         ]);
         $response->assertStatus(200);
 
@@ -37,7 +37,7 @@ class FoundCompanyTest extends TestCase
         $this->assertArraySubset([
             'title' => $fixture->title,
             'description' => $fixture->description,
-            'about' => $fixture->about
+            'summary' => $fixture->summary
         ], $result->toArray());
     }
 }

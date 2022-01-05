@@ -34,7 +34,7 @@ class GetCompaniesTest extends TestCase
                 'description' => $company->description,
             ]);
             $this->assertArrayNotHasKeys([
-                'about'
+                'summary'
             ], $response->json());
         }
     }

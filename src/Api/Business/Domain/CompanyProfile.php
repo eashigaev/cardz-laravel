@@ -6,14 +6,14 @@ class CompanyProfile
 {
     public string $title;
     public string $description;
-    public string $about;
+    public string $summary;
 
-    public static function of(string $title, string $description, string $about)
+    public static function of(string $title, string $description, string $summary)
     {
         $self = new self();
         $self->title = $title;
         $self->description = $description;
-        $self->about = $about;
+        $self->summary = $summary;
         return $self;
     }
 
@@ -22,7 +22,7 @@ class CompanyProfile
         return [
             'title' => $this->title,
             'description' => $this->description,
-            'about' => $this->about
+            'summary' => $this->summary
         ];
     }
 }

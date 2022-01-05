@@ -18,7 +18,7 @@ class CreateCompaniesTable extends Migration
             $table->foreignUuid('founder_id')->index();
             $table->string('title');
             $table->string('description');
-            $table->text('about');
+            $table->text('summary');
             $table->timestamps();
         });
     }

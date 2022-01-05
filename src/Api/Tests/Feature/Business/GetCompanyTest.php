@@ -32,7 +32,7 @@ class GetCompanyTest extends TestCase
             'id' => $company->id,
             'title' => $company->title,
             'description' => $company->description,
-            'about' => $company->about
+            'summary' => $company->summary
         ]);
     }
 }

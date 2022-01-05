@@ -17,7 +17,7 @@ class CompanyFactory extends Factory
             'founder_id' => User::factory(),
             'title' => $this->faker->company(),
             'description' => $this->faker->sentence(),
-            'about' => $this->faker->text()
+            'summary' => $this->faker->text()
         ];
     }
 }

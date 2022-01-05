@@ -23,7 +23,7 @@ class FoundCompanyController extends Controller
         $profile = CompanyProfile::of(
             $request->title,
             $request->description,
-            $request->about
+            $request->summary
         );
 
         $companyId = $this->companyService->foundCompany(
