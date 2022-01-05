@@ -16,10 +16,12 @@ class ProgramTaskFactory extends Factory
 
     public function definition()
     {
+        $company = Company::factory()->create();
+
         return [
             'id' => $this->uuidGenerator()->getNextValue(),
-            'company_id' => Company::factory(),
-            'program_id' => Program::factory(),
+            'company_id' => $company,
+            'program_id' => Program::factory()->for($company),
             'title' => $this->faker->company(),
             'description' => $this->faker->sentence(),
             'available' => $this->faker->boolean(),

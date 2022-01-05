@@ -23,7 +23,7 @@ class AddProgramTaskTest extends TestCase
     public function test_action()
     {
         $fixture = ProgramTask::factory()->make();
-        $user = $fixture->program->company->founder;
+        $user = $fixture->company->founder;
 
         $this->actingAsSanctum($user);
 
@@ -37,7 +37,7 @@ class AddProgramTaskTest extends TestCase
 
         $result = ProgramTask::query()->findOrFail($response['id']);
         $this->assertArraySubset([
-            'company_id' => $fixture->program->company->id,
+            'company_id' => $fixture->company->id,
             'program_id' => $fixture->program->id,
             'title' => $fixture->title,
             'description' => $fixture->description,
