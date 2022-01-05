@@ -17,9 +17,15 @@ abstract class Actions
     const BUSINESS_GET_COMPANY = 'api.v1.business.getCompany';
     const BUSINESS_GET_COMPANIES = 'api.v1.business.getCompanies';
 
+
     const COLLECT_ADD_PROGRAM = 'api.v1.collect.addProgram';
     const COLLECT_UPDATE_PROGRAM = 'api.v1.collect.updateProgram';
-    const COLLECT_UPDATE_PROGRAM_AVAILABILITY = 'api.v1.collect.updateProgramAvailability';
+    const COLLECT_UPDATE_PROGRAM_AVAILABLE = 'api.v1.collect.updateProgramAvailable';
     const COLLECT_GET_PROGRAM = 'api.v1.collect.getProgram';
     const COLLECT_GET_PROGRAMS = 'api.v1.collect.getPrograms';
+
+    const COLLECT_ADD_PROGRAM_TASK = 'api.v1.collect.addProgramTask';
+    const COLLECT_UPDATE_PROGRAM_TASK = 'api.v1.collect.updateProgram';
+    const COLLECT_UPDATE_PROGRAM_TASK_AVAILABLE = 'api.v1.collect.updateProgramTaskAvailable';
+    const COLLECT_UPDATE_PROGRAM_TASK_REPEATABLE = 'api.v1.collect.updateProgramTaskRepeatable';
 }

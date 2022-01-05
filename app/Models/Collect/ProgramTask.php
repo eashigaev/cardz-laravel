@@ -16,11 +16,25 @@ class ProgramTask extends Model
 
     protected $fillable = [
         'title',
-        'repeatable'
+        'description'
     ];
+
+    //
+
+    public function program()
+    {
+        return $this->belongsTo(Program::class);
+    }
 
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    //
+
+    public function scopeOfProgram($query, string $programId)
+    {
+        return $this->where('program_id', $programId);
     }
 }

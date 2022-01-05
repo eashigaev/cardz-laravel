@@ -8,16 +8,16 @@ use CardzApp\Api\Shared\Presentation\Routes;
 use CardzApp\Api\Tests\Support\ModuleTestTrait;
 use Tests\TestCase;
 
-class UpdateProgramAvailabilityTest extends TestCase
+class UpdateProgramAvailableTest extends TestCase
 {
-    private const ROUTE = Routes::COLLECT_UPDATE_PROGRAM_AVAILABILITY;
+    private const ROUTE = Routes::COLLECT_UPDATE_PROGRAM_AVAILABLE;
 
     use ModuleTestTrait;
 
     public function test_access()
     {
         $this->assertAuthenticatedRoute(self::ROUTE);
-        $this->assertAuthorizedRoute(self::ROUTE, Actions::COLLECT_UPDATE_PROGRAM_AVAILABILITY);
+        $this->assertAuthorizedRoute(self::ROUTE, Actions::COLLECT_UPDATE_PROGRAM_AVAILABLE);
     }
 
     public function test_action()

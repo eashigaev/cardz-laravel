@@ -11,17 +11,17 @@ class CollectBootstrap
 {
     public function getPolicies()
     {
-        return [
-            Actions::COLLECT_ADD_PROGRAM =>
-                fn(User $sub, Company $res) => $sub->id === $res->founder_id,
-            Actions::COLLECT_GET_PROGRAMS =>
-                fn(User $sub, Company $res) => $sub->id === $res->founder_id,
-            Actions::COLLECT_UPDATE_PROGRAM =>
-                fn(User $sub, Program $res) => $sub->id === $res->company->founder_id,
-            Actions::COLLECT_UPDATE_PROGRAM_AVAILABILITY =>
-                fn(User $sub, Program $res) => $sub->id === $res->company->founder_id,
-            Actions::COLLECT_GET_PROGRAM =>
-                fn(User $sub, Program $res) => $sub->id === $res->company->founder_id
-        ];
+        $isCompanyPrincipal = fn(User $sub, Company $res) => $sub->id === $res->founder_id;
+        $isProgramPrincipal = fn(User $sub, Program $res) => $sub->id === $res->company->founder_id;
+
+        return array_merge([
+            Actions::COLLECT_ADD_PROGRAM => $isCompanyPrincipal,
+            Actions::COLLECT_GET_PROGRAMS => $isCompanyPrincipal,
+            Actions::COLLECT_UPDATE_PROGRAM => $isProgramPrincipal,
+            Actions::COLLECT_UPDATE_PROGRAM_AVAILABLE => $isProgramPrincipal,
+            Actions::COLLECT_GET_PROGRAM => $isProgramPrincipal
+        ], [
+            Actions::COLLECT_ADD_PROGRAM_TASK => fn() => true
+        ]);
     }
 }

@@ -7,7 +7,7 @@ use CardzApp\Api\Collect\Application\Services\ProgramService;
 use CardzApp\Api\Shared\Presentation\ControllerTrait;
 use Illuminate\Http\Request;
 
-class UpdateProgramAvailabilityController extends Controller
+class UpdateProgramAvailableController extends Controller
 {
     use ControllerTrait;
 

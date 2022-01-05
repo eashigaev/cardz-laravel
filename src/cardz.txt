@@ -28,6 +28,7 @@ PTCH /collect/program/id/{program}/available        # Update collect program ava
 POST /collect/program/id/{program}/tasks            # Make program task
 PTCH /collect/program/task/id/{task}                # Update program task
 PTCH /collect/program/task/id/{task}/available      # Update program task availability
+PTCH /collect/program/task/id/{task}/repeatable     # Update program task repeatability
 
 POST /collect/program/id/{program}/rewards          # Make program rewards
 PTCH /collect/program/reward/id/{reward}            # Update program reward

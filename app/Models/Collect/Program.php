@@ -3,7 +3,6 @@
 namespace App\Models\Collect;
 
 use App\Models\Company;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,13 +38,8 @@ class Program extends Model
 
     //
 
-    public static function query(): Builder|ProgramBuilder
+    public function scopeOfCompany($query, string $companyId)
     {
-        return parent::query();
-    }
-
-    public function newEloquentBuilder($query)
-    {
-        return new ProgramBuilder($query);
+        return $query->where('company_id', $companyId);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,13 +28,8 @@ class Company extends Model
 
     //
 
-    public static function query(): Builder|CompanyBuilder
+    public function scopeOfFounder($query, string $founderId)
     {
-        return parent::query();
-    }
-
-    public function newEloquentBuilder($query)
-    {
-        return new CompanyBuilder($query);
+        return $query->where('founder_id', $founderId);
     }
 }
