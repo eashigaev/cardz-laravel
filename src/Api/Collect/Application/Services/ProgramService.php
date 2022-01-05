@@ -2,14 +2,13 @@
 
 namespace CardzApp\Api\Collect\Application\Services;
 
-use App\Http\Controllers\Controller;
 use App\Models\Collect\Program;
 use App\Models\Collect\ProgramBuilder;
 use App\Models\Company;
 use CardzApp\Api\Collect\Domain\ProgramProfile;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
 
-class ProgramService extends Controller
+class ProgramService
 {
     public function __construct(
         private UuidGenerator $uuidGenerator
