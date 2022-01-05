@@ -24,22 +24,10 @@ class ProgramFactory extends Factory
         ];
     }
 
-    public function added()
+    public function with(bool $available = false)
     {
-        return $this->notAvailable();
-    }
-
-    public function notAvailable()
-    {
-        return $this->state(function (array $attributes) {
-            return ['available' => false];
-        });
-    }
-
-    public function available()
-    {
-        return $this->state(function (array $attributes) {
-            return ['available' => true];
-        });
+        return $this->state(fn() => [
+            'available' => $available,
+        ]);
     }
 }

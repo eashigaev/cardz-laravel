@@ -29,7 +29,7 @@ class ProgramTaskFactory extends Factory
         ];
     }
 
-    public function set(bool $available = false, bool $repeatable = false)
+    public function with(bool $available = false, bool $repeatable = false)
     {
         return $this->state(fn() => [
             'available' => $available,

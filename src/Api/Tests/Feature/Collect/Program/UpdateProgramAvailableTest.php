@@ -22,7 +22,7 @@ class UpdateProgramAvailableTest extends TestCase
 
     public function test_action()
     {
-        $program = Program::factory()->notAvailable()->create();
+        $program = Program::factory()->with(available: false)->create();
         $user = $program->company->founder;
 
         $this->actingAsSanctum($user);

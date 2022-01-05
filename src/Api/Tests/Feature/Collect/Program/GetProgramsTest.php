@@ -46,8 +46,8 @@ class GetProgramsTest extends TestCase
     public function test_filter_available()
     {
         $company = Company::factory()->create();
-        $available = Program::factory()->for($company)->available()->count(3)->create();
-        Program::factory()->for($company)->notAvailable()->count(2)->create();
+        $available = Program::factory()->for($company)->with(available: true)->count(3)->create();
+        Program::factory()->for($company)->with(available: false)->count(2)->create();
 
         $this->actingAsSanctum($company->founder);
 
