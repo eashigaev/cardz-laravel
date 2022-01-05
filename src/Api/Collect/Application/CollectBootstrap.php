@@ -21,7 +21,7 @@ class CollectBootstrap
             Actions::COLLECT_UPDATE_PROGRAM_AVAILABLE => $isProgramPrincipal,
             Actions::COLLECT_GET_PROGRAM => $isProgramPrincipal
         ], [
-            Actions::COLLECT_ADD_PROGRAM_TASK => fn() => true
+            Actions::COLLECT_ADD_PROGRAM_TASK => $isProgramPrincipal
         ]);
     }
 }

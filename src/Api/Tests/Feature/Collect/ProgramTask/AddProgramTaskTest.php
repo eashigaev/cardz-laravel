@@ -23,7 +23,7 @@ class AddProgramTaskTest extends TestCase
     public function test_action()
     {
         $fixture = ProgramTask::factory()->make();
-        $user = $fixture->company->founder;
+        $user = $fixture->program->company->founder;
 
         $this->actingAsSanctum($user);
 
