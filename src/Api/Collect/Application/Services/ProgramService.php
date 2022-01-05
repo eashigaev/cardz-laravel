@@ -56,7 +56,7 @@ class ProgramService
             ->when(in_array('available', $filter),
                 fn(Builder $builder, bool $value) => $builder->where('available', $value)
             )
-            ->limit(1000)
+            ->limit(100)
             ->get();
     }
 

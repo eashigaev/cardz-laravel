@@ -33,6 +33,7 @@ class GetProgramTest extends TestCase
 
         $response->assertJson([
             'id' => $program->id,
+            'company_id' => $program->company->id,
             'title' => $program->title,
             'description' => $program->description,
             'available' => $program->available

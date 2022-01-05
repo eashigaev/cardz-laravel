@@ -8,6 +8,7 @@ use CardzApp\Api\Collect\Presentation\Controllers\Program\GetProgramsController;
 use CardzApp\Api\Collect\Presentation\Controllers\Program\UpdateProgramAvailableController;
 use CardzApp\Api\Collect\Presentation\Controllers\Program\UpdateProgramController;
 use CardzApp\Api\Collect\Presentation\Controllers\ProgramTask\AddProgramTaskController;
+use CardzApp\Api\Collect\Presentation\Controllers\ProgramTask\GetProgramTasksController;
 use CardzApp\Api\Shared\Application\Actions;
 use CardzApp\Api\Shared\Presentation\Routes;
 use Codderz\YokoLite\Application\Authorization\Middleware\Authorize;
@@ -45,8 +46,14 @@ Route::prefix(Routes::URL_PREFIX)->middleware([Routes::API_MIDDLEWARE,])->group(
         Route::patch('/id/{program}/available')
             ->name(Routes::COLLECT_UPDATE_PROGRAM_AVAILABLE)->uses(UpdateProgramAvailableController::class)
             ->middleware(Authorize::for(Actions::COLLECT_UPDATE_PROGRAM_AVAILABLE, ['program' => Program::class]));
+    });
+    
+    Route::prefix('/collect/program')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
         Route::post('/id/{program}/tasks')
             ->name(Routes::COLLECT_ADD_PROGRAM_TASK)->uses(AddProgramTaskController::class)
             ->middleware(Authorize::for(Actions::COLLECT_ADD_PROGRAM_TASK, ['program' => Program::class]));
+        Route::get('/id/{program}/tasks')
+            ->name(Routes::COLLECT_GET_PROGRAM_TASKS)->uses(GetProgramTasksController::class)
+            ->middleware(Authorize::for(Actions::COLLECT_GET_PROGRAM_TASKS, ['program' => Program::class]));
     });
 });

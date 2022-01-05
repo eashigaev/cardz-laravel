@@ -21,10 +21,10 @@ class GetProgramsController extends Controller
 
     public function __invoke(Request $request)
     {
-        $programs = $this->programService
+        $items = $this->programService
             ->getPrograms($request->company, $request->all())
             ->map(fn($i) => $this->programTransformer->preview($i));
 
-        return $this->successResponse($programs);
+        return $this->successResponse($items);
     }
 }

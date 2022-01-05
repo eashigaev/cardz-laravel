@@ -25,8 +25,10 @@ PTCH /collect/program/id/{program}                  # Update collect program +
  GET /collect/program/id/{program}                  # Get collect program +
 PTCH /collect/program/id/{program}/available        # Update collect program availability +
 
-POST /collect/program/id/{program}/tasks            # Make program task
+POST /collect/program/id/{program}/tasks            # Make program task +
+ GET /collect/program/id/{program}/tasks            # Get program tasks +
 PTCH /collect/program/task/id/{task}                # Update program task
+ GET /collect/program/task/id/{task}                # Get program task
 PTCH /collect/program/task/id/{task}/available      # Update program task availability
 PTCH /collect/program/task/id/{task}/repeatable     # Update program task repeatability
 

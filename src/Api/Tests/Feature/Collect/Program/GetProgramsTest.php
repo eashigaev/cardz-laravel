@@ -36,6 +36,7 @@ class GetProgramsTest extends TestCase
         foreach ($programs as $program) {
             $response->assertJsonFragment([
                 'id' => $program->id,
+                'company_id' => $program->company->id,
                 'title' => $program->title,
                 'description' => $program->description,
                 'available' => $program->available

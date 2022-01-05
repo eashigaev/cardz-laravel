@@ -46,7 +46,7 @@ class CompanyService
     {
         return Company::query()
             ->ofFounder($founderId)
-            ->limit(1000)
+            ->limit(100)
             ->get();
     }
 }

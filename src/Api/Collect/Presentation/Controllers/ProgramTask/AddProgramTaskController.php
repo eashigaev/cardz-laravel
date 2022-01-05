@@ -3,7 +3,6 @@
 namespace CardzApp\Api\Collect\Presentation\Controllers\ProgramTask;
 
 use App\Http\Controllers\Controller;
-use CardzApp\Api\Collect\Application\Services\ProgramService;
 use CardzApp\Api\Collect\Application\Services\ProgramTaskService;
 use CardzApp\Api\Collect\Domain\ProgramTaskProfile;
 use CardzApp\Api\Shared\Presentation\ControllerTrait;
@@ -14,7 +13,6 @@ class AddProgramTaskController extends Controller
     use ControllerTrait;
 
     public function __construct(
-        private ProgramService     $programService,
         private ProgramTaskService $programTaskService,
     )
     {

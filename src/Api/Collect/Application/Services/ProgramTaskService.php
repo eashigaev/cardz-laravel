@@ -56,7 +56,8 @@ class ProgramTaskService
     {
         return ProgramTask::query()
             ->ofProgram($programId)
-            ->limit(1000)
+            ->orderBy('updated_at', 'desc')
+            ->limit(100)
             ->get();
     }
 
