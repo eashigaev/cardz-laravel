@@ -1,12 +1,12 @@
 <?php
 
-namespace CardzApp\Api\Tests\Feature\Collect\ProgramTask;
+namespace Tests\Api\Feature\Collect\ProgramTask;
 
 use App\Models\Collect\Program;
 use App\Models\Collect\ProgramTask;
 use CardzApp\Api\Shared\Application\Actions;
 use CardzApp\Api\Shared\Presentation\Routes;
-use CardzApp\Api\Tests\Support\ModuleTestTrait;
+use Tests\Api\Support\ModuleTestTrait;
 use Tests\TestCase;
 
 class GetProgramTasksTest extends TestCase

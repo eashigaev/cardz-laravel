@@ -1,45 +1,43 @@
 <?php
 
-namespace CardzApp\Api\Tests\Feature\Collect\Program;
+namespace Tests\Api\Feature\Business;
 
-use App\Models\Collect\Program;
-use CardzApp\Api\Shared\Application\Actions;
+use App\Models\Company;
+use App\Models\User;
 use CardzApp\Api\Shared\Presentation\Routes;
-use CardzApp\Api\Tests\Support\ModuleTestTrait;
+use Tests\Api\Support\ModuleTestTrait;
 use Tests\TestCase;
 
-class UpdateProgramTest extends TestCase
+class FoundCompanyTest extends TestCase
 {
-    private const ROUTE = Routes::COLLECT_UPDATE_PROGRAM;
+    private const ROUTE = Routes::BUSINESS_FOUND_COMPANY;
 
     use ModuleTestTrait;
 
     public function test_access()
     {
         $this->assertAuthenticatedRoute(self::ROUTE);
-        $this->assertAuthorizedRoute(self::ROUTE, Actions::COLLECT_UPDATE_PROGRAM);
     }
 
     public function test_action()
     {
-        $fixture = Program::factory()->make();
-        $program = Program::factory()->create();
-        $user = $program->company->founder;
-
+        $user = User::factory()->create();
         $this->actingAsSanctum($user);
+
+        $fixture = Company::factory()->make();
 
         $response = $this->callJsonRoute(self::ROUTE, [
             'title' => $fixture->title,
             'description' => $fixture->description,
-        ], [
-            'program' => $program->id
+            'summary' => $fixture->summary
         ]);
         $response->assertStatus(200);
 
-        $result = Program::query()->findOrFail($program->id);
+        $result = Company::query()->findOrFail($response['id']);
         $this->assertArraySubset([
             'title' => $fixture->title,
             'description' => $fixture->description,
+            'summary' => $fixture->summary
         ], $result->toArray());
     }
 }

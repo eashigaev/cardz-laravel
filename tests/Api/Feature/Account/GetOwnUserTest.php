@@ -1,10 +1,10 @@
 <?php
 
-namespace CardzApp\Api\Tests\Feature\Account;
+namespace Tests\Api\Feature\Account;
 
 use App\Models\User;
 use CardzApp\Api\Shared\Presentation\Routes;
-use CardzApp\Api\Tests\Support\ModuleTestTrait;
+use Tests\Api\Support\ModuleTestTrait;
 use Tests\TestCase;
 
 class GetOwnUserTest extends TestCase

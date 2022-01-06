@@ -1,11 +1,11 @@
 <?php
 
-namespace CardzApp\Api\Tests\Feature\Auth;
+namespace Tests\Api\Feature\Auth;
 
 use App\Models\User;
 use CardzApp\Api\Shared\Presentation\Routes;
-use CardzApp\Api\Tests\Support\ModuleTestTrait;
 use Database\Factories\UserFactory;
+use Tests\Api\Support\ModuleTestTrait;
 use Tests\TestCase;
 
 class LoginTest extends TestCase

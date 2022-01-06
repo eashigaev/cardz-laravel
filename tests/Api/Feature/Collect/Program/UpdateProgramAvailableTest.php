@@ -1,11 +1,11 @@
 <?php
 
-namespace CardzApp\Api\Tests\Feature\Collect\Program;
+namespace Tests\Api\Feature\Collect\Program;
 
 use App\Models\Collect\Program;
 use CardzApp\Api\Shared\Application\Actions;
 use CardzApp\Api\Shared\Presentation\Routes;
-use CardzApp\Api\Tests\Support\ModuleTestTrait;
+use Tests\Api\Support\ModuleTestTrait;
 use Tests\TestCase;
 
 class UpdateProgramAvailableTest extends TestCase

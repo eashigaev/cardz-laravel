@@ -1,6 +1,6 @@
 <?php
 
-namespace CardzApp\Api\Tests\Support;
+namespace Tests\Api\Support;
 
 use Codderz\YokoLite\Application\Authentication\SanctumTestTrait;
 use Codderz\YokoLite\Application\Authorization\GateTestTrait;

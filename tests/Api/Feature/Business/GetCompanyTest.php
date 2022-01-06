@@ -1,10 +1,10 @@
 <?php
 
-namespace CardzApp\Api\Tests\Feature\Business;
+namespace Tests\Api\Feature\Business;
 
 use App\Models\Company;
 use CardzApp\Api\Shared\Presentation\Routes;
-use CardzApp\Api\Tests\Support\ModuleTestTrait;
+use Tests\Api\Support\ModuleTestTrait;
 use Tests\TestCase;
 
 class GetCompanyTest extends TestCase
