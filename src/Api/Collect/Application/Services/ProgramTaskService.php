@@ -4,7 +4,6 @@ namespace CardzApp\Api\Collect\Application\Services;
 
 use App\Models\Collect\Program;
 use App\Models\Collect\ProgramTask;
-use CardzApp\Api\Collect\Domain\ProgramProfile;
 use CardzApp\Api\Collect\Domain\ProgramTaskProfile;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
 
@@ -33,7 +32,7 @@ class ProgramTaskService
         return $task->id;
     }
 
-    public function updateProgramTask(string $taskId, ProgramProfile $profile)
+    public function updateProgramTask(string $taskId, ProgramTaskProfile $profile)
     {
         return Program::query()
             ->findOrFail($taskId)
@@ -41,7 +40,16 @@ class ProgramTaskService
             ->save();
     }
 
-    public function updateProgramTaskAvailability(string $taskId, bool $value)
+    public function updateProgramTaskRepeatable(string $taskId, bool $value)
+    {
+        return Program::query()
+            ->whereNotIn('repeatable', [$value])
+            ->findOrFail($taskId)
+            ->setAttribute('repeatable', $value)
+            ->save();
+    }
+
+    public function updateProgramTaskAvailable(string $taskId, bool $value)
     {
         return Program::query()
             ->whereNotIn('available', [$value])

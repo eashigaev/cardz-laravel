@@ -2,16 +2,16 @@
 
 namespace CardzApp\Api\Collect\Domain;
 
-class ProgramProfile
+class ProgramReward
 {
     private string $title;
-    private string $description;
+    private int $target;
 
-    public static function of(string $title, string $description)
+    public static function of(string $title, int $target)
     {
         $self = new self();
         $self->title = $title;
-        $self->description = $description;
+        $self->target = $target;
         return $self;
     }
 
@@ -22,8 +22,8 @@ class ProgramProfile
         return $this->title;
     }
 
-    public function getDescription()
+    public function getTarget()
     {
-        return $this->description;
+        return $this->target;
     }
 }

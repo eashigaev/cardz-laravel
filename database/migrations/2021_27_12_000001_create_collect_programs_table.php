@@ -18,6 +18,8 @@ class CreateCollectProgramsTable extends Migration
             $table->foreignUuid('company_id')->index();
             $table->string('title');
             $table->string('description');
+            $table->string('reward_title');
+            $table->integer('reward_target');
             $table->boolean('available');
             $table->timestamps();
         });

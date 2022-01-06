@@ -19,7 +19,9 @@ class ProgramFactory extends Factory
             'id' => $this->uuidGenerator()->getNextValue(),
             'company_id' => Company::factory(),
             'title' => $this->faker->company(),
-            'description' => $this->faker->sentence(),
+            'description' => $this->faker->sentence(10),
+            'reward_title' => $this->faker->streetName(),
+            'reward_target' => $this->faker->numberBetween(1, 5),
             'available' => $this->faker->boolean()
         ];
     }

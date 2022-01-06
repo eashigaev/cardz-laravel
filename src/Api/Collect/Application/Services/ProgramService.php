@@ -5,6 +5,7 @@ namespace CardzApp\Api\Collect\Application\Services;
 use App\Models\Collect\Program;
 use App\Models\Company;
 use CardzApp\Api\Collect\Domain\ProgramProfile;
+use CardzApp\Api\Collect\Domain\ProgramReward;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -16,13 +17,16 @@ class ProgramService
     {
     }
 
-    public function addProgram(string $companyId, ProgramProfile $profile)
+    public function addProgram(string $companyId, ProgramProfile $profile, ProgramReward $reward)
     {
         $company = Company::query()->findOrFail($companyId);
 
-        $program = Program::make($profile->toArray());
+        $program = Program::make();
+
         $program->id = $this->uuidGenerator->getNextValue();
         $program->available = false;
+        $program->setProfile($profile);
+        $program->setReward($reward);
         $program->company()->associate($company->id);
 
         $program->save();
@@ -30,15 +34,17 @@ class ProgramService
         return $program->id;
     }
 
-    public function updateProgram(string $programId, ProgramProfile $profile)
+    public function updateProgram(string $programId, ProgramProfile $profile, ProgramReward $reward)
     {
-        return Program::query()
-            ->findOrFail($programId)
-            ->fill($profile->toArray())
-            ->save();
+        $program = Program::query()->findOrFail($programId);
+
+        $program->setProfile($profile);
+        $program->setReward($reward);
+
+        return $program->save();
     }
 
-    public function updateProgramAvailability(string $programId, bool $value)
+    public function updateProgramAvailable(string $programId, bool $value)
     {
         return Program::query()
             ->whereNotIn('available', [$value])

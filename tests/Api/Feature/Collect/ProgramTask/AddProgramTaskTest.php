@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Api\Feature\Collect\Program;
+namespace Tests\Api\Feature\Collect\ProgramTask;
 
 use App\Models\Collect\ProgramTask;
 use CardzApp\Api\Shared\Application\Actions;

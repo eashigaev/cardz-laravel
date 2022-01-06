@@ -1,25 +1,25 @@
 <?php
 
-namespace CardzApp\Api\Collect\Presentation\Controllers\Program;
+namespace CardzApp\Api\Collect\Presentation\Controllers\ProgramTask;
 
 use App\Http\Controllers\Controller;
-use CardzApp\Api\Collect\Application\Services\ProgramService;
+use CardzApp\Api\Collect\Application\Services\ProgramTaskService;
 use CardzApp\Api\Shared\Presentation\ControllerTrait;
 use Illuminate\Http\Request;
 
-class UpdateProgramAvailableController extends Controller
+class UpdateProgramTaskAvailableController extends Controller
 {
     use ControllerTrait;
 
     public function __construct(
-        private ProgramService $programService
+        private ProgramTaskService $programTaskService,
     )
     {
     }
 
     public function __invoke(Request $request)
     {
-        $this->programService->updateProgramAvailable(
+        $this->programTaskService->updateProgramTaskAvailable(
             $request->program, $request->value
         );
 

@@ -32,10 +32,6 @@ PTCH /collect/program/task/id/{task}                # Update program task
 PTCH /collect/program/task/id/{task}/available      # Update program task availability
 PTCH /collect/program/task/id/{task}/repeatable     # Update program task repeatability
 
-POST /collect/program/id/{program}/rewards          # Make program rewards
-PTCH /collect/program/reward/id/{reward}            # Update program reward
-PTCH /collect/program/reward/id/{reward}/available  # Update program task availability
-
 POST /collect/cards/program/id/{program}            # Issue program card
  GET /collect/cards ?filter                         # Get cards
  GET /collect/card/id/{card}                        # Get card

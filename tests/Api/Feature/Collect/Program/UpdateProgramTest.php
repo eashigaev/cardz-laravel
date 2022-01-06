@@ -31,6 +31,8 @@ class UpdateProgramTest extends TestCase
         $response = $this->callJsonRoute(self::ROUTE, [
             'title' => $fixture->title,
             'description' => $fixture->description,
+            'reward_title' => $fixture->reward_title,
+            'reward_target' => $fixture->reward_target
         ], [
             'program' => $program->id
         ]);
@@ -40,6 +42,8 @@ class UpdateProgramTest extends TestCase
         $this->assertArraySubset([
             'title' => $fixture->title,
             'description' => $fixture->description,
+            'reward_title' => $fixture->reward_title,
+            'reward_target' => $fixture->reward_target
         ], $result->toArray());
     }
 }

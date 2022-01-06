@@ -30,6 +30,8 @@ class AddProgramTest extends TestCase
         $response = $this->callJsonRoute(self::ROUTE, [
             'title' => $fixture->title,
             'description' => $fixture->description,
+            'reward_title' => $fixture->reward_title,
+            'reward_target' => $fixture->reward_target
         ], [
             'company' => $fixture->company->id
         ]);
@@ -40,6 +42,8 @@ class AddProgramTest extends TestCase
             'company_id' => $fixture->company->id,
             'title' => $fixture->title,
             'description' => $fixture->description,
+            'reward_title' => $fixture->reward_title,
+            'reward_target' => $fixture->reward_target,
             'available' => false
         ], $result->toArray());
     }
