@@ -4,6 +4,7 @@ namespace CardzApp\Api\Collect\Application\Services;
 
 use App\Models\Collect\Program;
 use App\Models\Collect\ProgramTask;
+use CardzApp\Api\Collect\Domain\ProgramTaskFeature;
 use CardzApp\Api\Collect\Domain\ProgramTaskProfile;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
 
@@ -15,16 +16,16 @@ class ProgramTaskService
     {
     }
 
-    public function addProgramTask(string $programId, ProgramTaskProfile $profile)
+    public function addProgramTask(string $programId, ProgramTaskProfile $profile, ProgramTaskFeature $feature)
     {
         $program = Program::query()->findOrFail($programId);
 
-        $task = ProgramTask::make($profile->toArray());
+        $task = ProgramTask::make();
         $task->id = $this->uuidGenerator->getNextValue();
         $task->available = false;
-        $task->repeatable = false;
-
-        $task->company()->associate($program->company->id);
+        $task->setProfile($profile);
+        $task->setFeature($feature);
+        $task->company()->associate($program->company_id);
         $task->program()->associate($program->id);
 
         $task->save();
@@ -32,21 +33,13 @@ class ProgramTaskService
         return $task->id;
     }
 
-    public function updateProgramTask(string $taskId, ProgramTaskProfile $profile)
+    public function updateProgramTask(string $taskId, ProgramTaskProfile $profile, ProgramTaskFeature $feature)
     {
-        return Program::query()
-            ->findOrFail($taskId)
-            ->fill($profile->toArray())
-            ->save();
-    }
+        $task = ProgramTask::query()->findOrFail($taskId);
+        $task->setProfile($profile);
+        $task->setFeature($feature);
 
-    public function updateProgramTaskRepeatable(string $taskId, bool $value)
-    {
-        return Program::query()
-            ->whereNotIn('repeatable', [$value])
-            ->findOrFail($taskId)
-            ->setAttribute('repeatable', $value)
-            ->save();
+        return $task->save();
     }
 
     public function updateProgramTaskAvailable(string $taskId, bool $value)

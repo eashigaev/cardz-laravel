@@ -30,7 +30,6 @@ POST /collect/program/id/{program}/tasks            # Make program task +
 PTCH /collect/program/task/id/{task}                # Update program task
  GET /collect/program/task/id/{task}                # Get program task
 PTCH /collect/program/task/id/{task}/available      # Update program task availability
-PTCH /collect/program/task/id/{task}/repeatable     # Update program task repeatability
 
 POST /collect/cards/program/id/{program}            # Issue program card
  GET /collect/cards ?filter                         # Get cards

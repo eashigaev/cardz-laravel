@@ -30,6 +30,7 @@ class AddProgramTaskTest extends TestCase
         $response = $this->callJsonRoute(self::ROUTE, [
             'title' => $fixture->title,
             'description' => $fixture->description,
+            'repeatable' => $fixture->repeatable
         ], [
             'program' => $fixture->program->id
         ]);
@@ -41,8 +42,8 @@ class AddProgramTaskTest extends TestCase
             'program_id' => $fixture->program->id,
             'title' => $fixture->title,
             'description' => $fixture->description,
-            'available' => false,
-            'repeatable' => false
+            'repeatable' => $fixture->repeatable,
+            'available' => false
         ], $result->toArray());
     }
 }

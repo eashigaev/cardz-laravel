@@ -3,6 +3,8 @@
 namespace App\Models\Collect;
 
 use App\Models\Company;
+use CardzApp\Api\Collect\Domain\ProgramTaskFeature;
+use CardzApp\Api\Collect\Domain\ProgramTaskProfile;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,7 +18,8 @@ class ProgramTask extends Model
 
     protected $fillable = [
         'title',
-        'description'
+        'description',
+        'repeatable'
     ];
 
     //
@@ -32,6 +35,21 @@ class ProgramTask extends Model
     }
 
     //
+
+    public function setProfile(ProgramTaskProfile $profile)
+    {
+        return $this->fill([
+            'title' => $profile->getTitle(),
+            'description' => $profile->getDescription(),
+        ]);
+    }
+
+    public function setFeature(ProgramTaskFeature $feature)
+    {
+        return $this->fill([
+            'repeatable' => $feature->isRepeatable()
+        ]);
+    }
 
     //
 

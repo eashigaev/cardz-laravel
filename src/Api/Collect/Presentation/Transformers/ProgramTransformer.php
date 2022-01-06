@@ -20,6 +20,12 @@ class ProgramTransformer
 
     public function detail(Model|Program $model): array
     {
-        return $this->preview($model);
+        return [
+            ...$this->preview($model),
+            'reward' => [
+                'title' => $model->reward_title,
+                'target' => $model->reward_target
+            ]
+        ];
     }
 }

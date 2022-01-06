@@ -4,6 +4,7 @@ namespace CardzApp\Api\Collect\Presentation\Controllers\ProgramTask;
 
 use App\Http\Controllers\Controller;
 use CardzApp\Api\Collect\Application\Services\ProgramTaskService;
+use CardzApp\Api\Collect\Domain\ProgramTaskFeature;
 use CardzApp\Api\Collect\Domain\ProgramTaskProfile;
 use CardzApp\Api\Shared\Presentation\ControllerTrait;
 use Illuminate\Http\Request;
@@ -24,8 +25,12 @@ class AddProgramTaskController extends Controller
             $request->title, $request->description
         );
 
+        $feature = ProgramTaskFeature::of(
+            $request->repeatable
+        );
+
         $taskId = $this->programTaskService->addProgramTask(
-            $request->program, $profile
+            $request->program, $profile, $feature
         );
 
         return $this->successResponse([

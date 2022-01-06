@@ -4,8 +4,8 @@ namespace CardzApp\Api\Collect\Domain;
 
 class ProgramTaskProfile
 {
-    public string $title;
-    public string $description;
+    private string $title;
+    private string $description;
 
     public static function of(string $title, string $description)
     {
@@ -15,11 +15,15 @@ class ProgramTaskProfile
         return $self;
     }
 
-    public function toArray()
+    //
+
+    public function getTitle()
     {
-        return [
-            'title' => $this->title,
-            'description' => $this->description
-        ];
+        return $this->title;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
     }
 }
