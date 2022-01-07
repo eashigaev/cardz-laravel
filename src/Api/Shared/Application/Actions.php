@@ -20,11 +20,12 @@ abstract class Actions
     const COLLECT_ADD_PROGRAM = 'api.v1.collect.addProgram';
     const COLLECT_GET_PROGRAMS = 'api.v1.collect.getPrograms';
     const COLLECT_UPDATE_PROGRAM = 'api.v1.collect.updateProgram';
-    const COLLECT_UPDATE_PROGRAM_AVAILABLE = 'api.v1.collect.updateProgramAvailable';
     const COLLECT_GET_PROGRAM = 'api.v1.collect.getProgram';
+    const COLLECT_UPDATE_PROGRAM_AVAILABLE = 'api.v1.collect.updateProgramAvailable';
 
     const COLLECT_ADD_PROGRAM_TASK = 'api.v1.collect.addProgramTask';
     const COLLECT_GET_PROGRAM_TASKS = 'api.v1.collect.getProgramTasks';
     const COLLECT_UPDATE_PROGRAM_TASK = 'api.v1.collect.updateProgramTask';
+    const COLLECT_GET_PROGRAM_TASK = 'api.v1.collect.getProgramTask';
     const COLLECT_UPDATE_PROGRAM_TASK_AVAILABLE = 'api.v1.collect.updateProgramTaskAvailable';
 }

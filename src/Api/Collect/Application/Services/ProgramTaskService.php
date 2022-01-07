@@ -44,7 +44,7 @@ class ProgramTaskService
 
     public function updateProgramTaskAvailable(string $taskId, bool $value)
     {
-        return Program::query()
+        return ProgramTask::query()
             ->whereNotIn('available', [$value])
             ->findOrFail($taskId)
             ->setAttribute('available', $value)
@@ -62,9 +62,9 @@ class ProgramTaskService
             ->get();
     }
 
-    public function getProgramTask(string $programId)
+    public function getProgramTask(string $taskId)
     {
-        return Program::query()
-            ->findOrFail($programId);
+        return ProgramTask::query()
+            ->findOrFail($taskId);
     }
 }

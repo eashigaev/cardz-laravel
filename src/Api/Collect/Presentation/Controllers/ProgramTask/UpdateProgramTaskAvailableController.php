@@ -20,7 +20,7 @@ class UpdateProgramTaskAvailableController extends Controller
     public function __invoke(Request $request)
     {
         $this->programTaskService->updateProgramTaskAvailable(
-            $request->program, $request->value
+            $request->task, $request->value
         );
 
         return $this->successResponse();

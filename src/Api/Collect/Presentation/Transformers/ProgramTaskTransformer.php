@@ -2,12 +2,12 @@
 
 namespace CardzApp\Api\Collect\Presentation\Transformers;
 
-use App\Models\Collect\Program;
+use App\Models\Collect\ProgramTask;
 use Illuminate\Database\Eloquent\Model;
 
 class ProgramTaskTransformer
 {
-    public function preview(Model|Program $model): array
+    public function preview(Model|ProgramTask $model): array
     {
         return [
             'id' => $model->id,
@@ -19,7 +19,7 @@ class ProgramTaskTransformer
         ];
     }
 
-    public function detail(Model|Program $model): array
+    public function detail(Model|ProgramTask $model): array
     {
         return $this->preview($model);
     }

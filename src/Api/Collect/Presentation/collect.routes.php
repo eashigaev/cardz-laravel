@@ -9,7 +9,9 @@ use CardzApp\Api\Collect\Presentation\Controllers\Program\GetProgramsController;
 use CardzApp\Api\Collect\Presentation\Controllers\Program\UpdateProgramAvailableController;
 use CardzApp\Api\Collect\Presentation\Controllers\Program\UpdateProgramController;
 use CardzApp\Api\Collect\Presentation\Controllers\ProgramTask\AddProgramTaskController;
+use CardzApp\Api\Collect\Presentation\Controllers\ProgramTask\GetProgramTaskController;
 use CardzApp\Api\Collect\Presentation\Controllers\ProgramTask\GetProgramTasksController;
+use CardzApp\Api\Collect\Presentation\Controllers\ProgramTask\UpdateProgramTaskAvailableController;
 use CardzApp\Api\Collect\Presentation\Controllers\ProgramTask\UpdateProgramTaskController;
 use CardzApp\Api\Shared\Application\Actions;
 use CardzApp\Api\Shared\Presentation\Routes;
@@ -51,5 +53,11 @@ Route::prefix(Routes::URL_PREFIX . '/collect')->middleware([Routes::API_MIDDLEWA
         Route::patch('/')
             ->name(Routes::COLLECT_UPDATE_PROGRAM_TASK)->uses(UpdateProgramTaskController::class)
             ->middleware(Authorize::for(Actions::COLLECT_UPDATE_PROGRAM_TASK, ['task' => ProgramTask::class]));
+        Route::get('/')
+            ->name(Routes::COLLECT_GET_PROGRAM_TASK)->uses(GetProgramTaskController::class)
+            ->middleware(Authorize::for(Actions::COLLECT_GET_PROGRAM_TASK, ['task' => ProgramTask::class]));
+        Route::patch('/available')
+            ->name(Routes::COLLECT_UPDATE_PROGRAM_TASK_AVAILABLE)->uses(UpdateProgramTaskAvailableController::class)
+            ->middleware(Authorize::for(Actions::COLLECT_UPDATE_PROGRAM_TASK_AVAILABLE, ['task' => ProgramTask::class]));
     });
 });

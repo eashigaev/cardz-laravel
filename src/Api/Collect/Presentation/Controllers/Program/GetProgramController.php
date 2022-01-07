@@ -21,12 +21,12 @@ class GetProgramController extends Controller
 
     public function __invoke(Request $request)
     {
-        $program = $this->programService->getProgram(
+        $item = $this->programService->getProgram(
             $request->program
         );
 
         return $this->successResponse(
-            $this->programTransformer->detail($program)
+            $this->programTransformer->detail($item)
         );
     }
 }

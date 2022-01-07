@@ -28,8 +28,8 @@ PTCH /collect/program/id/{program}/available        # Update collect program ava
 POST /collect/program/id/{program}/tasks            # Make program task +
  GET /collect/program/id/{program}/tasks            # Get program tasks +
 PTCH /collect/program/task/id/{task}                # Update program task +
- GET /collect/program/task/id/{task}                # Get program task
-PTCH /collect/program/task/id/{task}/available      # Update program task availability
+ GET /collect/program/task/id/{task}                # Get program task +
+PTCH /collect/program/task/id/{task}/available      # Update program task availability +
 
 POST /collect/cards/program/id/{program}            # Issue program card
  GET /collect/cards ?filter                         # Get cards

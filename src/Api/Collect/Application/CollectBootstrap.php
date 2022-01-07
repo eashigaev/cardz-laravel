@@ -20,12 +20,14 @@ class CollectBootstrap
             Actions::COLLECT_ADD_PROGRAM => $isCompanyPrincipal,
             Actions::COLLECT_GET_PROGRAMS => $isCompanyPrincipal,
             Actions::COLLECT_UPDATE_PROGRAM => $isProgramPrincipal,
-            Actions::COLLECT_UPDATE_PROGRAM_AVAILABLE => $isProgramPrincipal,
-            Actions::COLLECT_GET_PROGRAM => $isProgramPrincipal
+            Actions::COLLECT_GET_PROGRAM => $isProgramPrincipal,
+            Actions::COLLECT_UPDATE_PROGRAM_AVAILABLE => $isProgramPrincipal
         ], [
             Actions::COLLECT_ADD_PROGRAM_TASK => $isProgramPrincipal,
             Actions::COLLECT_GET_PROGRAM_TASKS => $isProgramPrincipal,
-            Actions::COLLECT_UPDATE_PROGRAM_TASK => $isProgramTaskPrincipal
+            Actions::COLLECT_UPDATE_PROGRAM_TASK => $isProgramTaskPrincipal,
+            Actions::COLLECT_GET_PROGRAM_TASK => $isProgramTaskPrincipal,
+            Actions::COLLECT_UPDATE_PROGRAM_TASK_AVAILABLE => $isProgramTaskPrincipal
         ]);
     }
 }
