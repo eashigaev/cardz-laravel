@@ -25,7 +25,6 @@ abstract class Actions
 
     const COLLECT_ADD_PROGRAM_TASK = 'api.v1.collect.addProgramTask';
     const COLLECT_GET_PROGRAM_TASKS = 'api.v1.collect.getProgramTasks';
-    const COLLECT_UPDATE_PROGRAM_TASK = 'api.v1.collect.updateProgram';
+    const COLLECT_UPDATE_PROGRAM_TASK = 'api.v1.collect.updateProgramTask';
     const COLLECT_UPDATE_PROGRAM_TASK_AVAILABLE = 'api.v1.collect.updateProgramTaskAvailable';
-    const COLLECT_UPDATE_PROGRAM_TASK_REPEATABLE = 'api.v1.collect.updateProgramTaskRepeatable';
 }
