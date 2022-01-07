@@ -19,15 +19,15 @@ PTCH /business/company/id/{company}                 # Update company +
 
 // Collect
 
-POST /collect/programs/company/id/{company}         # Add collect program +
- GET /collect/programs/company/id/{company} ?filter # Get company programs +
+POST /collect/company/id/{company}/programs         # Add collect program +
+ GET /collect/company/id/{company}/programs ?filter # Get company programs +
 PTCH /collect/program/id/{program}                  # Update collect program +
  GET /collect/program/id/{program}                  # Get collect program +
 PTCH /collect/program/id/{program}/available        # Update collect program availability +
 
 POST /collect/program/id/{program}/tasks            # Make program task +
  GET /collect/program/id/{program}/tasks            # Get program tasks +
-PTCH /collect/program/task/id/{task}                # Update program task
+PTCH /collect/program/task/id/{task}                # Update program task +
  GET /collect/program/task/id/{task}                # Get program task
 PTCH /collect/program/task/id/{task}/available      # Update program task availability
 
@@ -45,7 +45,7 @@ PTCH /collect/card/task/id/{task}/relevance         # Update card task relevance
  GET /collect/wallet/cards                          # Get wallet cards
  GET /collect/wallet/card/id/{card}                 # Get wallet card
 
-//
+// Temp
 
  GET /reference/companies                           # Get reference companies
  GET /reference/company/id/{company}                # Get reference company

@@ -15,40 +15,40 @@ use CardzApp\Api\Shared\Application\Actions;
 use CardzApp\Api\Shared\Presentation\Routes;
 use Codderz\YokoLite\Application\Authorization\Middleware\Authorize;
 
-Route::prefix(Routes::URL_PREFIX)->middleware([Routes::API_MIDDLEWARE,])->group(function () {
+Route::prefix(Routes::URL_PREFIX . '/collect')->middleware([Routes::API_MIDDLEWARE])->group(function () {
 
-    Route::prefix('/collect/programs')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
-        Route::post('/company/id/{company}')
+    Route::prefix('/company/id/{company}/programs')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
+        Route::post('/')
             ->name(Routes::COLLECT_ADD_PROGRAM)->uses(AddProgramController::class)
             ->middleware(Authorize::for(Actions::COLLECT_ADD_PROGRAM, ['company' => Company::class]));
-        Route::get('/company/id/{company}')
+        Route::get('/')
             ->name(Routes::COLLECT_GET_PROGRAMS)->uses(GetProgramsController::class)
             ->middleware(Authorize::for(Actions::COLLECT_GET_PROGRAMS, ['company' => Company::class]));
     });
 
-    Route::prefix('/collect/program')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
-        Route::post('/id/{program}')
+    Route::prefix('/program/id/{program}')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
+        Route::patch('/')
             ->name(Routes::COLLECT_UPDATE_PROGRAM)->uses(UpdateProgramController::class)
             ->middleware(Authorize::for(Actions::COLLECT_UPDATE_PROGRAM, ['program' => Program::class]));
-        Route::get('/id/{program}')
+        Route::get('/')
             ->name(Routes::COLLECT_GET_PROGRAM)->uses(GetProgramController::class)
             ->middleware(Authorize::for(Actions::COLLECT_GET_PROGRAM, ['program' => Program::class]));
-        Route::patch('/id/{program}/available')
+        Route::patch('/available')
             ->name(Routes::COLLECT_UPDATE_PROGRAM_AVAILABLE)->uses(UpdateProgramAvailableController::class)
             ->middleware(Authorize::for(Actions::COLLECT_UPDATE_PROGRAM_AVAILABLE, ['program' => Program::class]));
     });
 
-    Route::prefix('/collect/program/id/{program}')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
-        Route::post('/tasks')
+    Route::prefix('/program/id/{program}/tasks')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
+        Route::post('/')
             ->name(Routes::COLLECT_ADD_PROGRAM_TASK)->uses(AddProgramTaskController::class)
             ->middleware(Authorize::for(Actions::COLLECT_ADD_PROGRAM_TASK, ['program' => Program::class]));
-        Route::get('/tasks')
+        Route::get('/')
             ->name(Routes::COLLECT_GET_PROGRAM_TASKS)->uses(GetProgramTasksController::class)
             ->middleware(Authorize::for(Actions::COLLECT_GET_PROGRAM_TASKS, ['program' => Program::class]));
     });
 
-    Route::prefix('/collect/task')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
-        Route::patch('/id/{task}')
+    Route::prefix('/program/task/id/{task}')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
+        Route::patch('/')
             ->name(Routes::COLLECT_UPDATE_PROGRAM_TASK)->uses(UpdateProgramTaskController::class)
             ->middleware(Authorize::for(Actions::COLLECT_UPDATE_PROGRAM_TASK, ['task' => ProgramTask::class]));
     });
