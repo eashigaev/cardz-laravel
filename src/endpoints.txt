@@ -17,6 +17,9 @@ POST /business/companies                            # Found company +
 PTCH /business/company/id/{company}                 # Update company +
  GET /business/company/id/{company}                 # Get company +
 
+ GET /business/catalog/companies                    # Get catalog companies
+ GET /business/catalog/company/id/{company}         # Get catalog company
+
 // Collect
 
 POST /collect/company/id/{company}/programs         # Add collect program +
@@ -31,16 +34,17 @@ PTCH /collect/program/task/id/{task}                # Update program task +
  GET /collect/program/task/id/{task}                # Get program task +
 PTCH /collect/program/task/id/{task}/available      # Update program task availability +
 
-POST /collect/cards/program/id/{program}            # Issue program card
- GET /collect/cards ?filter                         # Get cards
- GET /collect/card/id/{card}                        # Get card
+POST /collect/program/id/{program}/cards            # Issue program card
+ GET /collect/program/id/{program}/cards            # Get program cards
 PTCH /collect/card/id/{card}                        # Update card
+ GET /collect/card/id/{card}                        # Get card
 PTCH /collect/card/id/{card}/reward                 # Reward card
 PTCH /collect/card/id/{card}/reject                 # Reject card
 PTCH /collect/card/id/{card}/cancel                 # Cancel card
 
  PUT /collect/card/id/{card}/tasks                  # Add completed card task
-PTCH /collect/card/task/id/{task}/relevance         # Update card task relevance
+ GET /collect/card/id/{card}/tasks                  # Get card tasks
+PTCH /collect/card/task/id/{task}/valid             # Update card task validity
 
  GET /collect/wallet/cards                          # Get wallet cards
  GET /collect/wallet/card/id/{card}                 # Get wallet card
