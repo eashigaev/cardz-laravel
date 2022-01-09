@@ -31,9 +31,9 @@ PTCH /collect/program/task/id/{task}                # Update program task +
  GET /collect/program/task/id/{task}                # Get program task +
 PTCH /collect/program/task/id/{task}/active         # Update program task activity +
 
-POST /collect/program/id/{program}/cards            # Issue program card
+POST /collect/program/id/{program}/cards            # Issue program card +
  GET /collect/program/id/{program}/cards            # Get program cards
-PTCH /collect/card/id/{card}                        # Update card
+PTCH /collect/card/id/{card}                        # Update card +
  GET /collect/card/id/{card}                        # Get card
 PTCH /collect/card/id/{card}/reward                 # Reward card
 PTCH /collect/card/id/{card}/reject                 # Reject card
