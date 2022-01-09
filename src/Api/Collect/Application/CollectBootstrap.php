@@ -17,6 +17,7 @@ class CollectBootstrap
         $isProgramPrincipal = fn(User $sub, Program $res) => $sub->id === $res->company->founder_id;
         $isProgramTaskPrincipal = fn(User $sub, ProgramTask $res) => $sub->id === $res->company->founder_id;
         $isCardPrincipal = fn(User $sub, Card $res) => $sub->id === $res->company->founder_id;
+        $isCardHolder = fn(User $sub, Card $res) => $sub->id === $res->holder_id;
 
         return array_merge([
             Actions::COLLECT_ADD_PROGRAM => $isCompanyPrincipal,
@@ -32,7 +33,9 @@ class CollectBootstrap
             Actions::COLLECT_UPDATE_PROGRAM_TASK_ACTIVE => $isProgramTaskPrincipal
         ], [
             Actions::COLLECT_ISSUE_CARD => $isProgramPrincipal,
-            Actions::COLLECT_UPDATE_CARD => $isCardPrincipal
+            Actions::COLLECT_UPDATE_CARD => $isCardPrincipal,
+            Actions::COLLECT_REJECT_CARD => $isCardPrincipal,
+            Actions::COLLECT_CANCEL_CARD => $isCardHolder,
         ]);
     }
 }

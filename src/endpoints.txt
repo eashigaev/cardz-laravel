@@ -36,8 +36,8 @@ POST /collect/program/id/{program}/cards            # Issue program card +
 PTCH /collect/card/id/{card}                        # Update card +
  GET /collect/card/id/{card}                        # Get card
 PTCH /collect/card/id/{card}/reward                 # Reward card
-PTCH /collect/card/id/{card}/reject                 # Reject card
-PTCH /collect/card/id/{card}/cancel                 # Cancel card
+PTCH /collect/card/id/{card}/reject                 # Reject card +
+PTCH /collect/card/id/{card}/cancel                 # Cancel card +
 
  PUT /collect/card/id/{card}/tasks                  # Add completed card task
  GET /collect/card/id/{card}/tasks                  # Get card tasks

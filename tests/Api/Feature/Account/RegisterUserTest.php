@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class RegisterUserTest extends TestCase
 {
-    private const ROUTE = Routes::ACCOUNT_REGISTER_USER_ACTION;
+    private const ROUTE = Routes::ACCOUNT_REGISTER_USER;
 
     use ModuleTestTrait;
 

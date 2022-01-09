@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class GetOwnUserTest extends TestCase
 {
-    private const ROUTE = Routes::ACCOUNT_GET_OWN_USER_ACTION;
+    private const ROUTE = Routes::ACCOUNT_GET_OWN_USER;
 
     use ModuleTestTrait;
 

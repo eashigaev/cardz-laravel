@@ -10,8 +10,8 @@ use Tests\TestCase;
 
 class LogoutTest extends TestCase
 {
-    private const ROUTE = Routes::AUTH_LOGOUT_ACTION;
-    private const LOGIN_ROUTE = Routes::AUTH_LOGIN_ACTION;
+    private const ROUTE = Routes::AUTH_LOGOUT;
+    private const LOGIN_ROUTE = Routes::AUTH_LOGIN;
 
     use ModuleTestTrait;
 

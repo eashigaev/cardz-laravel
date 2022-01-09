@@ -4,7 +4,9 @@ use App\Models\Collect\Card;
 use App\Models\Collect\Program;
 use App\Models\Collect\ProgramTask;
 use App\Models\Company;
+use CardzApp\Api\Collect\Presentation\Controllers\Card\CancelCardController;
 use CardzApp\Api\Collect\Presentation\Controllers\Card\IssueCardController;
+use CardzApp\Api\Collect\Presentation\Controllers\Card\RejectCardController;
 use CardzApp\Api\Collect\Presentation\Controllers\Card\UpdateCardController;
 use CardzApp\Api\Collect\Presentation\Controllers\Program\AddProgramController;
 use CardzApp\Api\Collect\Presentation\Controllers\Program\GetProgramController;
@@ -77,5 +79,11 @@ Route::prefix(Routes::URL_PREFIX . '/collect')->middleware([Routes::API_MIDDLEWA
         Route::patch('/')
             ->name(Routes::COLLECT_UPDATE_CARD)->uses(UpdateCardController::class)
             ->middleware(Authorize::for(Actions::COLLECT_UPDATE_CARD, ['card' => Card::class]));
+        Route::patch('/reject')
+            ->name(Routes::COLLECT_REJECT_CARD)->uses(RejectCardController::class)
+            ->middleware(Authorize::for(Actions::COLLECT_REJECT_CARD, ['card' => Card::class]));
+        Route::patch('/cancel')
+            ->name(Routes::COLLECT_CANCEL_CARD)->uses(CancelCardController::class)
+            ->middleware(Authorize::for(Actions::COLLECT_CANCEL_CARD, ['card' => Card::class]));
     });
 });

@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class LoginTest extends TestCase
 {
-    private const ROUTE = Routes::AUTH_LOGIN_ACTION;
+    private const ROUTE = Routes::AUTH_LOGIN;
 
     use ModuleTestTrait;
 

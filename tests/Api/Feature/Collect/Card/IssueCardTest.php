@@ -5,7 +5,7 @@ namespace Tests\Api\Feature\Collect\Card;
 use App\Models\Collect\Card;
 use App\Models\User;
 use CardzApp\Api\Collect\Domain\CardStatus;
-use CardzApp\Api\Collect\Domain\Exceptions;
+use CardzApp\Api\Collect\Domain\Messages;
 use CardzApp\Api\Shared\Application\Actions;
 use CardzApp\Api\Shared\Presentation\Routes;
 use Tests\Api\Support\ModuleTestTrait;
@@ -60,7 +60,7 @@ class IssueCardTest extends TestCase
         $user = $fixture->company->founder;
         $this->actingAsSanctum($user);
 
-        $this->expectExceptionObject(Exceptions::programIsNotActive());
+        $this->expectExceptionMessage(Messages::PROGRAM_MUST_BE_ACTIVE);
 
         $response = $this->callJsonRoute(self::ROUTE, [
             'comment' => $fixture->comment,

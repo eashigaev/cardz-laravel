@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class UpdateOwnUserTest extends TestCase
 {
-    private const ROUTE = Routes::ACCOUNT_UPDATE_OWN_USER_ACTION;
+    private const ROUTE = Routes::ACCOUNT_UPDATE_OWN_USER;
 
     use ModuleTestTrait;
 

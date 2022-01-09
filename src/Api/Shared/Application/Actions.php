@@ -4,13 +4,13 @@ namespace CardzApp\Api\Shared\Application;
 
 abstract class Actions
 {
-    const AUTH_LOGIN_ACTION = 'api.v1.auth.login';
-    const AUTH_LOGOUT_ACTION = 'api.v1.auth.logout';
-    const AUTH_LOGOUT_ALL_ACTION = 'api.v1.auth.logoutAll';
+    const AUTH_LOGIN = 'api.v1.auth.login';
+    const AUTH_LOGOUT = 'api.v1.auth.logout';
+    const AUTH_LOGOUT_ALL = 'api.v1.auth.logoutAll';
 
-    const ACCOUNT_REGISTER_USER_ACTION = 'api.v1.account.registerUser';
-    const ACCOUNT_UPDATE_OWN_USER_ACTION = 'api.v1.account.changeOwnUser';
-    const ACCOUNT_GET_OWN_USER_ACTION = 'api.v1.account.getOwnUser';
+    const ACCOUNT_REGISTER_USER = 'api.v1.account.registerUser';
+    const ACCOUNT_UPDATE_OWN_USER = 'api.v1.account.changeOwnUser';
+    const ACCOUNT_GET_OWN_USER = 'api.v1.account.getOwnUser';
 
     const BUSINESS_FOUND_COMPANY = 'api.v1.business.foundCompany';
     const BUSINESS_GET_COMPANIES = 'api.v1.business.getCompanies';
@@ -31,4 +31,6 @@ abstract class Actions
 
     const COLLECT_ISSUE_CARD = 'api.v1.collect.issueCard';
     const COLLECT_UPDATE_CARD = 'api.v1.collect.updateCard';
+    const COLLECT_REJECT_CARD = 'api.v1.collect.rejectCard';
+    const COLLECT_CANCEL_CARD = 'api.v1.collect.cancelCard';
 }

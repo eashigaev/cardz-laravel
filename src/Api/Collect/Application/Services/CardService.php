@@ -6,7 +6,7 @@ use App\Models\Collect\Card;
 use App\Models\Collect\Program;
 use CardzApp\Api\Account\Application\Services\UserService;
 use CardzApp\Api\Collect\Domain\CardStatus;
-use CardzApp\Api\Collect\Domain\Exceptions;
+use CardzApp\Api\Collect\Domain\Messages;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
 use Codderz\YokoLite\Shared\Exception;
 
@@ -24,7 +24,7 @@ class CardService
         $program = Program::query()->findOrFail($programId);
 
         if (!$program->active) {
-            throw Exceptions::programIsNotActive();
+            throw Exception::of(Messages::PROGRAM_MUST_BE_ACTIVE);
         }
 
         $holder = $this->userService->getUser($holderId);
@@ -75,20 +75,28 @@ class CardService
 
     public function rejectCard(string $cardId)
     {
-        return Card::query()
-            ->where('status', CardStatus::ACTIVE->value)
-            ->findOrFail($cardId)
-            ->setAttribute('status', CardStatus::REWARDED)
-            ->save();
+        $card = Card::query()->findOrFail($cardId);
+
+        if ($card->status !== CardStatus::ACTIVE->value) {
+            throw Exception::of(Messages::CARD_MUST_BE_ACTIVE);
+        }
+
+        $card->status = CardStatus::REJECTED->value;
+
+        return $card->save();
     }
 
     public function cancelCard(string $cardId)
     {
-        return Card::query()
-            ->where('status', CardStatus::ACTIVE->value)
-            ->findOrFail($cardId)
-            ->setAttribute('status', CardStatus::CANCELLED)
-            ->save();
+        $card = Card::query()->findOrFail($cardId);
+
+        if ($card->status !== CardStatus::ACTIVE->value) {
+            throw Exception::of(Messages::CARD_MUST_BE_ACTIVE);
+        }
+
+        $card->status = CardStatus::CANCELLED->value;
+
+        return $card->save();
     }
 
     //
