@@ -22,14 +22,14 @@ class ProgramFactory extends Factory
             'description' => $this->faker->sentence(10),
             'reward_title' => $this->faker->streetName(),
             'reward_target' => $this->faker->numberBetween(1, 5),
-            'available' => $this->faker->boolean()
+            'active' => $this->faker->boolean()
         ];
     }
 
-    public function with(bool $available = false)
+    public function with(bool $active = false)
     {
         return $this->state(fn() => [
-            'available' => $available,
+            'active' => $active,
         ]);
     }
 }

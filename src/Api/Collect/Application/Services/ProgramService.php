@@ -24,7 +24,7 @@ class ProgramService
         $program = Program::make();
 
         $program->id = $this->uuidGenerator->getNextValue();
-        $program->available = false;
+        $program->active = false;
         $program->setProfile($profile);
         $program->setReward($reward);
         $program->company()->associate($company->id);
@@ -44,12 +44,12 @@ class ProgramService
         return $program->save();
     }
 
-    public function updateProgramAvailable(string $programId, bool $value)
+    public function updateProgramActive(string $programId, bool $value)
     {
         return Program::query()
-            ->whereNotIn('available', [$value])
+            ->whereNotIn('active', [$value])
             ->findOrFail($programId)
-            ->setAttribute('available', $value)
+            ->setAttribute('active', $value)
             ->save();
     }
 
@@ -59,8 +59,8 @@ class ProgramService
     {
         return Program::query()
             ->ofCompany($companyId)
-            ->when(in_array('available', $filter),
-                fn(Builder $builder, bool $value) => $builder->where('available', $value)
+            ->when(in_array('active', $filter),
+                fn(Builder $builder, bool $value) => $builder->where('active', $value)
             )
             ->limit(100)
             ->get();

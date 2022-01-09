@@ -43,7 +43,7 @@ class AddProgramTaskTest extends TestCase
             'title' => $fixture->title,
             'description' => $fixture->description,
             'repeatable' => $fixture->repeatable,
-            'available' => false
+            'active' => false
         ], $result->toArray());
     }
 }

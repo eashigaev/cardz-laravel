@@ -37,7 +37,7 @@ class GetProgramTaskTest extends TestCase
             'program_id' => $task->program->id,
             'title' => $task->title,
             'description' => $task->description,
-            'available' => $task->available
+            'active' => $task->active
         ]);
     }
 }

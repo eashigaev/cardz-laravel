@@ -15,7 +15,7 @@ class ProgramTaskTransformer
             'program_id' => $model->program_id,
             'title' => $model->title,
             'description' => $model->description,
-            'available' => $model->available
+            'active' => $model->active
         ];
     }
 

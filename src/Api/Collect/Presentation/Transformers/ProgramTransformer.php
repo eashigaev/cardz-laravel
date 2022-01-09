@@ -14,7 +14,7 @@ class ProgramTransformer
             'company_id' => $model->company_id,
             'title' => $model->title,
             'description' => $model->description,
-            'available' => $model->available
+            'active' => $model->active
         ];
     }
 

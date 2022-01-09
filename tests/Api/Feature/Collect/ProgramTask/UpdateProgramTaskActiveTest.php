@@ -1,42 +1,42 @@
 <?php
 
-namespace Tests\Api\Feature\Collect\Program;
+namespace Tests\Api\Feature\Collect\ProgramTask;
 
-use App\Models\Collect\Program;
+use App\Models\Collect\ProgramTask;
 use CardzApp\Api\Shared\Application\Actions;
 use CardzApp\Api\Shared\Presentation\Routes;
 use Tests\Api\Support\ModuleTestTrait;
 use Tests\TestCase;
 
-class UpdateProgramAvailableTest extends TestCase
+class UpdateProgramTaskActiveTest extends TestCase
 {
-    private const ROUTE = Routes::COLLECT_UPDATE_PROGRAM_AVAILABLE;
+    private const ROUTE = Routes::COLLECT_UPDATE_PROGRAM_TASK_ACTIVE;
 
     use ModuleTestTrait;
 
     public function test_access()
     {
         $this->assertAuthenticatedRoute(self::ROUTE);
-        $this->assertAuthorizedRoute(self::ROUTE, Actions::COLLECT_UPDATE_PROGRAM_AVAILABLE);
+        $this->assertAuthorizedRoute(self::ROUTE, Actions::COLLECT_UPDATE_PROGRAM_TASK_ACTIVE);
     }
 
     public function test_action()
     {
-        $program = Program::factory()->with(available: false)->create();
-        $user = $program->company->founder;
+        $task = ProgramTask::factory()->with(active: false)->create();
+        $user = $task->company->founder;
 
         $this->actingAsSanctum($user);
 
         $response = $this->callJsonRoute(self::ROUTE, [
             'value' => true
         ], [
-            'program' => $program->id
+            'task' => $task->id
         ]);
         $response->assertStatus(200);
 
-        $result = Program::query()->findOrFail($program->id);
+        $result = ProgramTask::query()->findOrFail($task->id);
         $this->assertArraySubset([
-            'available' => true,
+            'active' => true,
         ], $result->toArray());
     }
 }

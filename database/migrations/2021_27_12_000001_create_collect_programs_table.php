@@ -20,7 +20,7 @@ class CreateCollectProgramsTable extends Migration
             $table->string('description');
             $table->string('reward_title');
             $table->integer('reward_target');
-            $table->boolean('available');
+            $table->boolean('active');
             $table->timestamps();
         });
     }

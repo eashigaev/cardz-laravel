@@ -22,7 +22,7 @@ class ProgramTaskService
 
         $task = ProgramTask::make();
         $task->id = $this->uuidGenerator->getNextValue();
-        $task->available = false;
+        $task->active = false;
         $task->setProfile($profile);
         $task->setFeature($feature);
         $task->company()->associate($program->company_id);
@@ -42,12 +42,12 @@ class ProgramTaskService
         return $task->save();
     }
 
-    public function updateProgramTaskAvailable(string $taskId, bool $value)
+    public function updateProgramTaskActive(string $taskId, bool $value)
     {
         return ProgramTask::query()
-            ->whereNotIn('available', [$value])
+            ->whereNotIn('active', [$value])
             ->findOrFail($taskId)
-            ->setAttribute('available', $value)
+            ->setAttribute('active', $value)
             ->save();
     }
 

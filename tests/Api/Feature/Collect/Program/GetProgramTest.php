@@ -36,7 +36,7 @@ class GetProgramTest extends TestCase
             'company_id' => $program->company->id,
             'title' => $program->title,
             'description' => $program->description,
-            'available' => $program->available,
+            'active' => $program->active,
             'reward' => [
                 'title' => $program->reward_title,
                 'target' => $program->reward_target

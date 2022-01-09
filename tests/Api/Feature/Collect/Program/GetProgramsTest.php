@@ -39,27 +39,27 @@ class GetProgramsTest extends TestCase
                 'company_id' => $program->company->id,
                 'title' => $program->title,
                 'description' => $program->description,
-                'available' => $program->available
+                'active' => $program->active
             ]);
         }
     }
 
-    public function test_filter_available()
+    public function test_filter_active()
     {
         $company = Company::factory()->create();
-        $available = Program::factory()->for($company)->with(available: true)->count(3)->create();
-        Program::factory()->for($company)->with(available: false)->count(2)->create();
+        $active = Program::factory()->for($company)->with(active: true)->count(3)->create();
+        Program::factory()->for($company)->with(active: false)->count(2)->create();
 
         $this->actingAsSanctum($company->founder);
 
         $response = $this->callJsonRoute(self::ROUTE,
-            ['available' => true],
+            ['active' => true],
             ['company' => $company->id]
         );
         $response->assertStatus(200);
-        $response->assertJsonCount($available->count());
+        $response->assertJsonCount($active->count());
 
-        foreach ($available as $program) {
+        foreach ($active as $program) {
             $response->assertJsonFragment([
                 'id' => $program->id
             ]);

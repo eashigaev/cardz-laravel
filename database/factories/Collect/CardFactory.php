@@ -2,17 +2,19 @@
 
 namespace Database\Factories\Collect;
 
+use App\Models\Collect\Card;
 use App\Models\Collect\Program;
-use App\Models\Collect\ProgramTask;
 use App\Models\Company;
+use App\Models\User;
+use CardzApp\Api\Collect\Domain\CardStatus;
 use Codderz\YokoLite\Domain\Uuid\UuidTestTrait;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ProgramTaskFactory extends Factory
+class CardFactory extends Factory
 {
     use UuidTestTrait;
 
-    public $model = ProgramTask::class;
+    public $model = Card::class;
 
     public function definition()
     {
@@ -22,18 +24,16 @@ class ProgramTaskFactory extends Factory
             'id' => $this->uuidGenerator()->getNextValue(),
             'company_id' => $company,
             'program_id' => Program::factory()->for($company),
-            'title' => $this->faker->company(),
-            'description' => $this->faker->sentence(),
-            'active' => $this->faker->boolean(),
-            'repeatable' => $this->faker->boolean(),
+            'holder_id' => User::factory(),
+            'comment' => $this->faker->realText(),
+            'status' => $this->faker->randomElement(CardStatus::cases())->value
         ];
     }
 
-    public function with(bool $active = false, bool $repeatable = false)
+    public function withStatus(CardStatus $status)
     {
         return $this->state(fn() => [
-            'active' => $active,
-            'repeatable' => $repeatable
+            'status' => $status->value
         ]);
     }
 }

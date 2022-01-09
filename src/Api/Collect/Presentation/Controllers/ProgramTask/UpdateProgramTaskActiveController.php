@@ -7,7 +7,7 @@ use CardzApp\Api\Collect\Application\Services\ProgramTaskService;
 use CardzApp\Api\Shared\Presentation\ControllerTrait;
 use Illuminate\Http\Request;
 
-class UpdateProgramTaskAvailableController extends Controller
+class UpdateProgramTaskActiveController extends Controller
 {
     use ControllerTrait;
 
@@ -19,7 +19,7 @@ class UpdateProgramTaskAvailableController extends Controller
 
     public function __invoke(Request $request)
     {
-        $this->programTaskService->updateProgramTaskAvailable(
+        $this->programTaskService->updateProgramTaskActive(
             $request->task, $request->value
         );
 

@@ -44,7 +44,7 @@ class AddProgramTest extends TestCase
             'description' => $fixture->description,
             'reward_title' => $fixture->reward_title,
             'reward_target' => $fixture->reward_target,
-            'available' => false
+            'active' => false
         ], $result->toArray());
     }
 }
