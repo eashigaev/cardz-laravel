@@ -4,14 +4,14 @@ namespace Tests\Api\Feature\Account;
 
 use App\Models\User;
 use CardzApp\Api\Shared\Presentation\Routes;
-use Tests\Api\Support\ModuleTestTrait;
+use Tests\Api\Support\FeatureTestTrait;
 use Tests\TestCase;
 
 class GetOwnUserTest extends TestCase
 {
     private const ROUTE = Routes::ACCOUNT_GET_OWN_USER;
 
-    use ModuleTestTrait;
+    use FeatureTestTrait;
 
     public function test_access()
     {

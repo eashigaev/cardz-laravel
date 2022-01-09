@@ -5,14 +5,14 @@ namespace Tests\Api\Feature\Auth;
 use App\Models\User;
 use CardzApp\Api\Shared\Presentation\Routes;
 use Database\Factories\UserFactory;
-use Tests\Api\Support\ModuleTestTrait;
+use Tests\Api\Support\FeatureTestTrait;
 use Tests\TestCase;
 
 class LoginTest extends TestCase
 {
     private const ROUTE = Routes::AUTH_LOGIN;
 
-    use ModuleTestTrait;
+    use FeatureTestTrait;
 
     public function test_action()
     {

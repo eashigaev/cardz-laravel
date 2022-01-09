@@ -6,14 +6,14 @@ use App\Models\User;
 use CardzApp\Api\Shared\Presentation\Routes;
 use Database\Factories\UserFactory;
 use Illuminate\Support\Facades\Hash;
-use Tests\Api\Support\ModuleTestTrait;
+use Tests\Api\Support\FeatureTestTrait;
 use Tests\TestCase;
 
 class RegisterUserTest extends TestCase
 {
     private const ROUTE = Routes::ACCOUNT_REGISTER_USER;
 
-    use ModuleTestTrait;
+    use FeatureTestTrait;
 
     public function test_action()
     {

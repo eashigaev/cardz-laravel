@@ -6,14 +6,14 @@ use App\Models\Collect\Program;
 use App\Models\Collect\ProgramTask;
 use CardzApp\Api\Shared\Application\Actions;
 use CardzApp\Api\Shared\Presentation\Routes;
-use Tests\Api\Support\ModuleTestTrait;
+use Tests\Api\Support\FeatureTestTrait;
 use Tests\TestCase;
 
 class GetProgramTasksTest extends TestCase
 {
     private const ROUTE = Routes::COLLECT_GET_PROGRAM_TASKS;
 
-    use ModuleTestTrait;
+    use FeatureTestTrait;
 
     public function test_access()
     {

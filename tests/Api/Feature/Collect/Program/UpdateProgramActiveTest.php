@@ -3,16 +3,18 @@
 namespace Tests\Api\Feature\Collect\Program;
 
 use App\Models\Collect\Program;
+use CardzApp\Api\Collect\Application\Events\ProgramActiveUpdated;
 use CardzApp\Api\Shared\Application\Actions;
 use CardzApp\Api\Shared\Presentation\Routes;
-use Tests\Api\Support\ModuleTestTrait;
+use Event;
+use Tests\Api\Support\FeatureTestTrait;
 use Tests\TestCase;
 
 class UpdateProgramActiveTest extends TestCase
 {
     private const ROUTE = Routes::COLLECT_UPDATE_PROGRAM_ACTIVE;
 
-    use ModuleTestTrait;
+    use FeatureTestTrait;
 
     public function test_access()
     {
@@ -27,6 +29,8 @@ class UpdateProgramActiveTest extends TestCase
         $user = $program->company->founder;
         $this->actingAsSanctum($user);
 
+        Event::fake();
+
         $response = $this->callJsonRoute(self::ROUTE, [
             'value' => true
         ], [
@@ -36,7 +40,9 @@ class UpdateProgramActiveTest extends TestCase
 
         $result = Program::query()->findOrFail($program->id);
         $this->assertArraySubset([
-            'active' => true,
+            'active' => true
         ], $result->toArray());
+
+        Event::assertDispatched(ProgramActiveUpdated::class);
     }
 }

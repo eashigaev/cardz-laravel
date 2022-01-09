@@ -8,14 +8,14 @@ use CardzApp\Api\Collect\Domain\CardStatus;
 use CardzApp\Api\Collect\Domain\Messages;
 use CardzApp\Api\Shared\Application\Actions;
 use CardzApp\Api\Shared\Presentation\Routes;
-use Tests\Api\Support\ModuleTestTrait;
+use Tests\Api\Support\FeatureTestTrait;
 use Tests\TestCase;
 
 class IssueCardTest extends TestCase
 {
     private const ROUTE = Routes::COLLECT_ISSUE_CARD;
 
-    use ModuleTestTrait;
+    use FeatureTestTrait;
 
     public function test_access()
     {
@@ -60,6 +60,7 @@ class IssueCardTest extends TestCase
         $user = $fixture->company->founder;
         $this->actingAsSanctum($user);
 
+        $this->withoutExceptionHandling();
         $this->expectExceptionMessage(Messages::PROGRAM_MUST_BE_ACTIVE);
 
         $response = $this->callJsonRoute(self::ROUTE, [

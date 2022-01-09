@@ -4,12 +4,13 @@ namespace Tests\Api\Support;
 
 use Codderz\YokoLite\Application\Authentication\SanctumTestTrait;
 use Codderz\YokoLite\Application\Authorization\GateTestTrait;
+use Codderz\YokoLite\Tests\Support\EventTestTrait;
 use Codderz\YokoLite\Tests\Support\ExceptionTestTrait;
 use Codderz\YokoLite\Tests\Support\HttpTestTrait;
 use Codderz\YokoLite\Tests\Support\PhpUnitTestTrait;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-trait ModuleTestTrait
+trait FeatureTestTrait
 {
     use RefreshDatabase;
     use PhpUnitTestTrait;

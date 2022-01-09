@@ -7,14 +7,14 @@ use CardzApp\Api\Collect\Domain\CardStatus;
 use CardzApp\Api\Collect\Domain\Messages;
 use CardzApp\Api\Shared\Application\Actions;
 use CardzApp\Api\Shared\Presentation\Routes;
-use Tests\Api\Support\ModuleTestTrait;
+use Tests\Api\Support\FeatureTestTrait;
 use Tests\TestCase;
 
 class RejectCardTest extends TestCase
 {
     private const ROUTE = Routes::COLLECT_REJECT_CARD;
 
-    use ModuleTestTrait;
+    use FeatureTestTrait;
 
     public function test_access()
     {
@@ -45,12 +45,13 @@ class RejectCardTest extends TestCase
     public function test_fail_when_not_active()
     {
         $card = Card::factory()->create([
-            'status' => CardStatus::REWARDED->value
+            'status' => CardStatus::INACTIVE->value
         ]);
 
         $user = $card->company->founder;
         $this->actingAsSanctum($user);
 
+        $this->withoutExceptionHandling();
         $this->expectExceptionMessage(Messages::CARD_MUST_BE_ACTIVE);
 
         $this->callJsonRoute(self::ROUTE, parameters: [

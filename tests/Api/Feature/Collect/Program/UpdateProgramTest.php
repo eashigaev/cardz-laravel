@@ -5,14 +5,14 @@ namespace Tests\Api\Feature\Collect\Program;
 use App\Models\Collect\Program;
 use CardzApp\Api\Shared\Application\Actions;
 use CardzApp\Api\Shared\Presentation\Routes;
-use Tests\Api\Support\ModuleTestTrait;
+use Tests\Api\Support\FeatureTestTrait;
 use Tests\TestCase;
 
 class UpdateProgramTest extends TestCase
 {
     private const ROUTE = Routes::COLLECT_UPDATE_PROGRAM;
 
-    use ModuleTestTrait;
+    use FeatureTestTrait;
 
     public function test_access()
     {

@@ -4,6 +4,7 @@ namespace CardzApp\Api\Collect\Application\Services;
 
 use App\Models\Collect\Program;
 use App\Models\Company;
+use CardzApp\Api\Collect\Application\Events\ProgramActiveUpdated;
 use CardzApp\Api\Collect\Domain\ProgramProfile;
 use CardzApp\Api\Collect\Domain\ProgramReward;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
@@ -46,11 +47,16 @@ class ProgramService
 
     public function updateProgramActive(string $programId, bool $value)
     {
-        return Program::query()
+        $program = Program::query()
             ->whereNotIn('active', [$value])
-            ->findOrFail($programId)
-            ->setAttribute('active', $value)
-            ->save();
+            ->findOrFail($programId);
+
+        $program->active = $value;
+        $program->save();
+
+        ProgramActiveUpdated::dispatch($program);
+
+        return true;
     }
 
     //

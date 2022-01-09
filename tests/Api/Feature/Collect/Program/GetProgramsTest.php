@@ -6,14 +6,14 @@ use App\Models\Collect\Program;
 use App\Models\Company;
 use CardzApp\Api\Shared\Application\Actions;
 use CardzApp\Api\Shared\Presentation\Routes;
-use Tests\Api\Support\ModuleTestTrait;
+use Tests\Api\Support\FeatureTestTrait;
 use Tests\TestCase;
 
 class GetProgramsTest extends TestCase
 {
     private const ROUTE = Routes::COLLECT_GET_PROGRAMS;
 
-    use ModuleTestTrait;
+    use FeatureTestTrait;
 
     public function test_access()
     {

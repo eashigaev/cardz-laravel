@@ -44,11 +44,13 @@ class ProgramTaskService
 
     public function updateProgramTaskActive(string $taskId, bool $value)
     {
-        return ProgramTask::query()
+        $task = ProgramTask::query()
             ->whereNotIn('active', [$value])
-            ->findOrFail($taskId)
-            ->setAttribute('active', $value)
-            ->save();
+            ->findOrFail($taskId);
+
+        $task->active = $value;
+
+        return $task->save();
     }
 
     //

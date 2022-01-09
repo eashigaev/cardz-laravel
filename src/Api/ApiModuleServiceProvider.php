@@ -3,8 +3,10 @@
 namespace CardzApp\Api;
 
 use CardzApp\Api\Collect\Application\CollectBootstrap;
+use CardzApp\Api\Collect\Application\Subscribers\CollectSubscriber;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
 use Codderz\YokoLite\Domain\Uuid\UuidRamseyGenerator;
+use Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,5 +27,7 @@ class ApiModuleServiceProvider extends ServiceProvider
         collect($collectBootstrap->getPolicies())->map(
             fn($callback, $ability) => Gate::define($ability, $callback)
         );
+
+        Event::subscribe(CollectSubscriber::class);
     }
 }

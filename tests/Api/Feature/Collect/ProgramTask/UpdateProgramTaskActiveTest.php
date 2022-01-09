@@ -5,14 +5,14 @@ namespace Tests\Api\Feature\Collect\ProgramTask;
 use App\Models\Collect\ProgramTask;
 use CardzApp\Api\Shared\Application\Actions;
 use CardzApp\Api\Shared\Presentation\Routes;
-use Tests\Api\Support\ModuleTestTrait;
+use Tests\Api\Support\FeatureTestTrait;
 use Tests\TestCase;
 
 class UpdateProgramTaskActiveTest extends TestCase
 {
     private const ROUTE = Routes::COLLECT_UPDATE_PROGRAM_TASK_ACTIVE;
 
-    use ModuleTestTrait;
+    use FeatureTestTrait;
 
     public function test_access()
     {

@@ -4,14 +4,14 @@ namespace Tests\Api\Feature\Business;
 
 use App\Models\Company;
 use CardzApp\Api\Shared\Presentation\Routes;
-use Tests\Api\Support\ModuleTestTrait;
+use Tests\Api\Support\FeatureTestTrait;
 use Tests\TestCase;
 
 class GetCompanyTest extends TestCase
 {
     private const ROUTE = Routes::BUSINESS_GET_COMPANY;
 
-    use ModuleTestTrait;
+    use FeatureTestTrait;
 
     public function test_access()
     {
