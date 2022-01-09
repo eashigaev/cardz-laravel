@@ -24,8 +24,8 @@ class UpdateProgramTaskTest extends TestCase
     {
         $fixture = ProgramTask::factory()->make();
         $task = ProgramTask::factory()->create();
-        $user = $task->company->founder;
 
+        $user = $task->company->founder;
         $this->actingAsSanctum($user);
 
         $response = $this->callJsonRoute(self::ROUTE, [

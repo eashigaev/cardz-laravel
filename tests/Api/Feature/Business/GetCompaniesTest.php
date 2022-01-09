@@ -22,7 +22,9 @@ class GetCompaniesTest extends TestCase
     public function test_action()
     {
         $companies = Company::factory()->for(User::factory(), 'founder')->count(3)->create();
-        $this->actingAsSanctum($companies->first()->founder);
+
+        $user = $companies->first()->founder;
+        $this->actingAsSanctum($user);
 
         $response = $this->callJsonRoute(self::ROUTE);
         $response->assertStatus(200);

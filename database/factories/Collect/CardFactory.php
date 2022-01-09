@@ -25,6 +25,7 @@ class CardFactory extends Factory
             'company_id' => $company,
             'program_id' => Program::factory()->for($company),
             'holder_id' => User::factory(),
+            'balance' => $this->faker->numberBetween(1, 5),
             'comment' => $this->faker->realText(),
             'status' => $this->faker->randomElement(CardStatus::cases())->value
         ];

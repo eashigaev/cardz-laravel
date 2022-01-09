@@ -52,11 +52,4 @@ class Program extends Model
     {
         return $this->hasMany(ProgramTask::class);
     }
-
-    //
-
-    public function scopeOfCompany($query, string $companyId)
-    {
-        return $query->where('company_id', $companyId);
-    }
 }

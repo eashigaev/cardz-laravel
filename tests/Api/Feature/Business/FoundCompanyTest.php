@@ -22,6 +22,7 @@ class FoundCompanyTest extends TestCase
     public function test_action()
     {
         $user = User::factory()->create();
+
         $this->actingAsSanctum($user);
 
         $fixture = Company::factory()->make();

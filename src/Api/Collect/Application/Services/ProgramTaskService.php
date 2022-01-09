@@ -56,7 +56,7 @@ class ProgramTaskService
     public function getProgramTasks(string $programId)
     {
         return ProgramTask::query()
-            ->ofProgram($programId)
+            ->where('program_id', $programId)
             ->orderBy('updated_at', 'desc')
             ->limit(100)
             ->get();

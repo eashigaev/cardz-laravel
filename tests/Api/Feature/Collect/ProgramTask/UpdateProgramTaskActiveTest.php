@@ -23,8 +23,8 @@ class UpdateProgramTaskActiveTest extends TestCase
     public function test_action()
     {
         $task = ProgramTask::factory()->with(active: false)->create();
-        $user = $task->company->founder;
 
+        $user = $task->company->founder;
         $this->actingAsSanctum($user);
 
         $response = $this->callJsonRoute(self::ROUTE, [

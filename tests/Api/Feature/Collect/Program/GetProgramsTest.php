@@ -26,7 +26,8 @@ class GetProgramsTest extends TestCase
         $company = Company::factory()->create();
         $programs = Program::factory()->for($company)->count(3)->create();
 
-        $this->actingAsSanctum($company->founder);
+        $user = $company->founder;
+        $this->actingAsSanctum($user);
 
         $response = $this->callJsonRoute(self::ROUTE, parameters: [
             'company' => $company->id
@@ -50,7 +51,8 @@ class GetProgramsTest extends TestCase
         $active = Program::factory()->for($company)->with(active: true)->count(3)->create();
         Program::factory()->for($company)->with(active: false)->count(2)->create();
 
-        $this->actingAsSanctum($company->founder);
+        $user = $company->founder;
+        $this->actingAsSanctum($user);
 
         $response = $this->callJsonRoute(self::ROUTE,
             ['active' => true],

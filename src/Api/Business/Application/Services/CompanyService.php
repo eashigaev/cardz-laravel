@@ -27,7 +27,7 @@ class CompanyService
     public function updateCompany(string $founderId, string $companyId, CompanyProfile $profile)
     {
         return Company::query()
-            ->ofFounder($founderId)
+            ->where('founder_id', $founderId)
             ->findOrFail($companyId)
             ->fill($profile->toArray())
             ->save();
@@ -35,18 +35,18 @@ class CompanyService
 
     //
 
-    public function getCompany(string $founderId, string $companyId)
-    {
-        return Company::query()
-            ->ofFounder($founderId)
-            ->findOrFail($companyId);
-    }
-
     public function getCompanies(string $founderId)
     {
         return Company::query()
-            ->ofFounder($founderId)
+            ->where('founder_id', $founderId)
             ->limit(100)
             ->get();
+    }
+
+    public function getCompany(string $founderId, string $companyId)
+    {
+        return Company::query()
+            ->where('founder_id', $founderId)
+            ->findOrFail($companyId);
     }
 }

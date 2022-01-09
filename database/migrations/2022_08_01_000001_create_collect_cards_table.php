@@ -18,8 +18,9 @@ class CreateCollectCardsTable extends Migration
             $table->foreignUuid('company_id')->index();
             $table->foreignUuid('program_id')->index();
             $table->foreignUuid('holder_id')->index();
+            $table->integer('balance')->index();
             $table->string('comment');
-            $table->integer('status');
+            $table->integer('status')->index();
             $table->timestamps();
         });
     }

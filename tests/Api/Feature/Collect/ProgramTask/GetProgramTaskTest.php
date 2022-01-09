@@ -24,7 +24,8 @@ class GetProgramTaskTest extends TestCase
     {
         $task = ProgramTask::factory()->create();
 
-        $this->actingAsSanctum($task->company->founder);
+        $user = $task->company->founder;
+        $this->actingAsSanctum($user);
 
         $response = $this->callJsonRoute(self::ROUTE, parameters: [
             'task' => $task->id

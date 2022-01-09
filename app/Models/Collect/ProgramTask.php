@@ -50,11 +50,4 @@ class ProgramTask extends Model
             'repeatable' => $feature->isRepeatable()
         ]);
     }
-
-    //
-
-    public function scopeOfProgram($query, string $programId)
-    {
-        return $this->where('program_id', $programId);
-    }
 }

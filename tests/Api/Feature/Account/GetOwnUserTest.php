@@ -21,6 +21,7 @@ class GetOwnUserTest extends TestCase
     public function test_action()
     {
         $user = User::factory()->create();
+
         $this->actingAsSanctum($user);
 
         $response = $this->callJsonRoute(self::ROUTE);

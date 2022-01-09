@@ -2,6 +2,7 @@
 
 namespace CardzApp\Api\Collect\Application;
 
+use App\Models\Collect\Card;
 use App\Models\Collect\Program;
 use App\Models\Collect\ProgramTask;
 use App\Models\Company;
@@ -15,6 +16,7 @@ class CollectBootstrap
         $isCompanyPrincipal = fn(User $sub, Company $res) => $sub->id === $res->founder_id;
         $isProgramPrincipal = fn(User $sub, Program $res) => $sub->id === $res->company->founder_id;
         $isProgramTaskPrincipal = fn(User $sub, ProgramTask $res) => $sub->id === $res->company->founder_id;
+        $isCardPrincipal = fn(User $sub, Card $res) => $sub->id === $res->company->founder_id;
 
         return array_merge([
             Actions::COLLECT_ADD_PROGRAM => $isCompanyPrincipal,
@@ -28,6 +30,9 @@ class CollectBootstrap
             Actions::COLLECT_UPDATE_PROGRAM_TASK => $isProgramTaskPrincipal,
             Actions::COLLECT_GET_PROGRAM_TASK => $isProgramTaskPrincipal,
             Actions::COLLECT_UPDATE_PROGRAM_TASK_ACTIVE => $isProgramTaskPrincipal
+        ], [
+            Actions::COLLECT_ISSUE_CARD => $isProgramPrincipal,
+            Actions::COLLECT_UPDATE_CARD => $isCardPrincipal
         ]);
     }
 }

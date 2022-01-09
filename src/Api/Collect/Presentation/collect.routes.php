@@ -1,8 +1,11 @@
 <?php
 
+use App\Models\Collect\Card;
 use App\Models\Collect\Program;
 use App\Models\Collect\ProgramTask;
 use App\Models\Company;
+use CardzApp\Api\Collect\Presentation\Controllers\Card\IssueCardController;
+use CardzApp\Api\Collect\Presentation\Controllers\Card\UpdateCardController;
 use CardzApp\Api\Collect\Presentation\Controllers\Program\AddProgramController;
 use CardzApp\Api\Collect\Presentation\Controllers\Program\GetProgramController;
 use CardzApp\Api\Collect\Presentation\Controllers\Program\GetProgramsController;
@@ -59,5 +62,20 @@ Route::prefix(Routes::URL_PREFIX . '/collect')->middleware([Routes::API_MIDDLEWA
         Route::patch('/active')
             ->name(Routes::COLLECT_UPDATE_PROGRAM_TASK_ACTIVE)->uses(UpdateProgramTaskActiveController::class)
             ->middleware(Authorize::for(Actions::COLLECT_UPDATE_PROGRAM_TASK_ACTIVE, ['task' => ProgramTask::class]));
+    });
+
+    Route::prefix('/program/id/{program}/cards')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
+        Route::post('/')
+            ->name(Routes::COLLECT_ISSUE_CARD)->uses(IssueCardController::class)
+            ->middleware(Authorize::for(Actions::COLLECT_ISSUE_CARD, ['program' => Program::class]));
+//        Route::get('/')
+//            ->name(Routes::COLLECT_GET_PROGRAM_TASKS)->uses(GetProgramTasksController::class)
+//            ->middleware(Authorize::for(Actions::COLLECT_GET_PROGRAM_TASKS, ['program' => Program::class]));
+    });
+
+    Route::prefix('/card/id/{card}')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
+        Route::patch('/')
+            ->name(Routes::COLLECT_UPDATE_CARD)->uses(UpdateCardController::class)
+            ->middleware(Authorize::for(Actions::COLLECT_UPDATE_CARD, ['card' => Card::class]));
     });
 });

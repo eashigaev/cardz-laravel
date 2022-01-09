@@ -58,7 +58,7 @@ class ProgramService
     public function getPrograms(string $companyId, array $filter = [])
     {
         return Program::query()
-            ->ofCompany($companyId)
+            ->where('company_id', $companyId)
             ->when(in_array('active', $filter),
                 fn(Builder $builder, bool $value) => $builder->where('active', $value)
             )

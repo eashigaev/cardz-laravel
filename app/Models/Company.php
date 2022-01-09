@@ -25,11 +25,4 @@ class Company extends Model
     {
         return $this->belongsTo(User::class, 'founder_id');
     }
-
-    //
-
-    public function scopeOfFounder($query, string $founderId)
-    {
-        return $query->where('founder_id', $founderId);
-    }
 }

@@ -22,6 +22,7 @@ class UpdateCompanyTest extends TestCase
     {
         $fixture = Company::factory()->make();
         $company = Company::factory()->create();
+
         $this->actingAsSanctum($company->founder);
 
         $response = $this->callJsonRoute(self::ROUTE, [
