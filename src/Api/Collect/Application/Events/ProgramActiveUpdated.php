@@ -11,12 +11,7 @@ class ProgramActiveUpdated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public function __construct(protected Program $program)
+    public function __construct(public Program $program)
     {
-    }
-
-    public function getProgram()
-    {
-        return $this->program;
     }
 }

@@ -2,8 +2,8 @@
 
 namespace CardzApp\Api\Collect\Application\Services;
 
-use App\Models\Collect\Card;
 use App\Models\Collect\Achievement;
+use App\Models\Collect\Card;
 use App\Models\Collect\Task;
 use CardzApp\Api\Collect\Domain\CardStatus;
 use CardzApp\Api\Collect\Domain\Messages;
@@ -18,52 +18,52 @@ class AchievementService
     {
     }
 
-    public function completeCardTask(string $cardId, string $taskId)
+    public function addAchievement(string $cardId, string $taskId)
     {
-        $card = Card::query()->with(['program', 'tasks'])->findOrFail($cardId);
+        $card = Card::query()->with(['program', 'achievements'])->findOrFail($cardId);
 
-        $programTask = Task::query()
+        $task = Task::query()
             ->where(['active' => true, 'program_id' => $card->program_id])
             ->findOrFail($taskId);
 
-        if (CardStatus::tryFrom($card->status) !== CardStatus::ACTIVE) {
-            throw Exception::of(Messages::CARD_MUST_BE_ACTIVE);
+        if ($card->status !== CardStatus::ACTIVE->value) {
+            throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
         }
 
         if (!$card->program->active) {
-            throw Exception::of(Messages::PROGRAM_MUST_BE_ACTIVE);
+            throw Exception::of(Messages::PROGRAM_IS_NOT_ACTIVE);
         }
 
-        if (!$programTask->active) {
-            throw Exception::of(Messages::PROGRAM_TASK_MUST_BE_ACTIVE);
+        if (!$task->active) {
+            throw Exception::of(Messages::TASK_IS_NOT_ACTIVE);
         }
 
-        $cardTaskCount = $card->tasks()->where(['task_id' => $taskId])->count();
-        if (!$programTask->repeatable && $cardTaskCount) {
-            throw Exception::of(Messages::CARD_TASK_ALREADY_COMPLETED);
+        $timesCount = $card->tasks()->where(['task_id' => $taskId])->count();
+        if (!$task->repeatable && $timesCount) {
+            throw Exception::of(Messages::ACHIEVEMENT_ALREADY_EXISTS);
         }
 
-        $cardTask = Achievement::make();
+        $achievement = Achievement::make();
 
-        $cardTask->id = $this->uuidGenerator->getNextValue();
-        $cardTask->company()->associate($card->company_id);
-        $cardTask->program()->associate($card->program_id);
-        $cardTask->task()->associate($programTask->id);
-        $cardTask->card()->associate($card->id);
+        $achievement->id = $this->uuidGenerator->getNextValue();
+        $achievement->company()->associate($card->company_id);
+        $achievement->program()->associate($card->program_id);
+        $achievement->task()->associate($task->id);
+        $achievement->card()->associate($card->id);
 
-        $cardTask->save();
+        $achievement->save();
 
-        return $cardTask->id;
+        return $achievement->id;
     }
 
-    public function removeCardTask(string $cardId, string $taskId)
+    public function removeAchievement(string $cardId, string $taskId)
     {
         $card = Card::query()->findOrFail($cardId);
 
-        if (CardStatus::tryFrom($card->status) !== CardStatus::ACTIVE) {
-            throw Exception::of(Messages::CARD_MUST_BE_ACTIVE);
+        if ($card->status !== CardStatus::ACTIVE->value) {
+            throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
         }
 
-        return $card->tasks()->findOrFail($taskId)->deleteOrFail();
+        return $card->tasks()->findOrFail($taskId)->delete();
     }
 }

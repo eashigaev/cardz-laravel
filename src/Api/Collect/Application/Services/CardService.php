@@ -24,7 +24,7 @@ class CardService
         $program = Program::query()->findOrFail($programId);
 
         if (!$program->active) {
-            throw Exception::of(Messages::PROGRAM_MUST_BE_ACTIVE);
+            throw Exception::of(Messages::PROGRAM_IS_NOT_ACTIVE);
         }
 
         $holder = $this->userService->getUser($holderId);
@@ -35,6 +35,7 @@ class CardService
         $card->status = CardStatus::ACTIVE->value;
         $card->balance = 0;
         $card->comment = $comment;
+        $card->program_active = $program->active;
         $card->company()->associate($program->company_id);
         $card->program()->associate($program->id);
         $card->holder()->associate($holder->id);
@@ -60,12 +61,16 @@ class CardService
             ->where('status', CardStatus::ACTIVE->value)
             ->findOrFail($cardId);
 
-        if (!$card->program->active) {
-            throw Exception::of('Card program is not active');
+        if ($card->status === CardStatus::ACTIVE->value) {
+            throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
+        }
+
+        if (!$card->program_active) {
+            throw Exception::of(Messages::PROGRAM_IS_NOT_ACTIVE);
         }
 
         if ($card->balance < $card->program->reward_target) {
-            throw Exception::of('Card balance is not enough');
+            throw Exception::of(Messages::CARD_BALANCE_IS_NOT_ENOUGH);
         }
 
         $card->status = CardStatus::REWARDED->value;
@@ -78,7 +83,7 @@ class CardService
         $card = Card::query()->findOrFail($cardId);
 
         if ($card->status !== CardStatus::ACTIVE->value) {
-            throw Exception::of(Messages::CARD_MUST_BE_ACTIVE);
+            throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
         }
 
         $card->status = CardStatus::REJECTED->value;
@@ -91,7 +96,7 @@ class CardService
         $card = Card::query()->findOrFail($cardId);
 
         if ($card->status !== CardStatus::ACTIVE->value) {
-            throw Exception::of(Messages::CARD_MUST_BE_ACTIVE);
+            throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
         }
 
         $card->status = CardStatus::CANCELLED->value;
@@ -99,14 +104,11 @@ class CardService
         return $card->save();
     }
 
-    public function batchUpdateCardActive(string $programId, CardStatus $status)
+    public function batchUpdateCardProramActive(string $programId, bool $value)
     {
-        Card::query()
+        return Card::query()
             ->where('program_id', $programId)
-            ->whereIn('status', [CardStatus::ACTIVE, CardStatus::INACTIVE])
-            ->update(['status' => $status->value]);
-
-        return true;
+            ->update(['program_active' => $value]);
     }
 
     //

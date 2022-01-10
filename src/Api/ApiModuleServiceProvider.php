@@ -4,7 +4,7 @@ namespace CardzApp\Api;
 
 use CardzApp\Api\Collect\Application\CollectBootstrap;
 use CardzApp\Api\Collect\Application\Events\ProgramActiveUpdated;
-use CardzApp\Api\Collect\Application\Listeners\BatchUpdateCardActive;
+use CardzApp\Api\Collect\Application\Listeners\BatchUpdateCardProgramActive;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
 use Codderz\YokoLite\Domain\Uuid\UuidRamseyGenerator;
 use Event;
@@ -29,6 +29,6 @@ class ApiModuleServiceProvider extends ServiceProvider
             fn($callback, $ability) => Gate::define($ability, $callback)
         );
 
-        Event::listen(ProgramActiveUpdated::class, BatchUpdateCardActive::class);
+        Event::listen(ProgramActiveUpdated::class, BatchUpdateCardProgramActive::class);
     }
 }

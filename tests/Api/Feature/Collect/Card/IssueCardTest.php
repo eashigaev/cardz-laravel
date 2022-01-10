@@ -61,10 +61,11 @@ class IssueCardTest extends TestCase
         $this->actingAsSanctum($user);
 
         $this->withoutExceptionHandling();
-        $this->expectExceptionMessage(Messages::PROGRAM_MUST_BE_ACTIVE);
+        $this->expectExceptionMessage(Messages::PROGRAM_IS_NOT_ACTIVE);
 
         $response = $this->callJsonRoute(self::ROUTE, [
             'comment' => $fixture->comment,
+            'program_active' => $fixture->program->active,
             'holder' => $holder->id
         ], [
             'program' => $fixture->program->id

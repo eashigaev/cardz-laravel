@@ -27,14 +27,19 @@ class CardFactory extends Factory
             'holder_id' => User::factory(),
             'balance' => $this->faker->numberBetween(1, 5),
             'comment' => $this->faker->realText(),
-            'status' => $this->faker->randomElement(CardStatus::cases())->value
+            'status' => $this->faker->randomElement(CardStatus::cases())->value,
+            'program_active' => $this->faker->boolean()
         ];
     }
 
-    public function with(CardStatus $status)
+    public function with(
+        CardStatus $status = CardStatus::ACTIVE,
+        bool       $program_active = false
+    )
     {
         return $this->state(fn() => [
-            'status' => $status->value
+            'status' => $status->value,
+            'program_active' => $program_active
         ]);
     }
 }

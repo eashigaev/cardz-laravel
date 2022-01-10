@@ -21,6 +21,7 @@ class CreateCollectCardsTable extends Migration
             $table->integer('balance')->index();
             $table->string('comment');
             $table->integer('status')->index();
+            $table->boolean('program_active');
             $table->timestamps();
         });
     }

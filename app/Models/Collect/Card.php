@@ -36,7 +36,7 @@ class Card extends Model
         return $this->belongsTo(User::class, 'holder_id');
     }
 
-    public function tasks()
+    public function achievements()
     {
         return $this->hasMany(Achievement::class);
     }

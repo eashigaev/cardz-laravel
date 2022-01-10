@@ -45,14 +45,14 @@ class RejectCardTest extends TestCase
     public function test_fail_when_not_active()
     {
         $card = Card::factory()->create([
-            'status' => CardStatus::INACTIVE->value
+            'status' => CardStatus::REWARDED->value
         ]);
 
         $user = $card->company->founder;
         $this->actingAsSanctum($user);
 
         $this->withoutExceptionHandling();
-        $this->expectExceptionMessage(Messages::CARD_MUST_BE_ACTIVE);
+        $this->expectExceptionMessage(Messages::CARD_IS_NOT_ACTIVE);
 
         $this->callJsonRoute(self::ROUTE, parameters: [
             'card' => $card->id
