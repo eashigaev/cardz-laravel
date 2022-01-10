@@ -1,30 +1,30 @@
 <?php
 
-namespace Tests\Api\Feature\Collect\ProgramTask;
+namespace Tests\Api\Feature\Collect\Task;
 
 use App\Models\Collect\Program;
-use App\Models\Collect\ProgramTask;
+use App\Models\Collect\Task;
 use CardzApp\Api\Shared\Application\Actions;
 use CardzApp\Api\Shared\Presentation\Routes;
 use Tests\Api\Support\FeatureTestTrait;
 use Tests\TestCase;
 
-class GetProgramTasksTest extends TestCase
+class GetTasksTest extends TestCase
 {
-    private const ROUTE = Routes::COLLECT_GET_PROGRAM_TASKS;
+    private const ROUTE = Routes::COLLECT_GET_TASKS;
 
     use FeatureTestTrait;
 
     public function test_access()
     {
         $this->assertAuthenticatedRoute(self::ROUTE);
-        $this->assertAuthorizedRoute(self::ROUTE, Actions::COLLECT_GET_PROGRAM_TASKS);
+        $this->assertAuthorizedRoute(self::ROUTE, Actions::COLLECT_GET_TASKS);
     }
 
     public function test_action()
     {
         $program = Program::factory()->create();
-        $tasks = ProgramTask::factory()->for($program)->count(3)->create();
+        $tasks = Task::factory()->for($program)->count(3)->create();
 
         $user = $program->company->founder;
         $this->actingAsSanctum($user);

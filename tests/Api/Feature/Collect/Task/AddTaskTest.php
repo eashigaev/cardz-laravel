@@ -1,31 +1,30 @@
 <?php
 
-namespace Tests\Api\Feature\Collect\ProgramTask;
+namespace Tests\Api\Feature\Collect\Task;
 
-use App\Models\Collect\ProgramTask;
+use App\Models\Collect\Task;
 use CardzApp\Api\Shared\Application\Actions;
 use CardzApp\Api\Shared\Presentation\Routes;
 use Tests\Api\Support\FeatureTestTrait;
 use Tests\TestCase;
 
-class UpdateProgramTaskTest extends TestCase
+class AddTaskTest extends TestCase
 {
-    private const ROUTE = Routes::COLLECT_UPDATE_PROGRAM_TASK;
+    private const ROUTE = Routes::COLLECT_ADD_TASK;
 
     use FeatureTestTrait;
 
     public function test_access()
     {
         $this->assertAuthenticatedRoute(self::ROUTE);
-        $this->assertAuthorizedRoute(self::ROUTE, Actions::COLLECT_UPDATE_PROGRAM_TASK);
+        $this->assertAuthorizedRoute(self::ROUTE, Actions::COLLECT_ADD_TASK);
     }
 
     public function test_action()
     {
-        $fixture = ProgramTask::factory()->make();
-        $task = ProgramTask::factory()->create();
+        $fixture = Task::factory()->make();
 
-        $user = $task->company->founder;
+        $user = $fixture->company->founder;
         $this->actingAsSanctum($user);
 
         $response = $this->callJsonRoute(self::ROUTE, [
@@ -33,15 +32,18 @@ class UpdateProgramTaskTest extends TestCase
             'description' => $fixture->description,
             'repeatable' => $fixture->repeatable
         ], [
-            'task' => $task->id
+            'program' => $fixture->program->id
         ]);
         $response->assertStatus(200);
 
-        $result = ProgramTask::query()->findOrFail($task->id);
+        $result = Task::query()->findOrFail($response['id']);
         $this->assertArraySubset([
+            'company_id' => $fixture->company->id,
+            'program_id' => $fixture->program->id,
             'title' => $fixture->title,
             'description' => $fixture->description,
-            'repeatable' => $fixture->repeatable
+            'repeatable' => $fixture->repeatable,
+            'active' => false
         ], $result->toArray());
     }
 }

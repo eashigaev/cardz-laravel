@@ -1,28 +1,28 @@
 <?php
 
-namespace Tests\Api\Feature\Collect\ProgramTask;
+namespace Tests\Api\Feature\Collect\Task;
 
-use App\Models\Collect\ProgramTask;
+use App\Models\Collect\Task;
 use CardzApp\Api\Shared\Application\Actions;
 use CardzApp\Api\Shared\Presentation\Routes;
 use Tests\Api\Support\FeatureTestTrait;
 use Tests\TestCase;
 
-class UpdateProgramTaskActiveTest extends TestCase
+class UpdateTaskActiveTest extends TestCase
 {
-    private const ROUTE = Routes::COLLECT_UPDATE_PROGRAM_TASK_ACTIVE;
+    private const ROUTE = Routes::COLLECT_UPDATE_TASK_ACTIVE;
 
     use FeatureTestTrait;
 
     public function test_access()
     {
         $this->assertAuthenticatedRoute(self::ROUTE);
-        $this->assertAuthorizedRoute(self::ROUTE, Actions::COLLECT_UPDATE_PROGRAM_TASK_ACTIVE);
+        $this->assertAuthorizedRoute(self::ROUTE, Actions::COLLECT_UPDATE_TASK_ACTIVE);
     }
 
     public function test_action()
     {
-        $task = ProgramTask::factory()->with(active: false)->create();
+        $task = Task::factory()->with(active: false)->create();
 
         $user = $task->company->founder;
         $this->actingAsSanctum($user);
@@ -34,7 +34,7 @@ class UpdateProgramTaskActiveTest extends TestCase
         ]);
         $response->assertStatus(200);
 
-        $result = ProgramTask::query()->findOrFail($task->id);
+        $result = Task::query()->findOrFail($task->id);
         $this->assertArraySubset([
             'active' => true,
         ], $result->toArray());

@@ -3,16 +3,16 @@
 namespace Database\Factories\Collect;
 
 use App\Models\Collect\Program;
-use App\Models\Collect\ProgramTask;
+use App\Models\Collect\Task;
 use App\Models\Company;
 use Codderz\YokoLite\Domain\Uuid\UuidTestTrait;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ProgramTaskFactory extends Factory
+class TaskFactory extends Factory
 {
     use UuidTestTrait;
 
-    public $model = ProgramTask::class;
+    public $model = Task::class;
 
     public function definition()
     {

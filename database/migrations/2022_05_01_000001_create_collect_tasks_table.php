@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCollectProgramTasksTable extends Migration
+class CreateCollectTasksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCollectProgramTasksTable extends Migration
      */
     public function up()
     {
-        Schema::create('collect_program_tasks', function (Blueprint $table) {
+        Schema::create('collect_tasks', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('company_id')->index();
             $table->foreignUuid('program_id')->index();
@@ -32,6 +32,6 @@ class CreateCollectProgramTasksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('collect_programs');
+        Schema::dropIfExists('collect_tasks');
     }
 }

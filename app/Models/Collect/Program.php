@@ -50,6 +50,6 @@ class Program extends Model
 
     public function tasks()
     {
-        return $this->hasMany(ProgramTask::class);
+        return $this->hasMany(Task::class);
     }
 }

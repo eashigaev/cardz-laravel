@@ -1,30 +1,31 @@
 <?php
 
-namespace Tests\Api\Feature\Collect\ProgramTask;
+namespace Tests\Api\Feature\Collect\Task;
 
-use App\Models\Collect\ProgramTask;
+use App\Models\Collect\Task;
 use CardzApp\Api\Shared\Application\Actions;
 use CardzApp\Api\Shared\Presentation\Routes;
 use Tests\Api\Support\FeatureTestTrait;
 use Tests\TestCase;
 
-class AddProgramTaskTest extends TestCase
+class UpdateTaskTest extends TestCase
 {
-    private const ROUTE = Routes::COLLECT_ADD_PROGRAM_TASK;
+    private const ROUTE = Routes::COLLECT_UPDATE_TASK;
 
     use FeatureTestTrait;
 
     public function test_access()
     {
         $this->assertAuthenticatedRoute(self::ROUTE);
-        $this->assertAuthorizedRoute(self::ROUTE, Actions::COLLECT_ADD_PROGRAM_TASK);
+        $this->assertAuthorizedRoute(self::ROUTE, Actions::COLLECT_UPDATE_TASK);
     }
 
     public function test_action()
     {
-        $fixture = ProgramTask::factory()->make();
+        $fixture = Task::factory()->make();
+        $task = Task::factory()->create();
 
-        $user = $fixture->company->founder;
+        $user = $task->company->founder;
         $this->actingAsSanctum($user);
 
         $response = $this->callJsonRoute(self::ROUTE, [
@@ -32,18 +33,15 @@ class AddProgramTaskTest extends TestCase
             'description' => $fixture->description,
             'repeatable' => $fixture->repeatable
         ], [
-            'program' => $fixture->program->id
+            'task' => $task->id
         ]);
         $response->assertStatus(200);
 
-        $result = ProgramTask::query()->findOrFail($response['id']);
+        $result = Task::query()->findOrFail($task->id);
         $this->assertArraySubset([
-            'company_id' => $fixture->company->id,
-            'program_id' => $fixture->program->id,
             'title' => $fixture->title,
             'description' => $fixture->description,
-            'repeatable' => $fixture->repeatable,
-            'active' => false
+            'repeatable' => $fixture->repeatable
         ], $result->toArray());
     }
 }

@@ -2,7 +2,7 @@
 
 namespace CardzApp\Api\Collect\Domain;
 
-class ProgramTaskProfile
+class TaskProfile
 {
     private string $title;
     private string $description;

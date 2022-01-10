@@ -3,16 +3,16 @@
 namespace App\Models\Collect;
 
 use App\Models\Company;
-use CardzApp\Api\Collect\Domain\ProgramTaskFeature;
-use CardzApp\Api\Collect\Domain\ProgramTaskProfile;
+use CardzApp\Api\Collect\Domain\TaskFeature;
+use CardzApp\Api\Collect\Domain\TaskProfile;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProgramTask extends Model
+class Task extends Model
 {
     use HasFactory;
 
-    public $table = 'collect_program_tasks';
+    public $table = 'collect_tasks';
     public $keyType = 'string';
     public $incrementing = false;
 
@@ -36,7 +36,7 @@ class ProgramTask extends Model
 
     //
 
-    public function setProfile(ProgramTaskProfile $profile)
+    public function setProfile(TaskProfile $profile)
     {
         return $this->fill([
             'title' => $profile->getTitle(),
@@ -44,7 +44,7 @@ class ProgramTask extends Model
         ]);
     }
 
-    public function setFeature(ProgramTaskFeature $feature)
+    public function setFeature(TaskFeature $feature)
     {
         return $this->fill([
             'repeatable' => $feature->isRepeatable()

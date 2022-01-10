@@ -2,7 +2,7 @@
 
 use App\Models\Collect\Card;
 use App\Models\Collect\Program;
-use App\Models\Collect\ProgramTask;
+use App\Models\Collect\Task;
 use App\Models\Company;
 use CardzApp\Api\Collect\Presentation\Controllers\Card\CancelCardController;
 use CardzApp\Api\Collect\Presentation\Controllers\Card\IssueCardController;
@@ -13,11 +13,11 @@ use CardzApp\Api\Collect\Presentation\Controllers\Program\GetProgramController;
 use CardzApp\Api\Collect\Presentation\Controllers\Program\GetProgramsController;
 use CardzApp\Api\Collect\Presentation\Controllers\Program\UpdateProgramActiveController;
 use CardzApp\Api\Collect\Presentation\Controllers\Program\UpdateProgramController;
-use CardzApp\Api\Collect\Presentation\Controllers\ProgramTask\AddProgramTaskController;
-use CardzApp\Api\Collect\Presentation\Controllers\ProgramTask\GetProgramTaskController;
-use CardzApp\Api\Collect\Presentation\Controllers\ProgramTask\GetProgramTasksController;
-use CardzApp\Api\Collect\Presentation\Controllers\ProgramTask\UpdateProgramTaskActiveController;
-use CardzApp\Api\Collect\Presentation\Controllers\ProgramTask\UpdateProgramTaskController;
+use CardzApp\Api\Collect\Presentation\Controllers\Task\AddTaskController;
+use CardzApp\Api\Collect\Presentation\Controllers\Task\GetTaskController;
+use CardzApp\Api\Collect\Presentation\Controllers\Task\GetTasksController;
+use CardzApp\Api\Collect\Presentation\Controllers\Task\UpdateTaskActiveController;
+use CardzApp\Api\Collect\Presentation\Controllers\Task\UpdateTaskController;
 use CardzApp\Api\Shared\Application\Actions;
 use CardzApp\Api\Shared\Presentation\Routes;
 use Codderz\YokoLite\Application\Authorization\Middleware\Authorize;
@@ -47,23 +47,23 @@ Route::prefix(Routes::URL_PREFIX . '/collect')->middleware([Routes::API_MIDDLEWA
 
     Route::prefix('/program/id/{program}/tasks')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
         Route::post('/')
-            ->name(Routes::COLLECT_ADD_PROGRAM_TASK)->uses(AddProgramTaskController::class)
-            ->middleware(Authorize::for(Actions::COLLECT_ADD_PROGRAM_TASK, ['program' => Program::class]));
+            ->name(Routes::COLLECT_ADD_TASK)->uses(AddTaskController::class)
+            ->middleware(Authorize::for(Actions::COLLECT_ADD_TASK, ['program' => Program::class]));
         Route::get('/')
-            ->name(Routes::COLLECT_GET_PROGRAM_TASKS)->uses(GetProgramTasksController::class)
-            ->middleware(Authorize::for(Actions::COLLECT_GET_PROGRAM_TASKS, ['program' => Program::class]));
+            ->name(Routes::COLLECT_GET_TASKS)->uses(GetTasksController::class)
+            ->middleware(Authorize::for(Actions::COLLECT_GET_TASKS, ['program' => Program::class]));
     });
 
-    Route::prefix('/program/task/id/{task}')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
+    Route::prefix('/task/id/{task}')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
         Route::patch('/')
-            ->name(Routes::COLLECT_UPDATE_PROGRAM_TASK)->uses(UpdateProgramTaskController::class)
-            ->middleware(Authorize::for(Actions::COLLECT_UPDATE_PROGRAM_TASK, ['task' => ProgramTask::class]));
+            ->name(Routes::COLLECT_UPDATE_TASK)->uses(UpdateTaskController::class)
+            ->middleware(Authorize::for(Actions::COLLECT_UPDATE_TASK, ['task' => Task::class]));
         Route::get('/')
-            ->name(Routes::COLLECT_GET_PROGRAM_TASK)->uses(GetProgramTaskController::class)
-            ->middleware(Authorize::for(Actions::COLLECT_GET_PROGRAM_TASK, ['task' => ProgramTask::class]));
+            ->name(Routes::COLLECT_GET_TASK)->uses(GetTaskController::class)
+            ->middleware(Authorize::for(Actions::COLLECT_GET_TASK, ['task' => Task::class]));
         Route::patch('/active')
-            ->name(Routes::COLLECT_UPDATE_PROGRAM_TASK_ACTIVE)->uses(UpdateProgramTaskActiveController::class)
-            ->middleware(Authorize::for(Actions::COLLECT_UPDATE_PROGRAM_TASK_ACTIVE, ['task' => ProgramTask::class]));
+            ->name(Routes::COLLECT_UPDATE_TASK_ACTIVE)->uses(UpdateTaskActiveController::class)
+            ->middleware(Authorize::for(Actions::COLLECT_UPDATE_TASK_ACTIVE, ['task' => Task::class]));
     });
 
     Route::prefix('/program/id/{program}/cards')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
@@ -71,7 +71,7 @@ Route::prefix(Routes::URL_PREFIX . '/collect')->middleware([Routes::API_MIDDLEWA
             ->name(Routes::COLLECT_ISSUE_CARD)->uses(IssueCardController::class)
             ->middleware(Authorize::for(Actions::COLLECT_ISSUE_CARD, ['program' => Program::class]));
 //        Route::get('/')
-//            ->name(Routes::COLLECT_GET_PROGRAM_TASKS)->uses(GetProgramTasksController::class)
+//            ->name(Routes::COLLECT_GET_PROGRAM_TASKS)->uses(GetTasksController::class)
 //            ->middleware(Authorize::for(Actions::COLLECT_GET_PROGRAM_TASKS, ['program' => Program::class]));
     });
 

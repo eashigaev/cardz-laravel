@@ -2,7 +2,7 @@
 
 namespace CardzApp\Api\Collect\Domain;
 
-class ProgramTaskFeature
+class TaskFeature
 {
     private bool $repeatable;
 

@@ -27,9 +27,9 @@ PTCH /collect/program/id/{program}/active           # Update collect program act
 
 POST /collect/program/id/{program}/tasks            # Make program task +
  GET /collect/program/id/{program}/tasks            # Get program tasks +
-PTCH /collect/program/task/id/{task}                # Update program task +
- GET /collect/program/task/id/{task}                # Get program task +
-PTCH /collect/program/task/id/{task}/active         # Update program task activity +
+PTCH /collect/task/id/{task}                        # Update program task +
+ GET /collect/task/id/{task}                        # Get program task +
+PTCH /collect/task/id/{task}/active                 # Update program task activity +
 
 POST /collect/program/id/{program}/cards            # Issue program card +
  GET /collect/program/id/{program}/cards            # Get program cards
@@ -39,9 +39,9 @@ PTCH /collect/card/id/{card}/reward                 # Reward card
 PTCH /collect/card/id/{card}/reject                 # Reject card +
 PTCH /collect/card/id/{card}/cancel                 # Cancel card +
 
- PUT /collect/card/id/{card}/tasks                  # Add completed card task
- GET /collect/card/id/{card}/tasks                  # Get card tasks
-PTCH /collect/card/task/id/{task}/valid             # Update card task validity
+ PUT /collect/card/id/{card}/achievements           # Add achievement
+ GET /collect/card/id/{card}/achievements           # Get card achievements
+ DEL /collect/achievement/id/{achievement}          # Remove achievement
 
 // Wallet
 

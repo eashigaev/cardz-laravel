@@ -3,12 +3,12 @@
 namespace CardzApp\Api\Collect\Application\Services;
 
 use App\Models\Collect\Program;
-use App\Models\Collect\ProgramTask;
-use CardzApp\Api\Collect\Domain\ProgramTaskFeature;
-use CardzApp\Api\Collect\Domain\ProgramTaskProfile;
+use App\Models\Collect\Task;
+use CardzApp\Api\Collect\Domain\TaskFeature;
+use CardzApp\Api\Collect\Domain\TaskProfile;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
 
-class ProgramTaskService
+class TaskService
 {
     public function __construct(
         private UuidGenerator $uuidGenerator
@@ -16,11 +16,11 @@ class ProgramTaskService
     {
     }
 
-    public function addProgramTask(string $programId, ProgramTaskProfile $profile, ProgramTaskFeature $feature)
+    public function addProgramTask(string $programId, TaskProfile $profile, TaskFeature $feature)
     {
         $program = Program::query()->findOrFail($programId);
 
-        $task = ProgramTask::make();
+        $task = Task::make();
         $task->id = $this->uuidGenerator->getNextValue();
         $task->active = false;
         $task->setProfile($profile);
@@ -33,9 +33,9 @@ class ProgramTaskService
         return $task->id;
     }
 
-    public function updateProgramTask(string $taskId, ProgramTaskProfile $profile, ProgramTaskFeature $feature)
+    public function updateProgramTask(string $taskId, TaskProfile $profile, TaskFeature $feature)
     {
-        $task = ProgramTask::query()->findOrFail($taskId);
+        $task = Task::query()->findOrFail($taskId);
         $task->setProfile($profile);
         $task->setFeature($feature);
 
@@ -44,7 +44,7 @@ class ProgramTaskService
 
     public function updateProgramTaskActive(string $taskId, bool $value)
     {
-        $task = ProgramTask::query()
+        $task = Task::query()
             ->whereNotIn('active', [$value])
             ->findOrFail($taskId);
 
@@ -57,7 +57,7 @@ class ProgramTaskService
 
     public function getProgramTasks(string $programId)
     {
-        return ProgramTask::query()
+        return Task::query()
             ->where('program_id', $programId)
             ->orderBy('updated_at', 'desc')
             ->limit(100)
@@ -66,7 +66,7 @@ class ProgramTaskService
 
     public function getProgramTask(string $taskId)
     {
-        return ProgramTask::query()
+        return Task::query()
             ->findOrFail($taskId);
     }
 }
