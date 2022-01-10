@@ -31,7 +31,7 @@ class CardFactory extends Factory
         ];
     }
 
-    public function withStatus(CardStatus $status)
+    public function with(CardStatus $status)
     {
         return $this->state(fn() => [
             'status' => $status->value

@@ -18,10 +18,12 @@ trait FeatureTestTrait
     use ExceptionTestTrait;
     use SanctumTestTrait;
     use GateTestTrait;
+    use EventTestTrait;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->withoutExceptionHandling();
+        $this->mixinEvent();
     }
 }

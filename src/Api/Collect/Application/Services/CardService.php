@@ -99,6 +99,16 @@ class CardService
         return $card->save();
     }
 
+    public function batchUpdateCardActive(string $programId, CardStatus $status)
+    {
+        Card::query()
+            ->where('program_id', $programId)
+            ->whereIn('status', [CardStatus::ACTIVE, CardStatus::INACTIVE])
+            ->update(['status' => $status->value]);
+
+        return true;
+    }
+
     //
 
     public function getCards(string $programId)
