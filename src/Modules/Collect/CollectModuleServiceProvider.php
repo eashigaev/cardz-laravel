@@ -2,7 +2,10 @@
 
 namespace CardzApp\Modules\Collect;
 
-use CardzApp\Modules\Collect\Application\CollectBootstrap;
+use CardzApp\Modules\Collect\Application\CollectPolicy;
+use CardzApp\Modules\Collect\Application\Events\ProgramActiveUpdated;
+use CardzApp\Modules\Collect\Application\Listeners\BatchUpdateCardsProgramActive;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use function collect;
@@ -13,12 +16,12 @@ class CollectModuleServiceProvider extends ServiceProvider
     {
     }
 
-    public function boot(CollectBootstrap $collectBootstrap)
+    public function boot(CollectPolicy $collectPolicy)
     {
-        collect($collectBootstrap->getPolicies())->map(
+        collect($collectPolicy->getRules())->map(
             fn($callback, $ability) => Gate::define($ability, $callback)
         );
 
-        $collectBootstrap->registerListeners();
+        Event::listen(ProgramActiveUpdated::class, BatchUpdateCardsProgramActive::class);
     }
 }

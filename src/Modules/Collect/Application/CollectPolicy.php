@@ -7,14 +7,11 @@ use App\Models\Collect\Program;
 use App\Models\Collect\Task;
 use App\Models\Company;
 use App\Models\User;
-use CardzApp\Modules\Collect\Application\Events\ProgramActiveUpdated;
-use CardzApp\Modules\Collect\Application\Listeners\BatchUpdateCardsProgramActive;
 use CardzApp\Modules\Shared\Application\Actions;
-use Event;
 
-class CollectBootstrap
+class CollectPolicy
 {
-    public function getPolicies()
+    public function getRules()
     {
         $isCompanyPrincipal = fn(User $sub, Company $res) => $sub->id === $res->founder_id;
         $isProgramPrincipal = fn(User $sub, Program $res) => $sub->id === $res->company->founder_id;
@@ -41,10 +38,5 @@ class CollectBootstrap
             Actions::COLLECT_CANCEL_CARD => $isCardHolder,
             Actions::COLLECT_REWARD_CARD => $isCardPrincipal,
         ]);
-    }
-
-    public function registerListeners()
-    {
-        Event::listen(ProgramActiveUpdated::class, BatchUpdateCardsProgramActive::class);
     }
 }
