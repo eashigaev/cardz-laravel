@@ -2,8 +2,8 @@
 
 namespace Database\Factories\Collect;
 
-use App\Models\Collect\Card;
 use App\Models\Collect\Achievement;
+use App\Models\Collect\Card;
 use App\Models\Collect\Program;
 use App\Models\Collect\Task;
 use App\Models\Company;
@@ -34,15 +34,7 @@ class AchievementFactory extends Factory
             'company_id' => $company,
             'program_id' => $program,
             'task_id' => $task,
-            'card_id' => $card,
-            'valid' => $this->faker->boolean()
+            'card_id' => $card
         ];
-    }
-
-    public function with(bool $valid = false)
-    {
-        return $this->state(fn() => [
-            'active' => $valid
-        ]);
     }
 }

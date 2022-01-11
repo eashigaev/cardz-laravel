@@ -24,8 +24,7 @@ class GetProgramTest extends TestCase
     {
         $program = Program::factory()->create();
 
-        $user = $program->company->founder;
-        $this->actingAsSanctum($user);
+        $this->actingAsCompany($program->company);
 
         $response = $this->callJsonRoute(self::ROUTE, parameters: [
             'program' => $program->id

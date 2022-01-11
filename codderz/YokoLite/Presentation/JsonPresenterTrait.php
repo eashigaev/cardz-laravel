@@ -24,15 +24,13 @@ trait JsonPresenterTrait
 
     public function render($request, Throwable $e)
     {
-        return $request->wantsJson()
-            ? $this->handleApiException($request, $e)
-            : parent::render($request, $e);
+        return $request->wantsJson() ? $this->handleApiException($request, $e) : parent::render($request, $e);
     }
 
     protected function handleApiException($request, Throwable $exception)
     {
         if ($exception instanceof Exception) {
-            return $this->errorResponse($exception->getFullMessage(), $exception->getCode() ?: 403);
+            return $this->errorResponse($exception->getMessage(), $exception->getCode() ?: 403);
         }
 
         if ($exception instanceof MethodNotAllowedHttpException) {

@@ -1,9 +1,11 @@
 <?php
 
+use App\Models\Collect\Achievement;
 use App\Models\Collect\Card;
 use App\Models\Collect\Program;
 use App\Models\Collect\Task;
 use App\Models\Company;
+use CardzApp\Api\Collect\Controllers\Achievement\RemoveAchievementController;
 use CardzApp\Api\Collect\Controllers\Card\CancelCardController;
 use CardzApp\Api\Collect\Controllers\Card\IssueCardController;
 use CardzApp\Api\Collect\Controllers\Card\RejectCardController;
@@ -71,9 +73,6 @@ Route::prefix(Routes::URL_PREFIX . '/collect')->middleware([Routes::API_MIDDLEWA
         Route::post('/')
             ->name(Routes::COLLECT_ISSUE_CARD)->uses(IssueCardController::class)
             ->middleware(Authorize::for(Actions::COLLECT_ISSUE_CARD, ['program' => Program::class]));
-//        Route::get('/')
-//            ->name(Routes::COLLECT_GET_PROGRAM_TASKS)->uses(GetTasksController::class)
-//            ->middleware(Authorize::for(Actions::COLLECT_GET_PROGRAM_TASKS, ['program' => Program::class]));
     });
 
     Route::prefix('/card/id/{card}')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
@@ -89,5 +88,17 @@ Route::prefix(Routes::URL_PREFIX . '/collect')->middleware([Routes::API_MIDDLEWA
         Route::patch('/reward')
             ->name(Routes::COLLECT_REWARD_CARD)->uses(RewardCardController::class)
             ->middleware(Authorize::for(Actions::COLLECT_REWARD_CARD, ['card' => Card::class]));
+    });
+
+    Route::prefix('/card/id/{card}/achievements')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
+        Route::post('/')
+            ->name(Routes::COLLECT_ADD_ACHIEVEMENT)->uses(RemoveAchievementController::class)
+            ->middleware(Authorize::for(Actions::COLLECT_ADD_ACHIEVEMENT, ['card' => Card::class]));
+    });
+
+    Route::prefix('/achievement/id/{achievement}')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
+        Route::delete('/')
+            ->name(Routes::COLLECT_REMOVE_ACHIEVEMENT)->uses(RemoveAchievementController::class)
+            ->middleware(Authorize::for(Actions::COLLECT_REMOVE_ACHIEVEMENT, ['achievement' => Achievement::class]));
     });
 });

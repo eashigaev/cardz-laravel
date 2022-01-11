@@ -26,8 +26,7 @@ class UpdateProgramActiveTest extends TestCase
     {
         $program = Program::factory()->with(active: false)->create();
 
-        $user = $program->company->founder;
-        $this->actingAsSanctum($user);
+        $this->actingAsCompany($program->company);
 
         Event::fake();
 

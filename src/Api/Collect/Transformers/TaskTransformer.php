@@ -15,7 +15,7 @@ class TaskTransformer
             'program_id' => $model->program_id,
             'title' => $model->title,
             'description' => $model->description,
-            'active' => $model->active
+            'active' => (bool)$model->active
         ];
     }
 

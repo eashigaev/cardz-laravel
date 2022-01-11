@@ -24,8 +24,7 @@ class UpdateTaskActiveTest extends TestCase
     {
         $task = Task::factory()->with(active: false)->create();
 
-        $user = $task->company->founder;
-        $this->actingAsSanctum($user);
+        $this->actingAsCompany($task->company);
 
         $response = $this->callJsonRoute(self::ROUTE, [
             'value' => true

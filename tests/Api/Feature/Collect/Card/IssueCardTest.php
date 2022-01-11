@@ -29,8 +29,7 @@ class IssueCardTest extends TestCase
         $fixture = Card::factory()->make();
         $fixture->program()->update(['active' => true]);
 
-        $user = $fixture->company->founder;
-        $this->actingAsSanctum($user);
+        $this->actingAsCompany($fixture->company);
 
         $response = $this->callJsonRoute(self::ROUTE, [
             'comment' => $fixture->comment,
@@ -57,8 +56,7 @@ class IssueCardTest extends TestCase
         $fixture = Card::factory()->make();
         $fixture->program()->update(['active' => false]);
 
-        $user = $fixture->company->founder;
-        $this->actingAsSanctum($user);
+        $this->actingAsCompany($fixture->company);
 
         $this->withoutExceptionHandling();
         $this->expectExceptionMessage(Messages::PROGRAM_IS_NOT_ACTIVE);

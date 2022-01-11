@@ -24,8 +24,7 @@ class AddTaskTest extends TestCase
     {
         $fixture = Task::factory()->make();
 
-        $user = $fixture->company->founder;
-        $this->actingAsSanctum($user);
+        $this->actingAsCompany($fixture->company);
 
         $response = $this->callJsonRoute(self::ROUTE, [
             'title' => $fixture->title,

@@ -25,8 +25,7 @@ class UpdateCardTest extends TestCase
         $fixture = Card::factory()->make();
         $card = Card::factory()->create();
 
-        $user = $card->company->founder;
-        $this->actingAsSanctum($user);
+        $this->actingAsCompany($card->company);
 
         $response = $this->callJsonRoute(self::ROUTE, [
             'comment' => $fixture->comment

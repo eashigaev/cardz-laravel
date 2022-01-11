@@ -16,6 +16,11 @@ class Exception extends BaseException
 
     public function getFullMessage()
     {
-        return Reflect::getShortClass($this) . ': ' . $this->getMessage();
+        return $this->getType() . ': ' . $this->getMessage();
+    }
+
+    public function getType()
+    {
+        return Reflect::getShortClass($this);
     }
 }

@@ -24,8 +24,7 @@ class AddProgramTest extends TestCase
     {
         $fixture = Program::factory()->make();
 
-        $user = $fixture->company->founder;
-        $this->actingAsSanctum($user);
+        $this->actingAsCompany($fixture->company);
 
         $response = $this->callJsonRoute(self::ROUTE, [
             'title' => $fixture->title,

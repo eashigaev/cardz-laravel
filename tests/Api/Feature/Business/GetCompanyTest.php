@@ -22,8 +22,7 @@ class GetCompanyTest extends TestCase
     {
         $company = Company::factory()->create();
 
-        $user = $company->founder;
-        $this->actingAsSanctum($user);
+        $this->actingAsCompany($company);
 
         $response = $this->callJsonRoute(self::ROUTE, parameters: [
             'company' => $company->id

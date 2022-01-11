@@ -28,8 +28,7 @@ class RejectCardTest extends TestCase
             'status' => CardStatus::ACTIVE->value
         ]);
 
-        $user = $card->company->founder;
-        $this->actingAsSanctum($user);
+        $this->actingAsCompany($card->company);
 
         $response = $this->callJsonRoute(self::ROUTE, parameters: [
             'card' => $card->id
@@ -48,8 +47,7 @@ class RejectCardTest extends TestCase
             'status' => CardStatus::REWARDED->value
         ]);
 
-        $user = $card->company->founder;
-        $this->actingAsSanctum($user);
+        $this->actingAsCompany($card->company);
 
         $this->withoutExceptionHandling();
         $this->expectExceptionMessage(Messages::CARD_IS_NOT_ACTIVE);

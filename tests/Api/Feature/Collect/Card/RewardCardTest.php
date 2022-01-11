@@ -31,8 +31,7 @@ class RewardCardTest extends TestCase
             'active' => true, 'reward_target' => 5
         ]);
 
-        $user = $card->company->founder;
-        $this->actingAsSanctum($user);
+        $this->actingAsCompany($card->company);
 
         $response = $this->callJsonRoute(self::ROUTE, parameters: [
             'card' => $card->id
@@ -52,8 +51,7 @@ class RewardCardTest extends TestCase
             'status' => CardStatus::REWARDED->value
         ]);
 
-        $user = $card->company->founder;
-        $this->actingAsSanctum($user);
+        $this->actingAsCompany($card->company);
 
         $this->withoutExceptionHandling();
         $this->expectExceptionMessage(Messages::CARD_IS_NOT_ACTIVE);
@@ -72,8 +70,7 @@ class RewardCardTest extends TestCase
             'active' => false
         ]);
 
-        $user = $card->company->founder;
-        $this->actingAsSanctum($user);
+        $this->actingAsCompany($card->company);
 
         $this->withoutExceptionHandling();
         $this->expectExceptionMessage(Messages::PROGRAM_IS_NOT_ACTIVE);
@@ -92,8 +89,7 @@ class RewardCardTest extends TestCase
             'active' => true, 'reward_target' => 1
         ]);
 
-        $user = $card->company->founder;
-        $this->actingAsSanctum($user);
+        $this->actingAsCompany($card->company);
 
         $this->withoutExceptionHandling();
         $this->expectExceptionMessage(Messages::CARD_BALANCE_IS_NOT_ENOUGH);

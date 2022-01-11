@@ -34,4 +34,7 @@ abstract class Actions
     const COLLECT_REJECT_CARD = 'api.v1.collect.rejectCard';
     const COLLECT_CANCEL_CARD = 'api.v1.collect.cancelCard';
     const COLLECT_REWARD_CARD = 'api.v1.collect.rewardCard';
+
+    const COLLECT_ADD_ACHIEVEMENT = 'api.v1.collect.addAchievement';
+    const COLLECT_REMOVE_ACHIEVEMENT = 'api.v1.collect.removeAchievement';
 }
