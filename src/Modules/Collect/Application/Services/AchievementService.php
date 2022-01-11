@@ -4,7 +4,6 @@ namespace CardzApp\Modules\Collect\Application\Services;
 
 use App\Models\Collect\Achievement;
 use App\Models\Collect\Card;
-use App\Models\Collect\Task;
 use CardzApp\Modules\Collect\Application\Events\CardAchievementsChanged;
 use CardzApp\Modules\Collect\Domain\CardStatus;
 use CardzApp\Modules\Collect\Domain\Messages;
@@ -23,15 +22,19 @@ class AchievementService
     {
         $card = Card::query()->with(['program', 'achievements'])->findOrFail($cardId);
 
-        $task = Task::query()->where(['program_id' => $card->program_id])->findOrFail($taskId);
-
-        if (CardStatus::ACTIVE->is($card->status)) {
+        if (!CardStatus::ACTIVE->is($card->status)) {
             throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
         }
 
         if (!$card->program->active) {
             throw Exception::of(Messages::PROGRAM_IS_NOT_ACTIVE);
         }
+
+        if ($card->program->reward_target <= $card->achievements->count()) {
+            throw Exception::of(Messages::PROGRAM_TARGET_REACHED);
+        }
+
+        $task = $card->program->tasks()->findOrFail($taskId);
 
         if (!$task->active) {
             throw Exception::of(Messages::TASK_IS_NOT_ACTIVE);
@@ -41,9 +44,6 @@ class AchievementService
             throw Exception::of(Messages::ACHIEVEMENT_ALREADY_EXISTS);
         }
 
-        if ($card->program->reward_target <= $card->achievements->count()) {
-            throw Exception::of(Messages::PROGRAM_TARGET_REACHED);
-        }
 
         $achievement = Achievement::make();
 

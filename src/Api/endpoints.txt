@@ -41,7 +41,7 @@ PTCH /collect/card/id/{card}/cancel                                 # Cancel car
 
  PUT /collect/card/id/{card}/achievements                           # Add achievement
  GET /collect/card/id/{card}/achievements                           # Get card achievements
- DEL /collect/achievement/id/{achievement}                          # Remove achievement
+ DEL /collect/achievement/id/{achievement}                          # Remove achievement +
 
 // Wallet
 

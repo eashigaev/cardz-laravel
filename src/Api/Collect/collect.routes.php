@@ -5,6 +5,7 @@ use App\Models\Collect\Card;
 use App\Models\Collect\Program;
 use App\Models\Collect\Task;
 use App\Models\Company;
+use CardzApp\Api\Collect\Controllers\Achievement\AddAchievementController;
 use CardzApp\Api\Collect\Controllers\Achievement\RemoveAchievementController;
 use CardzApp\Api\Collect\Controllers\Card\CancelCardController;
 use CardzApp\Api\Collect\Controllers\Card\IssueCardController;
@@ -92,7 +93,7 @@ Route::prefix(Routes::URL_PREFIX . '/collect')->middleware([Routes::API_MIDDLEWA
 
     Route::prefix('/card/id/{card}/achievements')->middleware([Routes::AUTHENTICATE_MIDDLEWARE])->group(function () {
         Route::post('/')
-            ->name(Routes::COLLECT_ADD_ACHIEVEMENT)->uses(RemoveAchievementController::class)
+            ->name(Routes::COLLECT_ADD_ACHIEVEMENT)->uses(AddAchievementController::class)
             ->middleware(Authorize::for(Actions::COLLECT_ADD_ACHIEVEMENT, ['card' => Card::class]));
     });
 
