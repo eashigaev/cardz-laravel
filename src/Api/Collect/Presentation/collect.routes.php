@@ -7,6 +7,7 @@ use App\Models\Company;
 use CardzApp\Api\Collect\Presentation\Controllers\Card\CancelCardController;
 use CardzApp\Api\Collect\Presentation\Controllers\Card\IssueCardController;
 use CardzApp\Api\Collect\Presentation\Controllers\Card\RejectCardController;
+use CardzApp\Api\Collect\Presentation\Controllers\Card\RewardCardController;
 use CardzApp\Api\Collect\Presentation\Controllers\Card\UpdateCardController;
 use CardzApp\Api\Collect\Presentation\Controllers\Program\AddProgramController;
 use CardzApp\Api\Collect\Presentation\Controllers\Program\GetProgramController;
@@ -85,5 +86,8 @@ Route::prefix(Routes::URL_PREFIX . '/collect')->middleware([Routes::API_MIDDLEWA
         Route::patch('/cancel')
             ->name(Routes::COLLECT_CANCEL_CARD)->uses(CancelCardController::class)
             ->middleware(Authorize::for(Actions::COLLECT_CANCEL_CARD, ['card' => Card::class]));
+        Route::patch('/reward')
+            ->name(Routes::COLLECT_REWARD_CARD)->uses(RewardCardController::class)
+            ->middleware(Authorize::for(Actions::COLLECT_REWARD_CARD, ['card' => Card::class]));
     });
 });

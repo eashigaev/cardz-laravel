@@ -56,16 +56,13 @@ class CardService
 
     public function rewardCard(string $cardId)
     {
-        $card = Card::query()
-            ->with('program')
-            ->where('status', CardStatus::ACTIVE->value)
-            ->findOrFail($cardId);
+        $card = Card::query()->with('program')->findOrFail($cardId);
 
-        if ($card->status === CardStatus::ACTIVE->value) {
+        if (!CardStatus::ACTIVE->is($card->status)) {
             throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
         }
 
-        if (!$card->program_active) {
+        if (!$card->program->active) {
             throw Exception::of(Messages::PROGRAM_IS_NOT_ACTIVE);
         }
 
@@ -73,6 +70,7 @@ class CardService
             throw Exception::of(Messages::CARD_BALANCE_IS_NOT_ENOUGH);
         }
 
+        $card->balance -= $card->program->reward_target;
         $card->status = CardStatus::REWARDED->value;
 
         return $card->save();
@@ -104,7 +102,7 @@ class CardService
         return $card->save();
     }
 
-    public function batchUpdateCardProramActive(string $programId, bool $value)
+    public function batchUpdateCardsProramActive(string $programId, bool $value)
     {
         return Card::query()
             ->where('program_id', $programId)

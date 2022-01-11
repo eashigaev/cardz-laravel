@@ -5,7 +5,7 @@ namespace CardzApp\Api\Collect\Application\Listeners;
 use CardzApp\Api\Collect\Application\Events\ProgramActiveUpdated;
 use CardzApp\Api\Collect\Application\Services\CardService;
 
-class BatchUpdateCardProgramActive
+class BatchUpdateCardsProgramActive
 {
     public function __construct(
         private CardService $cardService
@@ -15,7 +15,7 @@ class BatchUpdateCardProgramActive
 
     public function __invoke(ProgramActiveUpdated $event)
     {
-        $this->cardService->batchUpdateCardProramActive(
+        $this->cardService->batchUpdateCardsProramActive(
             $event->program->id, $event->program->active
         );
     }

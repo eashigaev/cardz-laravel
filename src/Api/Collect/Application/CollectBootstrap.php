@@ -7,7 +7,10 @@ use App\Models\Collect\Program;
 use App\Models\Collect\Task;
 use App\Models\Company;
 use App\Models\User;
+use CardzApp\Api\Collect\Application\Events\ProgramActiveUpdated;
+use CardzApp\Api\Collect\Application\Listeners\BatchUpdateCardsProgramActive;
 use CardzApp\Api\Shared\Application\Actions;
+use Event;
 
 class CollectBootstrap
 {
@@ -36,6 +39,12 @@ class CollectBootstrap
             Actions::COLLECT_UPDATE_CARD => $isCardPrincipal,
             Actions::COLLECT_REJECT_CARD => $isCardPrincipal,
             Actions::COLLECT_CANCEL_CARD => $isCardHolder,
+            Actions::COLLECT_REWARD_CARD => $isCardPrincipal,
         ]);
+    }
+
+    public function registerListeners()
+    {
+        Event::listen(ProgramActiveUpdated::class, BatchUpdateCardsProgramActive::class);
     }
 }
