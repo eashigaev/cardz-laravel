@@ -3,8 +3,8 @@
 namespace Tests\Api\Feature\Collect\Task;
 
 use App\Models\Collect\Task;
-use CardzApp\Api\Shared\Application\Actions;
-use CardzApp\Api\Shared\Presentation\Routes;
+use CardzApp\Api\Shared\Routes;
+use CardzApp\Modules\Shared\Application\Actions;
 use Tests\Api\Support\FeatureTestTrait;
 use Tests\TestCase;
 

@@ -3,7 +3,7 @@
 namespace Tests\Api\Feature\Account;
 
 use App\Models\User;
-use CardzApp\Api\Shared\Presentation\Routes;
+use CardzApp\Api\Shared\Routes;
 use Tests\Api\Support\FeatureTestTrait;
 use Tests\TestCase;
 

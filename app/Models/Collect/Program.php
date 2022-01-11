@@ -3,8 +3,8 @@
 namespace App\Models\Collect;
 
 use App\Models\Company;
-use CardzApp\Api\Collect\Domain\ProgramProfile;
-use CardzApp\Api\Collect\Domain\ProgramReward;
+use CardzApp\Modules\Collect\Domain\ProgramProfile;
+use CardzApp\Modules\Collect\Domain\ProgramReward;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

@@ -4,10 +4,10 @@ namespace Tests\Api\Feature\Collect\Card;
 
 use App\Models\Collect\Card;
 use App\Models\User;
-use CardzApp\Api\Collect\Domain\CardStatus;
-use CardzApp\Api\Collect\Domain\Messages;
-use CardzApp\Api\Shared\Application\Actions;
-use CardzApp\Api\Shared\Presentation\Routes;
+use CardzApp\Api\Shared\Routes;
+use CardzApp\Modules\Collect\Domain\CardStatus;
+use CardzApp\Modules\Collect\Domain\Messages;
+use CardzApp\Modules\Shared\Application\Actions;
 use Tests\Api\Support\FeatureTestTrait;
 use Tests\TestCase;
 

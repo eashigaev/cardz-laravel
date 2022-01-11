@@ -3,8 +3,8 @@
 namespace App\Models\Collect;
 
 use App\Models\Company;
-use CardzApp\Api\Collect\Domain\TaskFeature;
-use CardzApp\Api\Collect\Domain\TaskProfile;
+use CardzApp\Modules\Collect\Domain\TaskFeature;
+use CardzApp\Modules\Collect\Domain\TaskProfile;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

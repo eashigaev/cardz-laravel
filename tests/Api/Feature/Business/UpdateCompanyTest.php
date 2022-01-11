@@ -3,7 +3,7 @@
 namespace Tests\Api\Feature\Business;
 
 use App\Models\Company;
-use CardzApp\Api\Shared\Presentation\Routes;
+use CardzApp\Api\Shared\Routes;
 use Tests\Api\Support\FeatureTestTrait;
 use Tests\TestCase;
 

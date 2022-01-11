@@ -6,7 +6,7 @@ use App\Models\Collect\Card;
 use App\Models\Collect\Program;
 use App\Models\Company;
 use App\Models\User;
-use CardzApp\Api\Collect\Domain\CardStatus;
+use CardzApp\Modules\Collect\Domain\CardStatus;
 use Codderz\YokoLite\Domain\Uuid\UuidTestTrait;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

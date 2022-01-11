@@ -4,8 +4,8 @@ namespace Tests\Api\Feature\Collect\Card\Listeners;
 
 use App\Models\Collect\Card;
 use App\Models\Collect\Program;
-use CardzApp\Api\Collect\Application\Events\ProgramActiveUpdated;
-use CardzApp\Api\Collect\Application\Listeners\BatchUpdateCardsProgramActive;
+use CardzApp\Modules\Collect\Application\Events\ProgramActiveUpdated;
+use CardzApp\Modules\Collect\Application\Listeners\BatchUpdateCardsProgramActive;
 use Tests\Api\Support\FeatureTestTrait;
 use Tests\TestCase;
 

@@ -2,7 +2,12 @@
 
 namespace CardzApp;
 
-use CardzApp\Api\ApiModuleServiceProvider;
+use CardzApp\Api\ApiGatewayServiceProvider;
+use CardzApp\Modules\Account\AccountModuleServiceProvider;
+use CardzApp\Modules\Auth\AuthModuleServiceProvider;
+use CardzApp\Modules\Business\BusinessModuleServiceProvider;
+use CardzApp\Modules\Collect\CollectModuleServiceProvider;
+use CardzApp\Modules\Shared\SharedModuleServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 class CardzAppServiceProvider extends ServiceProvider
@@ -11,7 +16,12 @@ class CardzAppServiceProvider extends ServiceProvider
     {
         return [
             self::class,
-            ApiModuleServiceProvider::class
+            ApiGatewayServiceProvider::class,
+            AccountModuleServiceProvider::class,
+            AuthModuleServiceProvider::class,
+            BusinessModuleServiceProvider::class,
+            CollectModuleServiceProvider::class,
+            SharedModuleServiceProvider::class
         ];
     }
 
