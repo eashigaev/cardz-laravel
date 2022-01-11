@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Api\Feature\Collect\Card\Reactors;
+namespace Tests\Api\Feature\Collect\Card\Listeners;
 
 use App\Models\Collect\Card;
 use App\Models\Collect\Program;

@@ -26,7 +26,7 @@ class AchievementService
             ->where(['active' => true, 'program_id' => $card->program_id])
             ->findOrFail($taskId);
 
-        if ($card->status !== CardStatus::ACTIVE->value) {
+        if (CardStatus::ACTIVE->is($card->status)) {
             throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
         }
 
@@ -60,7 +60,7 @@ class AchievementService
     {
         $card = Card::query()->findOrFail($cardId);
 
-        if ($card->status !== CardStatus::ACTIVE->value) {
+        if (!CardStatus::ACTIVE->is($card->status)) {
             throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
         }
 

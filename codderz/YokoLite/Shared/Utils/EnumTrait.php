@@ -4,8 +4,8 @@ namespace Codderz\YokoLite\Shared\Utils;
 
 trait EnumTrait
 {
-    public function is(int $value)
+    public function is($value)
     {
-        return self::from($value)->value === $this->value;
+        return $value === $this || self::tryFrom($value) === $this;
     }
 }
