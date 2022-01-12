@@ -10,8 +10,6 @@ use Codderz\YokoLite\Domain\Uuid\Uuid;
 
 class ProgramMediator
 {
-    protected array $map = [];
-
     public function of(Program $program): ProgramAggregate
     {
         return ProgramAggregate::of(
@@ -34,6 +32,5 @@ class ProgramMediator
         $program->reward_target = $aggregate->reward->getTarget();
         $program->active = $aggregate->active;
         $program->save();
-        return $program;
     }
 }

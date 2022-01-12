@@ -46,8 +46,6 @@ class ProgramService
         $aggregate = $this->programMediator->of($program);
         $aggregate->update($profile, $reward);
         $this->programMediator->save($aggregate);
-
-        return true;
     }
 
     public function updateProgramActive(string $programId, bool $value)
@@ -59,8 +57,6 @@ class ProgramService
         $this->programMediator->save($aggregate);
 
         ProgramActiveUpdated::dispatch($program->refresh());
-
-        return true;
     }
 
     //
