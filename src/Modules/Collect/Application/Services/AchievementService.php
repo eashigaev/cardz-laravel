@@ -22,6 +22,8 @@ class AchievementService
     {
         $card = Card::query()->with(['program', 'achievements'])->findOrFail($cardId);
 
+        $task = $card->program->tasks()->findOrFail($taskId);
+
         if (!CardStatus::ACTIVE->is($card->status)) {
             throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
         }
@@ -33,8 +35,6 @@ class AchievementService
         if ($card->program->reward_target <= $card->achievements->count()) {
             throw Exception::of(Messages::PROGRAM_TARGET_REACHED);
         }
-
-        $task = $card->program->tasks()->findOrFail($taskId);
 
         if (!$task->active) {
             throw Exception::of(Messages::TASK_IS_NOT_ACTIVE);
