@@ -3,8 +3,10 @@
 namespace App\Models\Collect;
 
 use App\Models\Company;
+use CardzApp\Modules\Collect\Domain\ProgramAggregate;
 use CardzApp\Modules\Collect\Domain\ProgramProfile;
 use CardzApp\Modules\Collect\Domain\ProgramReward;
+use Codderz\YokoLite\Domain\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -51,5 +53,30 @@ class Program extends Model
     public function tasks()
     {
         return $this->hasMany(Task::class);
+    }
+
+    //
+
+    public function toAggregate(): ProgramAggregate
+    {
+        return ProgramAggregate::of(
+            Uuid::of($this->id),
+            Uuid::of($this->company_id),
+            ProgramProfile::of($this->title, $this->description),
+            ProgramReward::of($this->reward_title, $this->reward_target),
+            $this->active
+        );
+    }
+
+    public function applyAggregate(ProgramAggregate $aggregate)
+    {
+        $this->id = $aggregate->id->getValue();
+        $this->company_id = $aggregate->companyId->getValue();
+        $this->title = $aggregate->profile->getTitle();
+        $this->description = $aggregate->profile->getDescription();
+        $this->reward_title = $aggregate->reward->getTitle();
+        $this->reward_target = $aggregate->reward->getTarget();
+        $this->active = $aggregate->active;
+        return $this;
     }
 }

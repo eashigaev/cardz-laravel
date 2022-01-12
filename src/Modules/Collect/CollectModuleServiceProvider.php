@@ -2,9 +2,9 @@
 
 namespace CardzApp\Modules\Collect;
 
-use CardzApp\Modules\Collect\Application\CollectPolicy;
 use CardzApp\Modules\Collect\Application\Events\ProgramActiveUpdated;
 use CardzApp\Modules\Collect\Application\Listeners\BatchUpdateCardsProgramActive;
+use CardzApp\Modules\Collect\Application\Policy;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -16,9 +16,9 @@ class CollectModuleServiceProvider extends ServiceProvider
     {
     }
 
-    public function boot(CollectPolicy $collectPolicy)
+    public function boot(Policy $policy)
     {
-        collect($collectPolicy->getRules())->map(
+        collect($policy->getRules())->map(
             fn($callback, $ability) => Gate::define($ability, $callback)
         );
 

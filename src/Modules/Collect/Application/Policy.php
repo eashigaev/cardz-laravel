@@ -10,7 +10,7 @@ use App\Models\Company;
 use App\Models\User;
 use CardzApp\Modules\Shared\Application\Actions;
 
-class CollectPolicy
+class Policy
 {
     public function getRules()
     {
