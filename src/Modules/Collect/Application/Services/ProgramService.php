@@ -5,10 +5,11 @@ namespace CardzApp\Modules\Collect\Application\Services;
 use App\Models\Collect\Program;
 use App\Models\Company;
 use CardzApp\Modules\Collect\Application\Events\ProgramActiveUpdated;
-use CardzApp\Modules\Collect\Application\Mapper;
 use CardzApp\Modules\Collect\Domain\ProgramAggregate;
 use CardzApp\Modules\Collect\Domain\ProgramProfile;
 use CardzApp\Modules\Collect\Domain\ProgramReward;
+use CardzApp\Modules\Collect\Infrastructure\Mediators\CompanyMediator;
+use CardzApp\Modules\Collect\Infrastructure\Mediators\ProgramMediator;
 use Codderz\YokoLite\Domain\Uuid\Uuid;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
 use Illuminate\Database\Eloquent\Builder;
@@ -16,55 +17,50 @@ use Illuminate\Database\Eloquent\Builder;
 class ProgramService
 {
     public function __construct(
-        private UuidGenerator $uuidGenerator,
-        private Mapper        $mapper
+        private UuidGenerator   $uuidGenerator,
+        private CompanyMediator $companyMediator,
+        private ProgramMediator $programMediator
     )
     {
     }
 
     public function addProgram(string $companyId, ProgramProfile $profile, ProgramReward $reward)
     {
-        $companyAggregate = $this->mapper->companyAggregate(
-            Company::query()->findOrFail($companyId)
-        );
+        $company = Company::query()->findOrFail($companyId);
 
-        $programAggregate = ProgramAggregate::add(
+        $aggregate = ProgramAggregate::add(
             Uuid::of($this->uuidGenerator->getNextValue()),
-            $companyAggregate,
+            $this->companyMediator->of($company),
             $profile,
             $reward
         );
+        $this->programMediator->save($aggregate);
 
-        $program = (new Program())->applyAggregate($programAggregate);
-        $program->save();
-
-        return $programAggregate->id->getValue();
+        return $aggregate->id->getValue();
     }
 
     public function updateProgram(string $programId, ProgramProfile $profile, ProgramReward $reward)
     {
         $program = Program::query()->findOrFail($programId);
 
-        $program->aggregate(
-            fn(ProgramAggregate $aggregate) => $aggregate->update($profile, $reward)
-        );
+        $aggregate = $this->programMediator->of($program);
+        $aggregate->update($profile, $reward);
+        $this->programMediator->save($aggregate);
 
-        return $program->save();
+        return true;
     }
 
     public function updateProgramActive(string $programId, bool $value)
     {
         $program = Program::query()->findOrFail($programId);
 
-        $program->aggregate(
-            fn(ProgramAggregate $aggregate) => $aggregate->updateActive($value)
-        );
+        $aggregate = $this->programMediator->of($program);
+        $aggregate->updateActive($value);
+        $this->programMediator->save($aggregate);
 
-        $program->save();
+        ProgramActiveUpdated::dispatch($program->refresh());
 
-        ProgramActiveUpdated::dispatch($program);
-
-        return $program;
+        return true;
     }
 
     //
