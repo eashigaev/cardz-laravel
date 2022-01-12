@@ -57,7 +57,15 @@ class Program extends Model
 
     //
 
-    public function toAggregate(): ProgramAggregate
+    public function aggregate(callable $callable): self
+    {
+        $aggregate = $this->asAggregate();
+        $callable($aggregate);
+        $this->applyAggregate($aggregate);
+        return $this;
+    }
+
+    public function asAggregate(): ProgramAggregate
     {
         return ProgramAggregate::of(
             Uuid::of($this->id),

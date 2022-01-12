@@ -35,9 +35,8 @@ class ProgramService
             $reward
         );
 
-        Program::make()
-            ->applyAggregate($programAggregate)
-            ->save();
+        $program = (new Program())->applyAggregate($programAggregate);
+        $program->save();
 
         return $programAggregate->id->getValue();
     }
@@ -45,25 +44,23 @@ class ProgramService
     public function updateProgram(string $programId, ProgramProfile $profile, ProgramReward $reward)
     {
         $program = Program::query()->findOrFail($programId);
-        $programAggregate = $program->toAggregate();
 
-        $programAggregate->update($profile, $reward);
+        $program->aggregate(
+            fn(ProgramAggregate $aggregate) => $aggregate->update($profile, $reward)
+        );
 
-        return $program
-            ->applyAggregate($programAggregate)
-            ->save();
+        return $program->save();
     }
 
     public function updateProgramActive(string $programId, bool $value)
     {
         $program = Program::query()->findOrFail($programId);
-        $programAggregate = $program->toAggregate();
 
-        $programAggregate->updateActive($value);
+        $program->aggregate(
+            fn(ProgramAggregate $aggregate) => $aggregate->updateActive($value)
+        );
 
-        $program
-            ->applyAggregate($programAggregate)
-            ->save();
+        $program->save();
 
         ProgramActiveUpdated::dispatch($program);
 
