@@ -18,23 +18,15 @@ class AchievementFactory extends Factory
 
     public function definition()
     {
-        $company = Company::factory()->create();
-        $program = Program::factory()
-            ->for($company, 'company')
-            ->create();
-        $task = Task::factory()
-            ->for($company, 'company')->for($program, 'program')
-            ->create();
-        $card = Card::factory()
-            ->for($company, 'company')->for($program, 'program')
-            ->create();
+        $company = Company::factory();
+        $program = Program::factory()->for($company);
 
         return [
             'id' => $this->uuidGenerator()->getNextValue(),
             'company_id' => $company,
             'program_id' => $program,
-            'task_id' => $task,
-            'card_id' => $card
+            'task_id' => Task::factory()->for($company)->for($program),
+            'card_id' => Card::factory()->for($company)->for($program)
         ];
     }
 }

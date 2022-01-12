@@ -16,7 +16,7 @@ class TaskFactory extends Factory
 
     public function definition()
     {
-        $company = Company::factory()->create();
+        $company = Company::factory();
 
         return [
             'id' => $this->uuidGenerator()->getNextValue(),
