@@ -5,6 +5,7 @@ namespace Tests\Api\Feature\Collect\Card\Listeners;
 use App\Models\Collect\Card;
 use App\Models\Collect\Program;
 use CardzApp\Modules\Collect\Application\Listeners\UpdateCardBalance;
+use CardzApp\Modules\Collect\Domain\CardStatus;
 use Tests\Api\Support\FeatureTestTrait;
 use Tests\TestCase;
 
@@ -16,10 +17,12 @@ class BatchUpdateCardsProgramActiveT1est extends TestCase
     {
         $this->flushEventListeners([UpdateCardBalance::class]);
 
-        $program = Program::factory()->with(active: true)->create();
+        $program = Program::factory()->create([
+            'active' => true
+        ]);
 
-        $programCard = Card::factory()->with()->for($program)->create();
-        $otherCard = Card::factory()->with()->create();
+        $programCard = Card::factory()->withStatus(CardStatus::ACTIVE)->for($program)->create();
+        $otherCard = Card::factory()->withStatus(CardStatus::ACTIVE)->create();
 
         ProgramActiveUpdated::dispatch($program);
 

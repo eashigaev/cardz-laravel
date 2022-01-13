@@ -25,11 +25,4 @@ class ProgramFactory extends Factory
             'active' => $this->faker->boolean()
         ];
     }
-
-    public function with(bool $active = false)
-    {
-        return $this->state(fn() => [
-            'active' => $active,
-        ]);
-    }
 }

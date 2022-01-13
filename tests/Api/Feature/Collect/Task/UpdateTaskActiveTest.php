@@ -22,7 +22,7 @@ class UpdateTaskActiveTest extends TestCase
 
     public function test_action()
     {
-        $task = Task::factory()->with(active: false)->create();
+        $task = Task::factory()->create(['active' => false]);
 
         $this->actingAsCompany($task->company);
 

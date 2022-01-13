@@ -28,12 +28,4 @@ class TaskFactory extends Factory
             'repeatable' => $this->faker->boolean(),
         ];
     }
-
-    public function with(bool $active = false, bool $repeatable = false)
-    {
-        return $this->state(fn() => [
-            'active' => $active,
-            'repeatable' => $repeatable
-        ]);
-    }
 }

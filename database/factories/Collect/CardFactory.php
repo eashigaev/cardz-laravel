@@ -31,9 +31,7 @@ class CardFactory extends Factory
         ];
     }
 
-    public function with(
-        CardStatus $status = CardStatus::ACTIVE
-    )
+    public function withStatus(CardStatus $status)
     {
         return $this->state(fn() => [
             'status' => $status->value

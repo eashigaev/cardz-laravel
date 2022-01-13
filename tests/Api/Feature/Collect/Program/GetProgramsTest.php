@@ -47,8 +47,8 @@ class GetProgramsTest extends TestCase
     public function test_filter_active()
     {
         $company = Company::factory()->create();
-        $active = Program::factory()->for($company)->with(active: true)->count(3)->create();
-        Program::factory()->for($company)->with(active: false)->count(2)->create();
+        $active = Program::factory()->for($company)->count(3)->create(['active' => true]);
+        Program::factory()->for($company)->count(2)->create(['active' => false]);
 
         $this->actingAsCompany($company);
 

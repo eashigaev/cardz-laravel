@@ -24,7 +24,7 @@ class UpdateProgramActiveTest extends TestCase
 
     public function test_action()
     {
-        $program = Program::factory()->with(active: false)->create();
+        $program = Program::factory()->create(['active' => false]);
 
         $this->actingAsCompany($program->company);
 
