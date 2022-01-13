@@ -35,7 +35,6 @@ class CardService
         $card->status = CardStatus::ACTIVE->value;
         $card->balance = 0;
         $card->comment = $comment;
-        $card->program_active = $program->active;
         $card->company()->associate($program->company_id);
         $card->program()->associate($program->id);
         $card->holder()->associate($holder->id);
@@ -100,15 +99,6 @@ class CardService
         $card->status = CardStatus::CANCELLED->value;
 
         return $card->save();
-    }
-
-    //
-
-    public function batchUpdateCardsProramActive(string $programId, bool $value)
-    {
-        return Card::query()
-            ->where('program_id', $programId)
-            ->update(['program_active' => $value]);
     }
 
     //

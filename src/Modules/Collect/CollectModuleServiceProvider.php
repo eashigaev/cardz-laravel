@@ -2,8 +2,9 @@
 
 namespace CardzApp\Modules\Collect;
 
+use CardzApp\Modules\Collect\Application\Events\CardAchievementsChanged;
 use CardzApp\Modules\Collect\Application\Events\ProgramActiveUpdated;
-use CardzApp\Modules\Collect\Application\Listeners\BatchUpdateCardsProgramActive;
+use CardzApp\Modules\Collect\Application\Listeners\UpdateCardBalance;
 use CardzApp\Modules\Collect\Application\Policy;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
@@ -22,6 +23,6 @@ class CollectModuleServiceProvider extends ServiceProvider
             fn($callback, $ability) => Gate::define($ability, $callback)
         );
 
-        Event::listen(ProgramActiveUpdated::class, BatchUpdateCardsProgramActive::class);
+        Event::listen(CardAchievementsChanged::class, UpdateCardBalance::class);
     }
 }

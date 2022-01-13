@@ -4,23 +4,22 @@ namespace Tests\Api\Feature\Collect\Card\Listeners;
 
 use App\Models\Collect\Card;
 use App\Models\Collect\Program;
-use CardzApp\Modules\Collect\Application\Events\ProgramActiveUpdated;
-use CardzApp\Modules\Collect\Application\Listeners\BatchUpdateCardsProgramActive;
+use CardzApp\Modules\Collect\Application\Listeners\UpdateCardBalance;
 use Tests\Api\Support\FeatureTestTrait;
 use Tests\TestCase;
 
-class BatchUpdateCardsProgramActiveTest extends TestCase
+class BatchUpdateCardsProgramActiveT1est extends TestCase
 {
     use FeatureTestTrait;
 
     public function test_update()
     {
-        $this->flushEventListeners([BatchUpdateCardsProgramActive::class]);
+        $this->flushEventListeners([UpdateCardBalance::class]);
 
         $program = Program::factory()->with(active: true)->create();
 
-        $programCard = Card::factory()->with(program_active: false)->for($program)->create();
-        $otherCard = Card::factory()->with(program_active: false)->create();
+        $programCard = Card::factory()->with()->for($program)->create();
+        $otherCard = Card::factory()->with()->create();
 
         ProgramActiveUpdated::dispatch($program);
 

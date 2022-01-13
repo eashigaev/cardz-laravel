@@ -31,9 +31,6 @@ class CardMediator
         $card->comment = $aggregate->comment;
         $card->balance = $aggregate->balance;
         $card->status = $aggregate->status->value;
-        if (!$card->exists) {
-//            $card->program_active = ;
-        }
         $card->save();
     }
 }

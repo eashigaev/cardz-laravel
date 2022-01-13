@@ -41,7 +41,5 @@ class UpdateProgramActiveTest extends TestCase
         $this->assertArraySubset([
             'active' => true
         ], $result->toArray());
-
-        Event::assertDispatched(ProgramActiveUpdated::class);
     }
 }

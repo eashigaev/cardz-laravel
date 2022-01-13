@@ -54,8 +54,6 @@ class ProgramService
         $aggregate = $this->programMediator->of($program);
         $aggregate->updateActive($value);
         $this->programMediator->save($aggregate);
-
-        ProgramActiveUpdated::dispatch($program->refresh());
     }
 
     //
