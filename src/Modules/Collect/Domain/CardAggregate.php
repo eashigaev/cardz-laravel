@@ -20,6 +20,9 @@ class CardAggregate
     public int $balance;
     public CardStatus $status;
 
+//    /** Collection<Achievement> $achievements */
+//    public Collection $achievements;
+
     public static function issue(Uuid $id, ProgramAggregate $program, Uuid $holderId, string $comment)
     {
         if (!$program->active) {
@@ -46,6 +49,9 @@ class CardAggregate
 
     public function reward(ProgramAggregate $program)
     {
+        if (!$program->id->isEquals($this->programId)) {
+            throw Exception::of(Messages::INVALID_ARGUMENT);
+        }
         if (CardStatus::ACTIVE !== $this->status) {
             throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
         }

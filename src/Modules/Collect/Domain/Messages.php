@@ -4,6 +4,7 @@ namespace CardzApp\Modules\Collect\Domain;
 
 abstract class Messages
 {
+    const INVALID_ARGUMENT = 'Invalid argument';
     const PROGRAM_IS_NOT_ACTIVE = 'Program is not active';
     const PROGRAM_IS_WRONG = 'Program is wrong';
     const PROGRAM_TARGET_ALREADY_REACHED = 'Program target already reached';
