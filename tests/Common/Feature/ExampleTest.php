@@ -2,6 +2,8 @@
 
 namespace Tests\Common\Feature;
 
+use App\Models\Collect\Program;
+use App\Models\Company;
 use Tests\TestCase;
 
 class ExampleTest extends TestCase

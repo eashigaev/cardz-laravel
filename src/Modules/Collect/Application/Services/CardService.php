@@ -23,6 +23,9 @@ class CardService
     {
         $program = Program::query()->findOrFail($programId);
 
+        if (!$program->active){
+            throw Exception::of(Messages::PROGRAM_IS_NOT_ACTIVE);
+        }
 
         $holder = $this->userService->getUser($holderId);
 

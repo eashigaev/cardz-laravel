@@ -64,7 +64,6 @@ class IssueCardTest extends TestCase
 
         $response = $this->callJsonRoute(self::ROUTE, [
             'comment' => $fixture->comment,
-            'program_active' => $fixture->program->active,
             'holder' => $holder->id
         ], [
             'program' => $program->id
