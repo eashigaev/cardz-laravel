@@ -2,11 +2,15 @@
 
 namespace CardzApp\Modules\Collect\Domain;
 
+use Codderz\YokoLite\Domain\OptimisticLockingTrait;
 use Codderz\YokoLite\Domain\Uuid\Uuid;
 use Codderz\YokoLite\Shared\Exception;
+use Illuminate\Support\Collection;
 
 class CardAggregate
 {
+    use OptimisticLockingTrait;
+
     public Uuid $id;
     public Uuid $companyId;
     public Uuid $programId;
@@ -35,20 +39,19 @@ class CardAggregate
         $this->comment = $comment;
     }
 
+    public function defineBalance(Collection $achievements)
+    {
+        //
+    }
+
     public function reward(ProgramAggregate $program)
     {
-        if ($this->programId->isEquals($program->id)) {
+        if (CardStatus::ACTIVE !== $this->status) {
             throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
         }
-
-        if (!CardStatus::ACTIVE->is($this->status)) {
-            throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
-        }
-
         if (!$program->active) {
             throw Exception::of(Messages::PROGRAM_IS_NOT_ACTIVE);
         }
-
         if ($this->balance < $program->reward->getTarget()) {
             throw Exception::of(Messages::CARD_BALANCE_IS_NOT_ENOUGH);
         }
@@ -59,7 +62,7 @@ class CardAggregate
 
     public function reject()
     {
-        if (!CardStatus::ACTIVE->is($this->status)) {
+        if (CardStatus::ACTIVE !== $this->status) {
             throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
         }
 
@@ -68,7 +71,7 @@ class CardAggregate
 
     public function cancel()
     {
-        if (!CardStatus::ACTIVE->is($this->status)) {
+        if (CardStatus::ACTIVE !== $this->status) {
             throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
         }
 

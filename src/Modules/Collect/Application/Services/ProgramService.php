@@ -8,8 +8,8 @@ use CardzApp\Modules\Collect\Application\Events\ProgramActiveUpdated;
 use CardzApp\Modules\Collect\Domain\ProgramAggregate;
 use CardzApp\Modules\Collect\Domain\ProgramProfile;
 use CardzApp\Modules\Collect\Domain\ProgramReward;
-use CardzApp\Modules\Collect\Infrastructure\Mediators\CompanyMediator;
-use CardzApp\Modules\Collect\Infrastructure\Mediators\ProgramMediator;
+use CardzApp\Modules\Collect\Infrastructure\Repositories\CompanyRepository;
+use CardzApp\Modules\Collect\Infrastructure\Repositories\ProgramRepository;
 use Codderz\YokoLite\Domain\Uuid\Uuid;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,8 +17,8 @@ use Illuminate\Database\Eloquent\Builder;
 class ProgramService
 {
     public function __construct(
-        private UuidGenerator   $uuidGenerator,
-        private ProgramMediator $programMediator
+        private UuidGenerator     $uuidGenerator,
+        private ProgramRepository $programRepository
     )
     {
     }
@@ -33,7 +33,7 @@ class ProgramService
             $profile,
             $reward
         );
-        $this->programMediator->save($aggregate);
+        $this->programRepository->save($aggregate);
 
         return $aggregate->id->getValue();
     }
@@ -42,18 +42,18 @@ class ProgramService
     {
         $program = Program::query()->findOrFail($programId);
 
-        $aggregate = $this->programMediator->of($program);
+        $aggregate = $this->programRepository->of($program);
         $aggregate->update($profile, $reward);
-        $this->programMediator->save($aggregate);
+        $this->programRepository->save($aggregate);
     }
 
     public function updateProgramActive(string $programId, bool $value)
     {
         $program = Program::query()->findOrFail($programId);
 
-        $aggregate = $this->programMediator->of($program);
+        $aggregate = $this->programRepository->of($program);
         $aggregate->updateActive($value);
-        $this->programMediator->save($aggregate);
+        $this->programRepository->save($aggregate);
     }
 
     //

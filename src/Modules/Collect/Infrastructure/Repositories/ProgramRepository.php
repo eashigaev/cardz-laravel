@@ -1,6 +1,6 @@
 <?php
 
-namespace CardzApp\Modules\Collect\Infrastructure\Mediators;
+namespace CardzApp\Modules\Collect\Infrastructure\Repositories;
 
 use App\Models\Collect\Program;
 use CardzApp\Modules\Collect\Domain\ProgramAggregate;
@@ -8,7 +8,7 @@ use CardzApp\Modules\Collect\Domain\ProgramProfile;
 use CardzApp\Modules\Collect\Domain\ProgramReward;
 use Codderz\YokoLite\Domain\Uuid\Uuid;
 
-class ProgramMediator
+class ProgramRepository
 {
     public function of(Program $program): ProgramAggregate
     {
@@ -18,7 +18,8 @@ class ProgramMediator
             ProgramProfile::of($program->title, $program->description),
             ProgramReward::of($program->reward_title, $program->reward_target),
             $program->active
-        )->withMetaVersion($program->meta_version);
+        )
+            ->withMetaVersion($program->meta_version);
     }
 
     public function save(ProgramAggregate $aggregate)

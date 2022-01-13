@@ -2,10 +2,13 @@
 
 namespace CardzApp\Modules\Collect\Domain;
 
+use Codderz\YokoLite\Domain\OptimisticLockingTrait;
 use Codderz\YokoLite\Domain\Uuid\Uuid;
 
 class TaskAggregate
 {
+    use OptimisticLockingTrait;
+
     public Uuid $id;
     public Uuid $companyId;
     public Uuid $programId;

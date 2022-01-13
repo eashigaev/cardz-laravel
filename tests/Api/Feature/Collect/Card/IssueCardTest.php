@@ -45,9 +45,9 @@ class IssueCardTest extends TestCase
             'company_id' => $program->company->id,
             'program_id' => $program->id,
             'holder_id' => $holder->id,
-            'balance' => 0,
             'comment' => $fixture->comment,
-            'status' => CardStatus::ACTIVE->value
+            'balance' => 0,
+            'status' => CardStatus::ACTIVE->getValue()
         ], $result->toArray());
     }
 

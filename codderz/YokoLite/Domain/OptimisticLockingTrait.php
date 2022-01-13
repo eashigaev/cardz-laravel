@@ -2,11 +2,6 @@
 
 namespace Codderz\YokoLite\Domain;
 
-/**
- * Migration: $table->integer('meta_version')->nullable();
- * Where: 'meta_version' => $aggregate->getMetaVersion()
- * Update: 'meta_version' => $aggregate->nextMetaVersion()
- */
 trait OptimisticLockingTrait
 {
     private ?int $metaVersion = null;

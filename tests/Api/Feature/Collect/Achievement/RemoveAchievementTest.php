@@ -27,7 +27,7 @@ class RemoveAchievementTest extends TestCase
     public function test_action()
     {
         $achievement = Achievement::factory()->create();
-        $achievement->card()->update(['status' => CardStatus::ACTIVE->value]);
+        $achievement->card()->update(['status' => CardStatus::ACTIVE->getValue()]);
         $achievement->program()->update(['active' => true]);
 
         $this->actingAsCompany($achievement->company);
@@ -47,7 +47,7 @@ class RemoveAchievementTest extends TestCase
     public function test_fail_when_non_active_card()
     {
         $achievement = Achievement::factory()->create();
-        $achievement->card()->update(['status' => CardStatus::REWARDED->value]);
+        $achievement->card()->update(['status' => CardStatus::REWARDED->getValue()]);
 
         $this->actingAsCompany($achievement->company);
 
@@ -62,7 +62,7 @@ class RemoveAchievementTest extends TestCase
     public function test_fail_when_non_active_program()
     {
         $achievement = Achievement::factory()->create();
-        $achievement->card()->update(['status' => CardStatus::ACTIVE->value]);
+        $achievement->card()->update(['status' => CardStatus::ACTIVE->getValue()]);
         $achievement->program()->update(['active' => false]);
 
         $this->actingAsCompany($achievement->company);

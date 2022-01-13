@@ -19,8 +19,9 @@ class CreateCollectTasksTable extends Migration
             $table->foreignUuid('program_id')->index();
             $table->string('title');
             $table->string('description');
-            $table->boolean('active');
             $table->boolean('repeatable');
+            $table->boolean('active');
+            $table->integer('meta_version')->nullable();
             $table->timestamps();
         });
     }

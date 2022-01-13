@@ -6,6 +6,16 @@ trait EnumTrait
 {
     public function is($value)
     {
-        return $value === $this || self::tryFrom($value) === $this;
+        return self::from($value) === $this;
+    }
+
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    public function getName()
+    {
+        return $this->name;
     }
 }

@@ -24,12 +24,8 @@ class RewardCardTest extends TestCase
 
     public function test_action()
     {
-        $card = Card::factory()->create([
-            'status' => CardStatus::ACTIVE->value, 'balance' => 5
-        ]);
-        $card->program()->update([
-            'active' => true, 'reward_target' => 5
-        ]);
+        $card = Card::factory()->withStatus(CardStatus::ACTIVE)->create(['balance' => 5]);
+        $card->program()->update(['active' => true, 'reward_target' => 5]);
 
         $this->actingAsCompany($card->company);
 
@@ -41,15 +37,13 @@ class RewardCardTest extends TestCase
         $result = Card::query()->findOrFail($card->id);
         $this->assertArraySubset([
             'balance' => 0,
-            'status' => CardStatus::REWARDED->value
+            'status' => CardStatus::REWARDED->getValue()
         ], $result->toArray());
     }
 
     public function test_fail_when_card_is_not_active()
     {
-        $card = Card::factory()->create([
-            'status' => CardStatus::REWARDED->value
-        ]);
+        $card = Card::factory()->withStatus(CardStatus::REWARDED)->create();
 
         $this->actingAsCompany($card->company);
 
@@ -63,12 +57,8 @@ class RewardCardTest extends TestCase
 
     public function test_fail_when_program_is_not_active()
     {
-        $card = Card::factory()->create([
-            'status' => CardStatus::ACTIVE->value
-        ]);
-        $card->program()->update([
-            'active' => false
-        ]);
+        $card = Card::factory()->withStatus(CardStatus::ACTIVE)->create();
+        $card->program()->update(['active' => false]);
 
         $this->actingAsCompany($card->company);
 
@@ -82,12 +72,8 @@ class RewardCardTest extends TestCase
 
     public function test_fail_when_card_balance_is_not_enough()
     {
-        $card = Card::factory()->create([
-            'status' => CardStatus::ACTIVE->value, 'balance' => 0
-        ]);
-        $card->program()->update([
-            'active' => true, 'reward_target' => 1
-        ]);
+        $card = Card::factory()->withStatus(CardStatus::ACTIVE)->create(['balance' => 0]);
+        $card->program()->update(['active' => true, 'reward_target' => 1]);
 
         $this->actingAsCompany($card->company);
 

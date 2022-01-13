@@ -4,17 +4,19 @@ namespace CardzApp\Modules\Collect\Application\Services;
 
 use App\Models\Collect\Card;
 use App\Models\Collect\Program;
-use CardzApp\Modules\Account\Application\Services\UserService;
-use CardzApp\Modules\Collect\Domain\CardStatus;
-use CardzApp\Modules\Collect\Domain\Messages;
+use App\Models\User;
+use CardzApp\Modules\Collect\Domain\CardAggregate;
+use CardzApp\Modules\Collect\Infrastructure\Repositories\CardRepository;
+use CardzApp\Modules\Collect\Infrastructure\Repositories\ProgramRepository;
+use Codderz\YokoLite\Domain\Uuid\Uuid;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
-use Codderz\YokoLite\Shared\Exception;
 
 class CardService
 {
     public function __construct(
-        private UuidGenerator $uuidGenerator,
-        private UserService   $userService
+        private UuidGenerator     $uuidGenerator,
+        private ProgramRepository $programRepository,
+        private CardRepository    $cardRepository
     )
     {
     }
@@ -22,83 +24,56 @@ class CardService
     public function issueCard(string $programId, string $holderId, string $comment)
     {
         $program = Program::query()->findOrFail($programId);
+        $holder = User::query()->findOrFail($holderId);
 
-        if (!$program->active){
-            throw Exception::of(Messages::PROGRAM_IS_NOT_ACTIVE);
-        }
+        $aggregate = CardAggregate::issue(
+            Uuid::of($this->uuidGenerator->getNextValue()),
+            $this->programRepository->of($program),
+            Uuid::of($holder->id),
+            $comment
+        );
 
-        $holder = $this->userService->getUser($holderId);
+        $this->cardRepository->save($aggregate);
 
-        $card = Card::make();
-
-        $card->id = $this->uuidGenerator->getNextValue();
-        $card->status = CardStatus::ACTIVE->value;
-        $card->balance = 0;
-        $card->comment = $comment;
-        $card->company()->associate($program->company_id);
-        $card->program()->associate($program->id);
-        $card->holder()->associate($holder->id);
-
-        $card->save();
-
-        return $card->id;
+        return $aggregate->id->getValue();
     }
 
     public function updateCard(string $cardId, string $comment)
     {
         $card = Card::query()->findOrFail($cardId);
 
-        $card->comment = $comment;
-
-        return $card->save();
+        $aggregate = $this->cardRepository->of($card);
+        $aggregate->update($comment);
+        $this->cardRepository->save($aggregate);
     }
 
     public function rewardCard(string $cardId)
     {
         $card = Card::query()->with('program')->findOrFail($cardId);
 
-        if (!CardStatus::ACTIVE->is($card->status)) {
-            throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
-        }
+        $programAggregate = $this->programRepository->of($card->program);
 
-        if (!$card->program->active) {
-            throw Exception::of(Messages::PROGRAM_IS_NOT_ACTIVE);
-        }
-
-        if ($card->balance < $card->program->reward_target) {
-            throw Exception::of(Messages::CARD_BALANCE_IS_NOT_ENOUGH);
-        }
-
-        $card->balance -= $card->program->reward_target;
-        $card->status = CardStatus::REWARDED->value;
-
-        return $card->save();
+        $aggregate = $this->cardRepository->of($card);
+        $aggregate->reward($programAggregate);
+        $this->cardRepository->save($aggregate);
     }
 
     public function rejectCard(string $cardId)
     {
         $card = Card::query()->findOrFail($cardId);
 
-        if (!CardStatus::ACTIVE->is($card->status)) {
-            throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
-        }
-
-        $card->status = CardStatus::REJECTED->value;
-
-        return $card->save();
+        $aggregate = $this->cardRepository->of($card);
+        $aggregate->reject();
+        $this->cardRepository->save($aggregate);
     }
 
     public function cancelCard(string $cardId)
     {
         $card = Card::query()->findOrFail($cardId);
 
-        if (!CardStatus::ACTIVE->is($card->status)) {
-            throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
-        }
-
-        $card->status = CardStatus::CANCELLED->value;
-
-        return $card->save();
+        $aggregate = $this->cardRepository->of($card);
+        $aggregate->cancel();
+        $this->cardRepository->save($aggregate);
     }
 
     //

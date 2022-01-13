@@ -24,9 +24,7 @@ class CancelCardTest extends TestCase
 
     public function test_action()
     {
-        $card = Card::factory()->create([
-            'status' => CardStatus::ACTIVE->value
-        ]);
+        $card = Card::factory()->withStatus(CardStatus::ACTIVE)->create();
 
         $user = $card->holder;
         $this->actingAsSanctum($user);
@@ -38,15 +36,13 @@ class CancelCardTest extends TestCase
 
         $result = Card::query()->findOrFail($card->id);
         $this->assertArraySubset([
-            'status' => CardStatus::CANCELLED->value
+            'status' => CardStatus::CANCELLED->getValue()
         ], $result->toArray());
     }
 
     public function test_fail_when_not_active()
     {
-        $card = Card::factory()->create([
-            'status' => CardStatus::REWARDED->value
-        ]);
+        $card = Card::factory()->withStatus(CardStatus::REWARDED)->create();
 
         $user = $card->holder;
         $this->actingAsSanctum($user);
