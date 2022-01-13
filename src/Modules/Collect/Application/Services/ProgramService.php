@@ -18,7 +18,6 @@ class ProgramService
 {
     public function __construct(
         private UuidGenerator   $uuidGenerator,
-        private CompanyMediator $companyMediator,
         private ProgramMediator $programMediator
     )
     {
@@ -30,7 +29,7 @@ class ProgramService
 
         $aggregate = ProgramAggregate::add(
             Uuid::of($this->uuidGenerator->getNextValue()),
-            $this->companyMediator->of($company),
+            Uuid::of($company->id),
             $profile,
             $reward
         );

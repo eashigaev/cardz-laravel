@@ -5,7 +5,8 @@ namespace CardzApp\Modules\Collect\Domain;
 abstract class Messages
 {
     const PROGRAM_IS_NOT_ACTIVE = 'Program is not active';
-    const PROGRAM_TARGET_REACHED = 'Program target reached';
+    const PROGRAM_IS_WRONG = 'Program is wrong';
+    const PROGRAM_TARGET_ALREADY_REACHED = 'Program target already reached';
     const TASK_IS_NOT_ACTIVE = 'Task is not active';
     const CARD_IS_NOT_ACTIVE = 'Card is not active';
     const CARD_BALANCE_IS_NOT_ENOUGH = 'Card balance is not enough';

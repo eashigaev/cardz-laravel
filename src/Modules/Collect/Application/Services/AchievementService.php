@@ -33,7 +33,7 @@ class AchievementService
         }
 
         if ($card->program->reward_target <= $card->achievements->count()) {
-            throw Exception::of(Messages::PROGRAM_TARGET_REACHED);
+            throw Exception::of(Messages::PROGRAM_TARGET_ALREADY_REACHED);
         }
 
         if (!$task->active) {

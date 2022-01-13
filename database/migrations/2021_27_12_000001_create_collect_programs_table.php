@@ -21,6 +21,7 @@ class CreateCollectProgramsTable extends Migration
             $table->string('reward_title');
             $table->integer('reward_target');
             $table->boolean('active');
+            $table->integer('meta_version')->nullable();
             $table->timestamps();
         });
     }

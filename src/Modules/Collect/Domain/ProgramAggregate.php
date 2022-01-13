@@ -2,19 +2,22 @@
 
 namespace CardzApp\Modules\Collect\Domain;
 
+use Codderz\YokoLite\Domain\OptimisticLockingTrait;
 use Codderz\YokoLite\Domain\Uuid\Uuid;
 
 class ProgramAggregate
 {
+    use OptimisticLockingTrait;
+
     public Uuid $id;
     public Uuid $companyId;
     public ProgramProfile $profile;
     public ProgramReward $reward;
     public bool $active;
 
-    public static function add(Uuid $id, CompanyAggregate $company, ProgramProfile $profile, ProgramReward $reward)
+    public static function add(Uuid $id, Uuid $companyId, ProgramProfile $profile, ProgramReward $reward)
     {
-        return self::of($id, $company->id, $profile, $reward, false);
+        return self::of($id, $companyId, $profile, $reward, false);
     }
 
     public function update(ProgramProfile $profile, ProgramReward $reward)

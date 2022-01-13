@@ -18,19 +18,23 @@ class ProgramMediator
             ProgramProfile::of($program->title, $program->description),
             ProgramReward::of($program->reward_title, $program->reward_target),
             $program->active
-        );
+        )->withMetaVersion($program->meta_version);
     }
 
     public function save(ProgramAggregate $aggregate)
     {
-        $program = Program::firstOrNew();
-        $program->id = $aggregate->id->getValue();
-        $program->company_id = $aggregate->companyId->getValue();
-        $program->title = $aggregate->profile->getTitle();
-        $program->description = $aggregate->profile->getDescription();
-        $program->reward_title = $aggregate->reward->getTitle();
-        $program->reward_target = $aggregate->reward->getTarget();
-        $program->active = $aggregate->active;
-        $program->save();
+        Program::query()->updateOrInsert([
+            'id' => $aggregate->id->getValue(),
+            'meta_version' => $aggregate->getMetaVersion()
+        ], [
+            'id' => $aggregate->id->getValue(),
+            'company_id' => $aggregate->companyId->getValue(),
+            'title' => $aggregate->profile->getTitle(),
+            'description' => $aggregate->profile->getDescription(),
+            'reward_title' => $aggregate->reward->getTitle(),
+            'reward_target' => $aggregate->reward->getTarget(),
+            'active' => $aggregate->active,
+            'meta_version' => $aggregate->nextMetaVersion()
+        ]);
     }
 }
