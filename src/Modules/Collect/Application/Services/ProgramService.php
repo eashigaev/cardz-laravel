@@ -23,36 +23,37 @@ class ProgramService
     {
     }
 
-    public function addProgram(string $companyId, ProgramProfile $profile, ProgramReward $reward)
+    public function addProgram(Uuid $companyId, ProgramProfile $profile, ProgramReward $reward)
     {
-        $company = Company::query()->findOrFail($companyId);
+        Company::query()->findOrFail($companyId->getValue());
 
         $aggregate = ProgramAggregate::add(
             Uuid::of($this->uuidGenerator->getNextValue()),
-            Uuid::of($company->id),
+            $companyId,
             $profile,
             $reward
         );
+
         $this->programRepository->create($aggregate);
 
         return $aggregate->id->getValue();
     }
 
-    public function updateProgram(string $programId, ProgramProfile $profile, ProgramReward $reward)
+    public function updateProgram(Uuid $programId, ProgramProfile $profile, ProgramReward $reward)
     {
-        $program = Program::query()->findOrFail($programId);
+        $aggregate = $this->programRepository->ofIdOrFail($programId);
 
-        $aggregate = $this->programRepository->of($program);
         $aggregate->update($profile, $reward);
+
         $this->programRepository->update($aggregate);
     }
 
-    public function updateProgramActive(string $programId, bool $value)
+    public function updateProgramActive(Uuid $programId, bool $value)
     {
-        $program = Program::query()->findOrFail($programId);
+        $aggregate = $this->programRepository->ofIdOrFail($programId);
 
-        $aggregate = $this->programRepository->of($program);
         $aggregate->updateActive($value);
+
         $this->programRepository->update($aggregate);
     }
 

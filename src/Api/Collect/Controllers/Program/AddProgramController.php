@@ -7,6 +7,7 @@ use CardzApp\Api\Shared\ControllerTrait;
 use CardzApp\Modules\Collect\Application\Services\ProgramService;
 use CardzApp\Modules\Collect\Domain\ProgramProfile;
 use CardzApp\Modules\Collect\Domain\ProgramReward;
+use Codderz\YokoLite\Domain\Uuid\Uuid;
 use Illuminate\Http\Request;
 
 class AddProgramController extends Controller
@@ -30,7 +31,7 @@ class AddProgramController extends Controller
         );
 
         $programId = $this->programService->addProgram(
-            $request->company, $profile, $reward
+            Uuid::of($request->company), $profile, $reward
         );
 
         return $this->successResponse([

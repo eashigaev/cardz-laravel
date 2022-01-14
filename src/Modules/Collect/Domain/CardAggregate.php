@@ -17,8 +17,8 @@ class CardAggregate
     public Uuid $holderId;
     public string $comment;
 
-    public int $balance;
     public CardStatus $status;
+    public Collection $achievements;
 
     public static function issue(Uuid $id, ProgramAggregate $program, Uuid $holderId, string $comment)
     {
@@ -26,11 +26,11 @@ class CardAggregate
             throw Exception::of(Messages::PROGRAM_IS_NOT_ACTIVE);
         }
 
-        $balance = 0;
         $status = CardStatus::ACTIVE;
+        $achievements = Collection::make();
 
         return self::of(
-            $id, $program->companyId, $program->id, $holderId, $comment, $balance, $status
+            $id, $program->companyId, $program->id, $holderId, $comment, $status, $achievements
         );
     }
 
@@ -39,14 +39,12 @@ class CardAggregate
         $this->comment = $comment;
     }
 
-    public function updateBalance(Collection $achievedTaskIds)
-    {
-        $this->balance = $achievedTaskIds->count();
-    }
-
     public function reward(ProgramAggregate $program)
     {
-        if (CardStatus::ACTIVE !== $this->status) {
+        if (!$this->programId->isEquals($program->id)) {
+            throw Exception::of(Messages::INVALID_ARGUMENT);
+        }
+        if ($this->status !== CardStatus::ACTIVE) {
             throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
         }
         if (!$program->active) {
@@ -62,7 +60,7 @@ class CardAggregate
 
     public function reject()
     {
-        if (CardStatus::ACTIVE !== $this->status) {
+        if ($this->status !== CardStatus::ACTIVE) {
             throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
         }
 
@@ -71,11 +69,70 @@ class CardAggregate
 
     public function cancel()
     {
-        if (CardStatus::ACTIVE !== $this->status) {
+        if ($this->status !== CardStatus::ACTIVE) {
             throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
         }
 
         $this->status = CardStatus::CANCELLED;
+    }
+
+    //
+
+    public function findAchievement(callable $criteria): AchievementEntity|null
+    {
+        return $this->achievements->first($criteria);
+    }
+
+    public function addAchievement(Uuid $achievementId, Uuid $taskId, ProgramAggregate $program)
+    {
+        if (!$this->programId->isEquals($program->id)) {
+            throw Exception::of(Messages::INVALID_ARGUMENT);
+        }
+        if ($this->status !== CardStatus::ACTIVE) {
+            throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
+        }
+        if (!$program->active) {
+            throw Exception::of(Messages::PROGRAM_IS_NOT_ACTIVE);
+        }
+        if ($program->reward->getTarget() <= $this->achievements->count()) {
+            throw Exception::of(Messages::PROGRAM_TARGET_ALREADY_REACHED);
+        };
+
+        $task = $program->findTask(fn(TaskEntity $e) => $e->id->isEquals($achievementId));
+        if (!$task) {
+            throw Exception::of(Messages::NOT_FOUND);
+        }
+        if (!$task->active) {
+            throw Exception::of(Messages::TASK_IS_NOT_ACTIVE);
+        }
+
+        $achieved = $this->findAchievement(
+            fn(AchievementEntity $e) => $e->id->isEquals($achievementId) && !$e->removed
+        );
+        if (!$task->feature->isRepeatable() && $achieved) {
+            throw Exception::of(Messages::CARD_TASK_ALREADY_ACHIEVED);
+        }
+
+        $achievement = AchievementEntity::add($achievementId, $taskId);
+
+        $this->achievements = $this->achievements->add($achievement);
+    }
+
+    public function removeAchievement(Uuid $achievementId)
+    {
+        if ($this->status !== CardStatus::ACTIVE) {
+            throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
+        }
+
+        $achievement = $this->findAchievement(
+            fn(AchievementEntity $e) => $e->id->isEquals($achievementId)
+        );
+
+        if (!$achievementId) {
+            throw Exception::of(Messages::NOT_FOUND);
+        }
+
+        $achievement->remove();
     }
 
     //
@@ -86,8 +143,8 @@ class CardAggregate
         Uuid       $programId,
         Uuid       $holderId,
         string     $comment,
-        int        $balance,
-        CardStatus $status
+        CardStatus $status,
+        Collection $achievements
     )
     {
         $self = new self();
@@ -96,8 +153,8 @@ class CardAggregate
         $self->programId = $programId;
         $self->holderId = $holderId;
         $self->comment = $comment;
-        $self->balance = $balance;
         $self->status = $status;
+        $self->achievements = $achievements;
         return $self;
     }
 }

@@ -2,13 +2,10 @@
 
 namespace CardzApp\Modules\Collect\Application\Services;
 
-use App\Models\Collect\Program;
 use App\Models\Collect\Task;
-use CardzApp\Modules\Collect\Domain\TaskAggregate;
 use CardzApp\Modules\Collect\Domain\TaskFeature;
 use CardzApp\Modules\Collect\Domain\TaskProfile;
 use CardzApp\Modules\Collect\Infrastructure\Repositories\ProgramRepository;
-use CardzApp\Modules\Collect\Infrastructure\Repositories\TaskRepository;
 use Codderz\YokoLite\Domain\Uuid\Uuid;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
 
@@ -17,42 +14,41 @@ class TaskService
     public function __construct(
         private UuidGenerator     $uuidGenerator,
         private ProgramRepository $programRepository,
-        private TaskRepository    $taskRepository
     )
     {
     }
 
-    public function addProgramTask(string $programId, TaskProfile $profile, TaskFeature $feature)
+    public function addTask(Uuid $programId, TaskProfile $profile, TaskFeature $feature)
     {
-        $program = Program::query()->findOrFail($programId);
+        $aggregate = $this->programRepository->ofIdOrFail($programId);
 
-        $aggregate = TaskAggregate::add(
+        $task = $aggregate->addTask(
             Uuid::of($this->uuidGenerator->getNextValue()),
-            $this->programRepository->of($program),
             $profile,
             $feature
         );
-        $this->taskRepository->create($aggregate);
 
-        return $aggregate->id->getValue();
+        $this->programRepository->update($aggregate);
+
+        return $task->id->getValue();
     }
 
-    public function updateProgramTask(string $taskId, TaskProfile $profile, TaskFeature $feature)
+    public function updateTask(Uuid $taskId, TaskProfile $profile, TaskFeature $feature)
     {
-        $task = Task::query()->findOrFail($taskId);
+        $aggregate = $this->programRepository->ofTaskIdOrFail($taskId);
 
-        $aggregate = $this->taskRepository->of($task);
-        $aggregate->update($profile, $feature);
-        $this->taskRepository->update($aggregate);
+        $aggregate->updateTask($taskId, $profile, $feature);
+
+        $this->programRepository->update($aggregate);
     }
 
-    public function updateProgramTaskActive(string $taskId, bool $value)
+    public function updateTaskActive(Uuid $taskId, bool $value)
     {
-        $task = Task::query()->findOrFail($taskId);
+        $aggregate = $this->programRepository->ofTaskIdOrFail($taskId);
 
-        $aggregate = $this->taskRepository->of($task);
-        $aggregate->updateActive($value);
-        $this->taskRepository->update($aggregate);
+        $aggregate->updateTaskActive($taskId, $value);
+
+        $this->programRepository->update($aggregate);
     }
 
     //

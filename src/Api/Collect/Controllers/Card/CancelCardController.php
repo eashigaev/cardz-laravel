@@ -5,6 +5,7 @@ namespace CardzApp\Api\Collect\Controllers\Card;
 use App\Http\Controllers\Controller;
 use CardzApp\Api\Shared\ControllerTrait;
 use CardzApp\Modules\Collect\Application\Services\CardService;
+use Codderz\YokoLite\Domain\Uuid\Uuid;
 use Illuminate\Http\Request;
 
 class CancelCardController extends Controller
@@ -20,7 +21,7 @@ class CancelCardController extends Controller
     public function __invoke(Request $request)
     {
         $this->cardService->cancelCard(
-            $request->card
+            Uuid::of($request->card)
         );
 
         return $this->successResponse();

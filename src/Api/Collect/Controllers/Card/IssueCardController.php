@@ -5,6 +5,7 @@ namespace CardzApp\Api\Collect\Controllers\Card;
 use App\Http\Controllers\Controller;
 use CardzApp\Api\Shared\ControllerTrait;
 use CardzApp\Modules\Collect\Application\Services\CardService;
+use Codderz\YokoLite\Domain\Uuid\Uuid;
 use Illuminate\Http\Request;
 
 class IssueCardController extends Controller
@@ -20,7 +21,9 @@ class IssueCardController extends Controller
     public function __invoke(Request $request)
     {
         $cardId = $this->cardService->issueCard(
-            $request->program, $request->holder, $request->comment
+            Uuid::of($request->program),
+            Uuid::of($request->holder),
+            $request->comment
         );
 
         return $this->successResponse([

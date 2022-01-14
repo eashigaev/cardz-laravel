@@ -2,8 +2,11 @@
 
 namespace CardzApp\Modules\Collect\Domain;
 
+use App\Models\Collect\Task;
 use Codderz\YokoLite\Domain\OptimisticLockingTrait;
 use Codderz\YokoLite\Domain\Uuid\Uuid;
+use Codderz\YokoLite\Shared\Exception;
+use Illuminate\Support\Collection;
 
 class ProgramAggregate
 {
@@ -15,9 +18,11 @@ class ProgramAggregate
     public ProgramReward $reward;
     public bool $active;
 
+    public Collection $tasks;
+
     public static function add(Uuid $id, Uuid $companyId, ProgramProfile $profile, ProgramReward $reward)
     {
-        return self::of($id, $companyId, $profile, $reward, false);
+        return self::of($id, $companyId, $profile, $reward, false, Collection::make());
     }
 
     public function update(ProgramProfile $profile, ProgramReward $reward)
@@ -35,15 +40,44 @@ class ProgramAggregate
 
     //
 
-    public function isRewardReached(int $balance)
+    public function findTask(callable $criteria): TaskEntity|null
     {
-        return $this->reward->getTarget() <= $balance;
+        return $this->tasks->first($criteria);
+    }
+
+    public function addTask(Uuid $id, TaskProfile $profile, TaskFeature $feature)
+    {
+        $task = TaskEntity::add($id, $profile, $feature);
+
+        $this->tasks = $this->tasks->add($task);
+
+        return $task;
+    }
+
+    public function updateTask(Uuid $taskId, TaskProfile $profile, TaskFeature $feature)
+    {
+        $task = $this->findTask(fn(TaskEntity $i) => $i->id->isEquals($taskId));
+
+        $task->update($profile, $feature);
+    }
+
+    public function updateTaskActive(Uuid $taskId, bool $value)
+    {
+        $task = $this->findTask(
+            fn(TaskEntity $e) => $e->id->isEquals($taskId)
+        );
+
+        if (!$task) {
+            throw Exception::of(Messages::NOT_FOUND);
+        }
+
+        $task->updateActive($value);
     }
 
     //
 
     public static function of(
-        Uuid $id, Uuid $companyId, ProgramProfile $profile, ProgramReward $reward, bool $active
+        Uuid $id, Uuid $companyId, ProgramProfile $profile, ProgramReward $reward, bool $active, Collection $tasks
     )
     {
         $self = new self();
@@ -52,6 +86,7 @@ class ProgramAggregate
         $self->profile = $profile;
         $self->reward = $reward;
         $self->active = $active;
+        $self->tasks = $tasks;
         return $self;
     }
 }

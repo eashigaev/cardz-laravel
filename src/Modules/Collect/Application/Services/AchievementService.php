@@ -25,10 +25,10 @@ class AchievementService
     {
     }
 
-    public function addAchievement(string $cardId, string $taskId)
+    public function addAchievement(Uuid $cardId, Uuid $taskId)
     {
-        $card = Card::query()->with(['program', 'achievements'])->findOrFail($cardId);
-        $task = $card->program->tasks->firstOrFail('id', $taskId);
+        $card = Card::query()->with(['program', 'achievements'])->findOrFail($cardId->getValue());
+        $task = $card->program->tasks->firstOrFail('id', $taskId->getValue());
 
         $aggregate = AchievementAggregate::add(
             Uuid::of($this->uuidGenerator->getNextValue()),
@@ -44,9 +44,9 @@ class AchievementService
         return $aggregate->id->getValue();
     }
 
-    public function removeAchievement(string $achievementId)
+    public function removeAchievement(Uuid $achievementId)
     {
-        $achievement = Achievement::query()->with(['card'])->findOrFail($achievementId);
+        $achievement = Achievement::query()->with(['card'])->findOrFail($achievementId->getValue());
 
         $cardAggregate = $this->cardRepository->of($achievement->card);
 

@@ -21,7 +21,6 @@ class CreateCollectTasksTable extends Migration
             $table->string('description');
             $table->boolean('repeatable');
             $table->boolean('active');
-            $table->integer('meta_version')->nullable();
             $table->timestamps();
         });
     }

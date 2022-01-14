@@ -7,6 +7,7 @@ use CardzApp\Api\Shared\ControllerTrait;
 use CardzApp\Modules\Collect\Application\Services\ProgramService;
 use CardzApp\Modules\Collect\Domain\ProgramProfile;
 use CardzApp\Modules\Collect\Domain\ProgramReward;
+use Codderz\YokoLite\Domain\Uuid\Uuid;
 use Illuminate\Http\Request;
 
 class UpdateProgramController extends Controller
@@ -30,7 +31,7 @@ class UpdateProgramController extends Controller
         );
 
         $this->programService->updateProgram(
-            $request->program, $profile, $reward
+            Uuid::of($request->program), $profile, $reward
         );
 
         return $this->successResponse();

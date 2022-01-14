@@ -7,6 +7,7 @@ use CardzApp\Api\Shared\ControllerTrait;
 use CardzApp\Modules\Collect\Application\Services\TaskService;
 use CardzApp\Modules\Collect\Domain\TaskFeature;
 use CardzApp\Modules\Collect\Domain\TaskProfile;
+use Codderz\YokoLite\Domain\Uuid\Uuid;
 use Illuminate\Http\Request;
 
 class UpdateTaskController extends Controller
@@ -29,8 +30,8 @@ class UpdateTaskController extends Controller
             $request->repeatable
         );
 
-        $this->taskService->updateProgramTask(
-            $request->task, $profile, $feature
+        $this->taskService->updateTask(
+            Uuid::of($request->task), $profile, $feature
         );
 
         return $this->successResponse();

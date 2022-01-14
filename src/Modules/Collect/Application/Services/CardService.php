@@ -21,15 +21,15 @@ class CardService
     {
     }
 
-    public function issueCard(string $programId, string $holderId, string $comment)
+    public function issueCard(Uuid $programId, Uuid $holderId, string $comment)
     {
-        $program = Program::query()->findOrFail($programId);
-        $holder = User::query()->findOrFail($holderId);
+        $program = Program::query()->findOrFail($programId->getValue());
+        $holder = User::query()->findOrFail($holderId->getValue());
 
         $aggregate = CardAggregate::issue(
             Uuid::of($this->uuidGenerator->getNextValue()),
             $this->programRepository->of($program),
-            Uuid::of($holder->id),
+            $holderId,
             $comment
         );
 
@@ -38,18 +38,18 @@ class CardService
         return $aggregate->id->getValue();
     }
 
-    public function updateCard(string $cardId, string $comment)
+    public function updateCard(Uuid $cardId, string $comment)
     {
-        $card = Card::query()->findOrFail($cardId);
+        $card = Card::query()->findOrFail($cardId->getValue());
 
         $aggregate = $this->cardRepository->of($card);
         $aggregate->update($comment);
         $this->cardRepository->update($aggregate);
     }
 
-    public function rewardCard(string $cardId)
+    public function rewardCard(Uuid $cardId)
     {
-        $card = Card::query()->with('program')->findOrFail($cardId);
+        $card = Card::query()->with('program')->findOrFail($cardId->getValue());
 
         $programAggregate = $this->programRepository->of($card->program);
 
@@ -58,7 +58,7 @@ class CardService
         $this->cardRepository->update($aggregate);
     }
 
-    public function rejectCard(string $cardId)
+    public function rejectCard(Uuid $cardId)
     {
         $card = Card::query()->findOrFail($cardId);
 
@@ -67,9 +67,9 @@ class CardService
         $this->cardRepository->update($aggregate);
     }
 
-    public function cancelCard(string $cardId)
+    public function cancelCard(Uuid $cardId)
     {
-        $card = Card::query()->findOrFail($cardId);
+        $card = Card::query()->findOrFail($cardId->getValue());
 
         $aggregate = $this->cardRepository->of($card);
         $aggregate->cancel();
