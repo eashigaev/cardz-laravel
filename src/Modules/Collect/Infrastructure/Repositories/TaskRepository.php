@@ -23,15 +23,26 @@ class TaskRepository
             ->withMetaVersion($task->meta_version);
     }
 
-    public function save(TaskAggregate $aggregate)
+    public function create(TaskAggregate $aggregate)
     {
-        Task::query()->updateOrInsert([
-            'id' => $aggregate->id->getValue(),
-            'meta_version' => $aggregate->getMetaVersion()
-        ], [
+        Task::query()->insert([
             'id' => $aggregate->id->getValue(),
             'company_id' => $aggregate->companyId->getValue(),
             'program_id' => $aggregate->programId->getValue(),
+            'title' => $aggregate->profile->getTitle(),
+            'description' => $aggregate->profile->getDescription(),
+            'repeatable' => $aggregate->feature->isRepeatable(),
+            'active' => $aggregate->active,
+            'meta_version' => $aggregate->nextMetaVersion()
+        ]);
+    }
+
+    public function update(TaskAggregate $aggregate)
+    {
+        Task::query()->where([
+            'id' => $aggregate->id->getValue(),
+            'meta_version' => $aggregate->getMetaVersion()
+        ])->update([
             'title' => $aggregate->profile->getTitle(),
             'description' => $aggregate->profile->getDescription(),
             'repeatable' => $aggregate->feature->isRepeatable(),

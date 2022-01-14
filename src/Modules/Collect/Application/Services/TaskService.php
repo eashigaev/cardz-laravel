@@ -17,7 +17,7 @@ class TaskService
     public function __construct(
         private UuidGenerator     $uuidGenerator,
         private ProgramRepository $programRepository,
-        private TaskRepository $taskRepository
+        private TaskRepository    $taskRepository
     )
     {
     }
@@ -32,7 +32,7 @@ class TaskService
             $profile,
             $feature
         );
-        $this->taskRepository->save($aggregate);
+        $this->taskRepository->create($aggregate);
 
         return $aggregate->id->getValue();
     }
@@ -43,7 +43,7 @@ class TaskService
 
         $aggregate = $this->taskRepository->of($task);
         $aggregate->update($profile, $feature);
-        $this->taskRepository->save($aggregate);
+        $this->taskRepository->update($aggregate);
     }
 
     public function updateProgramTaskActive(string $taskId, bool $value)
@@ -52,7 +52,7 @@ class TaskService
 
         $aggregate = $this->taskRepository->of($task);
         $aggregate->updateActive($value);
-        $this->taskRepository->save($aggregate);
+        $this->taskRepository->update($aggregate);
     }
 
     //

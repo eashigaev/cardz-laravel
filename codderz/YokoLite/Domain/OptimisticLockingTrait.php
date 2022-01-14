@@ -4,7 +4,7 @@ namespace Codderz\YokoLite\Domain;
 
 trait OptimisticLockingTrait
 {
-    private ?int $metaVersion = null;
+    private ?int $metaVersion = 0;
 
     public function withMetaVersion($value)
     {

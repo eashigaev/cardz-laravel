@@ -7,7 +7,7 @@ use Codderz\YokoLite\Domain\Uuid\Uuid;
 use Codderz\YokoLite\Shared\Exception;
 use Illuminate\Support\Collection;
 
-class CardAggregate
+class Card2Aggregate
 {
     use OptimisticLockingTrait;
 
@@ -17,8 +17,8 @@ class CardAggregate
     public Uuid $holderId;
     public string $comment;
 
-    public int $balance;
     public CardStatus $status;
+    public Collection $achievements;
 
     public static function issue(Uuid $id, ProgramAggregate $program, Uuid $holderId, string $comment)
     {

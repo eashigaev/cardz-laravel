@@ -30,8 +30,10 @@ class AddAchievementTest extends TestCase
         $task = Task::factory()->create(['active' => true, 'repeatable' => true]);
         $task->program()->update(['active' => true, 'reward_target' => 5]);
 
+        dd($task->company_id, $task->program->company_id);
+
         $card = Card::factory()->for($task->program)->for($task->company)
-            ->withStatus(CardStatus::ACTIVE)->create();
+            ->withStatus(CardStatus::ACTIVE)->create(['balance' => 0]);
 
         Achievement::factory()->for($card)->count(3)->create();
 

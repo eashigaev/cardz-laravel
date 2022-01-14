@@ -23,16 +23,26 @@ class CardRepository
             ->withMetaVersion($card->meta_version);
     }
 
-    public function save(CardAggregate $aggregate)
+    public function create(CardAggregate $aggregate)
     {
-        Card::query()->updateOrInsert([
-            'id' => $aggregate->id->getValue(),
-            'meta_version' => $aggregate->getMetaVersion()
-        ], [
+        Card::query()->insert([
             'id' => $aggregate->id->getValue(),
             'company_id' => $aggregate->companyId->getValue(),
             'program_id' => $aggregate->programId->getValue(),
             'holder_id' => $aggregate->holderId->getValue(),
+            'comment' => $aggregate->comment,
+            'balance' => $aggregate->balance,
+            'status' => $aggregate->status->getValue(),
+            'meta_version' => $aggregate->nextMetaVersion()
+        ]);
+    }
+
+    public function update(CardAggregate $aggregate)
+    {
+        Card::query()->where([
+            'id' => $aggregate->id->getValue(),
+            'meta_version' => $aggregate->getMetaVersion()
+        ])->update([
             'comment' => $aggregate->comment,
             'balance' => $aggregate->balance,
             'status' => $aggregate->status->getValue(),

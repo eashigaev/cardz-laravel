@@ -58,20 +58,4 @@ class RemoveAchievementTest extends TestCase
             'achievement' => $achievement->id
         ]);
     }
-
-    public function test_fail_when_non_active_program()
-    {
-        $achievement = Achievement::factory()->create();
-        $achievement->card()->update(['status' => CardStatus::ACTIVE->getValue()]);
-        $achievement->program()->update(['active' => false]);
-
-        $this->actingAsCompany($achievement->company);
-
-        $this->withoutExceptionHandling();
-        $this->expectExceptionMessage(Messages::PROGRAM_IS_NOT_ACTIVE);
-
-        $this->callJsonRoute(self::ROUTE, parameters: [
-            'achievement' => $achievement->id
-        ]);
-    }
 }

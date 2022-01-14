@@ -21,7 +21,7 @@ class TaskFactory extends Factory
         return [
             'id' => $this->uuidGenerator()->getNextValue(),
             'company_id' => $company,
-            'program_id' => Program::factory()->for($company),
+            'program_id' => fn() => Program::factory()->for($company),
             'title' => $this->faker->company(),
             'description' => $this->faker->sentence(),
             'active' => $this->faker->boolean(),

@@ -33,7 +33,7 @@ class ProgramService
             $profile,
             $reward
         );
-        $this->programRepository->save($aggregate);
+        $this->programRepository->create($aggregate);
 
         return $aggregate->id->getValue();
     }
@@ -44,7 +44,7 @@ class ProgramService
 
         $aggregate = $this->programRepository->of($program);
         $aggregate->update($profile, $reward);
-        $this->programRepository->save($aggregate);
+        $this->programRepository->update($aggregate);
     }
 
     public function updateProgramActive(string $programId, bool $value)
@@ -53,7 +53,7 @@ class ProgramService
 
         $aggregate = $this->programRepository->of($program);
         $aggregate->updateActive($value);
-        $this->programRepository->save($aggregate);
+        $this->programRepository->update($aggregate);
     }
 
     //

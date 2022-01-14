@@ -33,7 +33,7 @@ class CardService
             $comment
         );
 
-        $this->cardRepository->save($aggregate);
+        $this->cardRepository->create($aggregate);
 
         return $aggregate->id->getValue();
     }
@@ -44,7 +44,7 @@ class CardService
 
         $aggregate = $this->cardRepository->of($card);
         $aggregate->update($comment);
-        $this->cardRepository->save($aggregate);
+        $this->cardRepository->update($aggregate);
     }
 
     public function rewardCard(string $cardId)
@@ -55,7 +55,7 @@ class CardService
 
         $aggregate = $this->cardRepository->of($card);
         $aggregate->reward($programAggregate);
-        $this->cardRepository->save($aggregate);
+        $this->cardRepository->update($aggregate);
     }
 
     public function rejectCard(string $cardId)
@@ -64,7 +64,7 @@ class CardService
 
         $aggregate = $this->cardRepository->of($card);
         $aggregate->reject();
-        $this->cardRepository->save($aggregate);
+        $this->cardRepository->update($aggregate);
     }
 
     public function cancelCard(string $cardId)
@@ -73,7 +73,7 @@ class CardService
 
         $aggregate = $this->cardRepository->of($card);
         $aggregate->cancel();
-        $this->cardRepository->save($aggregate);
+        $this->cardRepository->update($aggregate);
     }
 
     //

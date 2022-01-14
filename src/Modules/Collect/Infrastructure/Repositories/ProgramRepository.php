@@ -22,14 +22,26 @@ class ProgramRepository
             ->withMetaVersion($program->meta_version);
     }
 
-    public function save(ProgramAggregate $aggregate)
+    public function create(ProgramAggregate $aggregate)
     {
-        Program::query()->updateOrInsert([
-            'id' => $aggregate->id->getValue(),
-            'meta_version' => $aggregate->getMetaVersion()
-        ], [
+        Program::query()->insert([
             'id' => $aggregate->id->getValue(),
             'company_id' => $aggregate->companyId->getValue(),
+            'title' => $aggregate->profile->getTitle(),
+            'description' => $aggregate->profile->getDescription(),
+            'reward_title' => $aggregate->reward->getTitle(),
+            'reward_target' => $aggregate->reward->getTarget(),
+            'active' => $aggregate->active,
+            'meta_version' => $aggregate->nextMetaVersion()
+        ]);
+    }
+
+    public function update(ProgramAggregate $aggregate)
+    {
+        Program::query()->where([
+            'id' => $aggregate->id->getValue(),
+            'meta_version' => $aggregate->getMetaVersion()
+        ])->update([
             'title' => $aggregate->profile->getTitle(),
             'description' => $aggregate->profile->getDescription(),
             'reward_title' => $aggregate->reward->getTitle(),
