@@ -3,12 +3,16 @@
 namespace App\Models\Collect;
 
 use App\Models\Company;
+use Codderz\YokoLite\Infrastructure\Model\HasManySyncableTrait;
+use Codderz\YokoLite\Infrastructure\Model\OptimisticLockingTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Program extends Model
 {
-    use HasFactory;
+    use HasFactory,
+        OptimisticLockingTrait,
+        HasManySyncableTrait;
 
     public $table = 'collect_programs';
     public $keyType = 'string';
@@ -30,6 +34,6 @@ class Program extends Model
 
     public function tasks()
     {
-        return $this->hasMany(Task::class);
+        return $this->hasManySyncable(Task::class);
     }
 }

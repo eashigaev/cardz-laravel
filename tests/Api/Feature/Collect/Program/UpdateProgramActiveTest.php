@@ -4,7 +4,6 @@ namespace Tests\Api\Feature\Collect\Program;
 
 use App\Models\Collect\Program;
 use CardzApp\Api\Shared\Routes;
-use CardzApp\Modules\Collect\Application\Events\ProgramActiveUpdated;
 use CardzApp\Modules\Shared\Application\Actions;
 use Event;
 use Tests\Api\Support\FeatureTestTrait;
