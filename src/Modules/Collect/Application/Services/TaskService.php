@@ -28,7 +28,7 @@ class TaskService
             $feature
         );
 
-        $this->programRepository->update($aggregate);
+        $this->programRepository->save($aggregate);
 
         return $task->id->getValue();
     }
@@ -39,7 +39,7 @@ class TaskService
 
         $aggregate->updateTask($taskId, $profile, $feature);
 
-        $this->programRepository->update($aggregate);
+        $this->programRepository->save($aggregate);
     }
 
     public function updateTaskActive(Uuid $taskId, bool $value)
@@ -48,7 +48,7 @@ class TaskService
 
         $aggregate->updateTaskActive($taskId, $value);
 
-        $this->programRepository->update($aggregate);
+        $this->programRepository->save($aggregate);
     }
 
     //

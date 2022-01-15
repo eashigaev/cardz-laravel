@@ -3,16 +3,16 @@
 namespace App\Models\Collect;
 
 use App\Models\Company;
-use Codderz\YokoLite\Infrastructure\Model\HasManySyncableTrait;
-use Codderz\YokoLite\Infrastructure\Model\OptimisticLockingTrait;
+use Codderz\YokoLite\Infrastructure\Database\Model\HasManySyncableTrait;
+use Codderz\YokoLite\Infrastructure\Database\Model\OptimisticLockingTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Program extends Model
 {
     use HasFactory,
-        OptimisticLockingTrait,
-        HasManySyncableTrait;
+        HasManySyncableTrait,
+        OptimisticLockingTrait;
 
     public $table = 'collect_programs';
     public $keyType = 'string';
@@ -35,5 +35,17 @@ class Program extends Model
     public function tasks()
     {
         return $this->hasManySyncable(Task::class);
+    }
+
+    //
+
+    public static function ofIdOrFail(string $programId)
+    {
+        return static::query()->with('tasks')->findOrFail($programId);
+    }
+
+    public static function ofTaskIdOrFail(string $taskId)
+    {
+        return static::query()->with('program', 'program.tasks')->findOrFail($taskId);
     }
 }

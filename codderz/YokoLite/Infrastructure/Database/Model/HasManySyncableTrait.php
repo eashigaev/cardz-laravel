@@ -1,8 +1,8 @@
 <?php
 
-namespace Codderz\YokoLite\Infrastructure\Model;
+namespace Codderz\YokoLite\Infrastructure\Database\Model;
 
-use Codderz\YokoLite\Infrastructure\Model\Relations\HasManySyncable;
+use Codderz\YokoLite\Infrastructure\Database\Model\Relations\HasManySyncable;
 
 trait HasManySyncableTrait
 {

@@ -4,11 +4,9 @@ namespace CardzApp\Modules\Collect\Application\Services;
 
 use App\Models\Collect\Program;
 use App\Models\Company;
-use CardzApp\Modules\Collect\Application\Events\ProgramActiveUpdated;
 use CardzApp\Modules\Collect\Domain\ProgramAggregate;
 use CardzApp\Modules\Collect\Domain\ProgramProfile;
 use CardzApp\Modules\Collect\Domain\ProgramReward;
-use CardzApp\Modules\Collect\Infrastructure\Repositories\CompanyRepository;
 use CardzApp\Modules\Collect\Infrastructure\Repositories\ProgramRepository;
 use Codderz\YokoLite\Domain\Uuid\Uuid;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
@@ -34,7 +32,7 @@ class ProgramService
             $reward
         );
 
-        $this->programRepository->create($aggregate);
+        $this->programRepository->save($aggregate);
 
         return $aggregate->id->getValue();
     }
@@ -45,7 +43,7 @@ class ProgramService
 
         $aggregate->update($profile, $reward);
 
-        $this->programRepository->update($aggregate);
+        $this->programRepository->save($aggregate);
     }
 
     public function updateProgramActive(Uuid $programId, bool $value)
@@ -54,7 +52,7 @@ class ProgramService
 
         $aggregate->updateActive($value);
 
-        $this->programRepository->update($aggregate);
+        $this->programRepository->save($aggregate);
     }
 
     //

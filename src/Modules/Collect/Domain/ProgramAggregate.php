@@ -2,16 +2,12 @@
 
 namespace CardzApp\Modules\Collect\Domain;
 
-use App\Models\Collect\Task;
-use Codderz\YokoLite\Domain\OptimisticLockingTrait;
 use Codderz\YokoLite\Domain\Uuid\Uuid;
 use Codderz\YokoLite\Shared\Exception;
 use Illuminate\Support\Collection;
 
 class ProgramAggregate
 {
-    use OptimisticLockingTrait;
-
     public Uuid $id;
     public Uuid $companyId;
     public ProgramProfile $profile;

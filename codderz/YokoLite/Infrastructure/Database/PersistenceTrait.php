@@ -1,6 +1,6 @@
 <?php
 
-namespace Codderz\YokoLite\Infrastructure;
+namespace Codderz\YokoLite\Infrastructure\Database;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;

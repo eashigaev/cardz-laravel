@@ -1,16 +1,17 @@
 <?php
 
-namespace Codderz\YokoLite\Infrastructure\Model\Relations;
+namespace Codderz\YokoLite\Infrastructure\Database\Model\Relations;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class HasManySyncable extends HasMany
 {
-    public function sync($data, $deleting = true)
+    public function sync(array $data, $deleting = true)
     {
-        $changes = [
-            'created' => [], 'deleted' => [], 'updated' => [],
-        ];
+        Model::unguard();
+
+        $changes = ['created' => [], 'deleted' => [], 'updated' => [],];
 
         $relatedKeyName = $this->related->getKeyName();
 
@@ -66,6 +67,8 @@ class HasManySyncable extends HasMany
         }
 
         $changes['created'][] = $this->castKeys($newIds);
+
+        Model::reguard();
 
         return $changes;
     }
