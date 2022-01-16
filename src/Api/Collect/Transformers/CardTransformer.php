@@ -23,6 +23,10 @@ class CardTransformer
 
     public function detail(Model|Card $model): array
     {
-        return $this->preview($model);
+        return [
+            ...$this->preview($model),
+            'comment' => $model->comment,
+            'holder_username' => $model->holder->username,
+        ];
     }
 }

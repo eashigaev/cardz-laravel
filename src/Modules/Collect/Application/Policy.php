@@ -16,7 +16,7 @@ class Policy
     {
         $isCompanyPrincipal = fn(User $sub, Company $res) => $sub->id === $res->founder_id;
         $isProgramPrincipal = fn(User $sub, Program $res) => $sub->id === $res->company->founder_id;
-        $isProgramTaskPrincipal = fn(User $sub, Task $res) => $sub->id === $res->company->founder_id;
+        $isTaskPrincipal = fn(User $sub, Task $res) => $sub->id === $res->company->founder_id;
         $isCardPrincipal = fn(User $sub, Card $res) => $sub->id === $res->company->founder_id;
         $isCardHolder = fn(User $sub, Card $res) => $sub->id === $res->holder_id;
         $isAchievementPrincipal = fn(User $sub, Achievement $res) => $sub->id === $res->company->founder_id;
@@ -30,13 +30,14 @@ class Policy
         ], [
             Actions::COLLECT_ADD_TASK => $isProgramPrincipal,
             Actions::COLLECT_GET_TASKS => $isProgramPrincipal,
-            Actions::COLLECT_UPDATE_TASK => $isProgramTaskPrincipal,
-            Actions::COLLECT_GET_TASK => $isProgramTaskPrincipal,
-            Actions::COLLECT_UPDATE_TASK_ACTIVE => $isProgramTaskPrincipal
+            Actions::COLLECT_UPDATE_TASK => $isTaskPrincipal,
+            Actions::COLLECT_GET_TASK => $isTaskPrincipal,
+            Actions::COLLECT_UPDATE_TASK_ACTIVE => $isTaskPrincipal
         ], [
             Actions::COLLECT_ISSUE_CARD => $isProgramPrincipal,
             Actions::COLLECT_GET_CARDS => $isProgramPrincipal,
             Actions::COLLECT_UPDATE_CARD => $isCardPrincipal,
+            Actions::COLLECT_GET_CARD => $isCardPrincipal,
             Actions::COLLECT_REJECT_CARD => $isCardPrincipal,
             Actions::COLLECT_CANCEL_CARD => $isCardHolder,
             Actions::COLLECT_REWARD_CARD => $isCardPrincipal,

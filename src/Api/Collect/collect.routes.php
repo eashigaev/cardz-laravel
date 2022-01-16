@@ -9,6 +9,7 @@ use CardzApp\Api\Collect\Controllers\Achievement\AddAchievementController;
 use CardzApp\Api\Collect\Controllers\Achievement\GetAchievementsController;
 use CardzApp\Api\Collect\Controllers\Achievement\RemoveAchievementController;
 use CardzApp\Api\Collect\Controllers\Card\CancelCardController;
+use CardzApp\Api\Collect\Controllers\Card\GetCardController;
 use CardzApp\Api\Collect\Controllers\Card\GetCardsController;
 use CardzApp\Api\Collect\Controllers\Card\IssueCardController;
 use CardzApp\Api\Collect\Controllers\Card\RejectCardController;
@@ -85,6 +86,9 @@ Route::prefix(Routes::URL_PREFIX . '/collect')->middleware([Routes::API_MIDDLEWA
         Route::patch('/')
             ->name(Routes::COLLECT_UPDATE_CARD)->uses(UpdateCardController::class)
             ->middleware(Authorize::for(Actions::COLLECT_UPDATE_CARD, ['card' => Card::class]));
+        Route::get('/')
+            ->name(Routes::COLLECT_GET_CARD)->uses(GetCardController::class)
+            ->middleware(Authorize::for(Actions::COLLECT_GET_CARD, ['card' => Card::class]));
         Route::patch('/reject')
             ->name(Routes::COLLECT_REJECT_CARD)->uses(RejectCardController::class)
             ->middleware(Authorize::for(Actions::COLLECT_REJECT_CARD, ['card' => Card::class]));

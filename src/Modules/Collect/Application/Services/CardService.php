@@ -90,7 +90,7 @@ class CardService
     public function getCard(string $cardId)
     {
         return Card::query()
-            ->with('company', 'program')
+            ->with('company', 'program', 'holder')
             ->findOrFail($cardId);
     }
 }
