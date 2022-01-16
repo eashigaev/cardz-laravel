@@ -41,6 +41,7 @@ class CardAggregate
         if (!$this->programId->isEquals($program->id)) {
             throw Exception::of(Messages::INVALID_ARGUMENT);
         }
+
         if ($this->status !== CardStatus::ACTIVE) {
             throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
         }
@@ -88,6 +89,10 @@ class CardAggregate
 
     public function addAchievement(Uuid $id, Uuid $taskId, ProgramAggregate $program)
     {
+        if (!$this->programId->isEquals($program->id)) {
+            throw Exception::of(Messages::INVALID_ARGUMENT);
+        }
+
         if ($this->status !== CardStatus::ACTIVE) {
             throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
         }
@@ -107,7 +112,7 @@ class CardAggregate
         }
 
         $achieved = $this->findAchievement(
-            fn(AchievementEntity $e) => $e->id->isEquals($id)
+            fn(AchievementEntity $e) => $e->taskId->isEquals($taskId)
         );
         if (!$task->feature->isRepeatable() && $achieved) {
             throw Exception::of(Messages::CARD_TASK_ALREADY_ACHIEVED);

@@ -5,7 +5,7 @@ namespace Tests\Api\Feature\Business;
 use App\Models\Company;
 use App\Models\User;
 use CardzApp\Api\Shared\Routes;
-use Tests\Api\Support\FeatureTestTrait;
+use Tests\Api\Feature\FeatureTestTrait;
 use Tests\TestCase;
 
 class GetCompaniesTest extends TestCase

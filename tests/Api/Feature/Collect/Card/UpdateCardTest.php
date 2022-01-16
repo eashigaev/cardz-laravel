@@ -5,7 +5,7 @@ namespace Tests\Api\Feature\Collect\Card;
 use App\Models\Collect\Card;
 use CardzApp\Api\Shared\Routes;
 use CardzApp\Modules\Shared\Application\Actions;
-use Tests\Api\Support\FeatureTestTrait;
+use Tests\Api\Feature\FeatureTestTrait;
 use Tests\TestCase;
 
 class UpdateCardTest extends TestCase

@@ -4,7 +4,7 @@ namespace Tests\Api\Feature\Business;
 
 use App\Models\Company;
 use CardzApp\Api\Shared\Routes;
-use Tests\Api\Support\FeatureTestTrait;
+use Tests\Api\Feature\FeatureTestTrait;
 use Tests\TestCase;
 
 class UpdateCompanyTest extends TestCase

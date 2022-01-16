@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Api\Support;
+namespace Tests\Api\Feature;
 
 use App\Models\Company;
 use Codderz\YokoLite\Application\Authentication\SanctumTestTrait;

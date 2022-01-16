@@ -5,7 +5,7 @@ namespace Tests\Api\Feature\Auth;
 use App\Models\User;
 use CardzApp\Api\Shared\Routes;
 use Database\Factories\UserFactory;
-use Tests\Api\Support\FeatureTestTrait;
+use Tests\Api\Feature\FeatureTestTrait;
 use Tests\TestCase;
 
 class LogoutTest extends TestCase

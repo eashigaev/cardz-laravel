@@ -2,6 +2,7 @@
 
 namespace Codderz\YokoLite\Tests\Support;
 
+use ErrorException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 trait ExceptionTestTrait
@@ -13,6 +14,6 @@ trait ExceptionTestTrait
 
     public function expectErrorException()
     {
-        $this->expectException(\ErrorException::class);
+        $this->expectException(ErrorException::class);
     }
 }

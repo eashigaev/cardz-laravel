@@ -8,7 +8,7 @@ use App\Models\Collect\Task;
 use CardzApp\Api\Shared\Routes;
 use CardzApp\Modules\Collect\Domain\CardStatus;
 use CardzApp\Modules\Shared\Application\Actions;
-use Tests\Api\Support\FeatureTestTrait;
+use Tests\Api\Feature\FeatureTestTrait;
 use Tests\TestCase;
 
 class AddAchievementTest extends TestCase

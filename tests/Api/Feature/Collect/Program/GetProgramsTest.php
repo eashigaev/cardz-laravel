@@ -6,7 +6,7 @@ use App\Models\Collect\Program;
 use App\Models\Company;
 use CardzApp\Api\Shared\Routes;
 use CardzApp\Modules\Shared\Application\Actions;
-use Tests\Api\Support\FeatureTestTrait;
+use Tests\Api\Feature\FeatureTestTrait;
 use Tests\TestCase;
 
 class GetProgramsTest extends TestCase

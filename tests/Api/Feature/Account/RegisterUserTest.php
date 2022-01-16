@@ -6,7 +6,7 @@ use App\Models\User;
 use CardzApp\Api\Shared\Routes;
 use Database\Factories\UserFactory;
 use Illuminate\Support\Facades\Hash;
-use Tests\Api\Support\FeatureTestTrait;
+use Tests\Api\Feature\FeatureTestTrait;
 use Tests\TestCase;
 
 class RegisterUserTest extends TestCase
