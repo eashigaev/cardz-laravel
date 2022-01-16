@@ -2,6 +2,7 @@
 
 namespace CardzApp\Modules\Collect\Application\Services;
 
+use App\Models\Collect\Achievement;
 use CardzApp\Modules\Collect\Infrastructure\Repositories\CardRepository;
 use CardzApp\Modules\Collect\Infrastructure\Repositories\ProgramRepository;
 use Codderz\YokoLite\Domain\Uuid\Uuid;
@@ -40,5 +41,15 @@ class AchievementService
         $aggregate->removeAchievement($id);
 
         $this->cardRepository->save($aggregate);
+    }
+
+    //
+
+    public function getAchievements(string $cardId)
+    {
+        return Achievement::with('task')
+            ->where('card_id', $cardId)
+            ->orderBy('created_at')
+            ->get();
     }
 }

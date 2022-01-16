@@ -15,6 +15,7 @@ class TaskTransformer
             'program_id' => $model->program_id,
             'title' => $model->title,
             'description' => $model->description,
+            'repeatable' => (bool)$model->repeatable,
             'active' => (bool)$model->active
         ];
     }

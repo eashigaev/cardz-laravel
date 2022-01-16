@@ -35,12 +35,14 @@ class Policy
             Actions::COLLECT_UPDATE_TASK_ACTIVE => $isProgramTaskPrincipal
         ], [
             Actions::COLLECT_ISSUE_CARD => $isProgramPrincipal,
+            Actions::COLLECT_GET_CARDS => $isProgramPrincipal,
             Actions::COLLECT_UPDATE_CARD => $isCardPrincipal,
             Actions::COLLECT_REJECT_CARD => $isCardPrincipal,
             Actions::COLLECT_CANCEL_CARD => $isCardHolder,
             Actions::COLLECT_REWARD_CARD => $isCardPrincipal,
         ], [
             Actions::COLLECT_ADD_ACHIEVEMENT => $isCardPrincipal,
+            Actions::COLLECT_GET_ACHIEVEMENTS => $isCardPrincipal,
             Actions::COLLECT_REMOVE_ACHIEVEMENT => $isAchievementPrincipal,
         ]);
     }

@@ -40,6 +40,7 @@ class GetTasksTest extends TestCase
                 'program_id' => $task->program->id,
                 'title' => $task->title,
                 'description' => $task->description,
+                'repeatable' => $task->repeatable,
                 'active' => $task->active
             ]);
         }

@@ -30,11 +30,14 @@ abstract class Actions
     const COLLECT_UPDATE_TASK_ACTIVE = 'api.v1.collect.updateTaskActive';
 
     const COLLECT_ISSUE_CARD = 'api.v1.collect.issueCard';
+    const COLLECT_GET_CARDS = 'api.v1.collect.getCards';
     const COLLECT_UPDATE_CARD = 'api.v1.collect.updateCard';
     const COLLECT_REJECT_CARD = 'api.v1.collect.rejectCard';
     const COLLECT_CANCEL_CARD = 'api.v1.collect.cancelCard';
     const COLLECT_REWARD_CARD = 'api.v1.collect.rewardCard';
+    const COLLECT_GET_CARD = 'api.v1.collect.getCard';
 
     const COLLECT_ADD_ACHIEVEMENT = 'api.v1.collect.addAchievement';
+    const COLLECT_GET_ACHIEVEMENTS = 'api.v1.collect.getAchievements';
     const COLLECT_REMOVE_ACHIEVEMENT = 'api.v1.collect.removeAchievement';
 }

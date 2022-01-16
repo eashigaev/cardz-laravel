@@ -39,16 +39,14 @@ PTCH /collect/card/id/{card}/reward                                 # Reward car
 PTCH /collect/card/id/{card}/reject                                 # Reject card +
 PTCH /collect/card/id/{card}/cancel                                 # Cancel card +
 
- PUT /collect/card/id/{card}/achievements                           # Add achievement
- GET /collect/card/id/{card}/achievements                           # Get card achievements
+ PUT /collect/card/id/{card}/achievements                           # Add achievement +
+ GET /collect/card/id/{card}/achievements                           # Get card achievements +
  DEL /collect/achievement/id/{achievement}                          # Remove achievement +
 
-// Wallet
+ GET /collect/wallet/cards                                          # Get customer cards
+ GET /collect/wallet/card/id/{card}                                 # Get customer card
 
- GET /wallet/cards                                                  # Get cards
- GET /wallet/card/id/{card}                                         # Get card
-
-// Team [OUT]
+// Team [TODO]
 
  POST /team/invites/company/id/{company}                            # Make company invite
   GET /team/invites ?filter                                         # Get company invites
