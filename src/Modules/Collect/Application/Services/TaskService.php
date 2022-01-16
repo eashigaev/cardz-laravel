@@ -22,7 +22,7 @@ class TaskService
     {
         $aggregate = $this->programRepository->ofIdOrFail($programId);
 
-        $task = $aggregate->addTask(
+        $taskId = $aggregate->addTask(
             Uuid::of($this->uuidGenerator->getNextValue()),
             $profile,
             $feature
@@ -30,7 +30,7 @@ class TaskService
 
         $this->programRepository->save($aggregate);
 
-        return $task->id->getValue();
+        return $taskId->getValue();
     }
 
     public function updateTask(Uuid $taskId, TaskProfile $profile, TaskFeature $feature)

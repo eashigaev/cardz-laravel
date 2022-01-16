@@ -47,7 +47,7 @@ class ProgramAggregate
 
         $this->tasks = $this->tasks->add($task);
 
-        return $task;
+        return $task->id;
     }
 
     public function updateTask(Uuid $taskId, TaskProfile $profile, TaskFeature $feature)

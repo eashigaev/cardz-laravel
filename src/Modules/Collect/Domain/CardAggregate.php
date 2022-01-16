@@ -86,11 +86,8 @@ class CardAggregate
         return $this->achievements->first($criteria);
     }
 
-    public function addAchievement(Uuid $achievementId, Uuid $taskId, ProgramAggregate $program)
+    public function addAchievement(Uuid $id, Uuid $taskId, ProgramAggregate $program)
     {
-        if (!$this->programId->isEquals($program->id)) {
-            throw Exception::of(Messages::INVALID_ARGUMENT);
-        }
         if ($this->status !== CardStatus::ACTIVE) {
             throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
         }
@@ -101,7 +98,7 @@ class CardAggregate
             throw Exception::of(Messages::PROGRAM_TARGET_ALREADY_REACHED);
         };
 
-        $task = $program->findTask(fn(TaskEntity $e) => $e->id->isEquals($achievementId));
+        $task = $program->findTask(fn(TaskEntity $e) => $e->id->isEquals($taskId));
         if (!$task) {
             throw Exception::of(Messages::NOT_FOUND);
         }
@@ -110,15 +107,17 @@ class CardAggregate
         }
 
         $achieved = $this->findAchievement(
-            fn(AchievementEntity $e) => $e->id->isEquals($achievementId) && !$e->removed
+            fn(AchievementEntity $e) => $e->id->isEquals($id)
         );
         if (!$task->feature->isRepeatable() && $achieved) {
             throw Exception::of(Messages::CARD_TASK_ALREADY_ACHIEVED);
         }
 
-        $achievement = AchievementEntity::add($achievementId, $taskId);
+        $achievement = AchievementEntity::add($id, $taskId);
 
         $this->achievements = $this->achievements->add($achievement);
+
+        return $achievement->id;
     }
 
     public function removeAchievement(Uuid $achievementId)
@@ -127,15 +126,15 @@ class CardAggregate
             throw Exception::of(Messages::CARD_IS_NOT_ACTIVE);
         }
 
-        $achievement = $this->findAchievement(
+        $achievements = $this->achievements->reject(
             fn(AchievementEntity $e) => $e->id->isEquals($achievementId)
         );
 
-        if (!$achievementId) {
+        if (!$achievements->count()) {
             throw Exception::of(Messages::NOT_FOUND);
         }
 
-        $achievement->remove();
+        $this->achievements = $achievements;
     }
 
     //

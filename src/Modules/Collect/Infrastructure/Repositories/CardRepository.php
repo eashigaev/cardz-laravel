@@ -30,7 +30,7 @@ class CardRepository
     {
         $model = Achievement::query()->with('card', 'card.achievements')->findOrFail($achievementId->getValue());
 
-        return $this->of($model->program);
+        return $this->of($model->card);
     }
 
     public function of(Card $card): CardAggregate

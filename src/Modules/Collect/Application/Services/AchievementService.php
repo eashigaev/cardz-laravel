@@ -2,60 +2,43 @@
 
 namespace CardzApp\Modules\Collect\Application\Services;
 
-use App\Models\Collect\Achievement;
-use App\Models\Collect\Card;
-use CardzApp\Modules\Collect\Application\Events\CardAchievementsChanged;
-use CardzApp\Modules\Collect\Domain\AchievementAggregate;
-use CardzApp\Modules\Collect\Infrastructure\Repositories\AchievementRepository;
 use CardzApp\Modules\Collect\Infrastructure\Repositories\CardRepository;
 use CardzApp\Modules\Collect\Infrastructure\Repositories\ProgramRepository;
-use CardzApp\Modules\Collect\Infrastructure\Repositories\TaskRepository;
 use Codderz\YokoLite\Domain\Uuid\Uuid;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
 
 class AchievementService
 {
     public function __construct(
-        private UuidGenerator         $uuidGenerator,
-        private ProgramRepository     $programRepository,
-        private TaskRepository        $taskRepository,
-        private CardRepository        $cardRepository,
-        private AchievementRepository $achievementRepository
+        private UuidGenerator     $uuidGenerator,
+        private CardRepository    $cardRepository,
+        private ProgramRepository $programRepository
     )
     {
     }
 
     public function addAchievement(Uuid $cardId, Uuid $taskId)
     {
-        $card = Card::query()->with(['program', 'achievements'])->findOrFail($cardId->getValue());
-        $task = $card->program->tasks->firstOrFail('id', $taskId->getValue());
+        $aggregate = $this->cardRepository->ofIdOrFail($cardId);
+        $programAggregate = $this->programRepository->ofIdOrFail($aggregate->programId);
 
-        $aggregate = AchievementAggregate::add(
+        $achievementId = $aggregate->addAchievement(
             Uuid::of($this->uuidGenerator->getNextValue()),
-            $this->programRepository->of($card->program),
-            $this->taskRepository->of($task),
-            $this->cardRepository->of($card),
-            $card->achievements->pluck('task_id')
+            $taskId,
+            $programAggregate
         );
-        $this->achievementRepository->create($aggregate);
 
-        CardAchievementsChanged::dispatch($card->refresh());
+        $this->cardRepository->save($aggregate);
 
-        return $aggregate->id->getValue();
+        return $achievementId->getValue();
     }
 
-    public function removeAchievement(Uuid $achievementId)
+    public function removeAchievement(Uuid $id)
     {
-        $achievement = Achievement::query()->with(['card'])->findOrFail($achievementId->getValue());
+        $aggregate = $this->cardRepository->ofAchievementIdOrFail($id);
 
-        $cardAggregate = $this->cardRepository->of($achievement->card);
+        $aggregate->removeAchievement($id);
 
-        $aggregate = $this->achievementRepository->of($achievement);
-        $aggregate->remove($cardAggregate);
-        $this->achievementRepository->delete($aggregate);
-
-        CardAchievementsChanged::dispatch($achievement->card->refresh());
-
-        return $achievement->id;
+        $this->cardRepository->save($aggregate);
     }
 }

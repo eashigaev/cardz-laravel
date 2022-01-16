@@ -13,7 +13,7 @@ class GetTasksController extends Controller
     use ControllerTrait;
 
     public function __construct(
-        private TaskService            $taskService,
+        private TaskService     $taskService,
         private TaskTransformer $taskTransformer
     )
     {
