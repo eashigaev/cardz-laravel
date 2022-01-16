@@ -29,51 +29,50 @@ class CardService
         $aggregate = CardAggregate::issue(
             Uuid::of($this->uuidGenerator->getNextValue()),
             $this->programRepository->of($program),
-            $holderId,
+            Uuid::of($holder->id),
             $comment
         );
 
-        $this->cardRepository->create($aggregate);
+        $this->cardRepository->save($aggregate);
 
         return $aggregate->id->getValue();
     }
 
     public function updateCard(Uuid $cardId, string $comment)
     {
-        $card = Card::query()->findOrFail($cardId->getValue());
+        $aggregate = $this->cardRepository->ofIdOrFail($cardId);
 
-        $aggregate = $this->cardRepository->of($card);
         $aggregate->update($comment);
-        $this->cardRepository->update($aggregate);
+
+        $this->cardRepository->save($aggregate);
     }
 
     public function rewardCard(Uuid $cardId)
     {
-        $card = Card::query()->with('program')->findOrFail($cardId->getValue());
+        $aggregate = $this->cardRepository->ofIdOrFail($cardId);
+        $programAggregate = $this->programRepository->ofIdOrFail($aggregate->programId);
 
-        $programAggregate = $this->programRepository->of($card->program);
-
-        $aggregate = $this->cardRepository->of($card);
         $aggregate->reward($programAggregate);
-        $this->cardRepository->update($aggregate);
+
+        $this->cardRepository->save($aggregate);
     }
 
     public function rejectCard(Uuid $cardId)
     {
-        $card = Card::query()->findOrFail($cardId);
+        $aggregate = $this->cardRepository->ofIdOrFail($cardId);
 
-        $aggregate = $this->cardRepository->of($card);
         $aggregate->reject();
-        $this->cardRepository->update($aggregate);
+
+        $this->cardRepository->save($aggregate);
     }
 
     public function cancelCard(Uuid $cardId)
     {
-        $card = Card::query()->findOrFail($cardId->getValue());
+        $aggregate = $this->cardRepository->ofIdOrFail($cardId);
 
-        $aggregate = $this->cardRepository->of($card);
         $aggregate->cancel();
-        $this->cardRepository->update($aggregate);
+
+        $this->cardRepository->save($aggregate);
     }
 
     //

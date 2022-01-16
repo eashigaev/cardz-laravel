@@ -40,11 +40,11 @@ class ProgramRepository
     {
         $this->registry->set($program->id, $program);
 
-        $tasks = $program->tasks->map(fn(Task $task) => TaskEntity::of(
-            Uuid::of($task->id),
-            TaskProfile::of($task->title, $task->description),
-            TaskFeature::of($task->repeatable),
-            $task->active
+        $tasks = $program->tasks->map(fn(Task $item) => TaskEntity::of(
+            Uuid::of($item->id),
+            TaskProfile::of($item->title, $item->description),
+            TaskFeature::of($item->repeatable),
+            $item->active
         ));
 
         return ProgramAggregate::of(
@@ -64,27 +64,36 @@ class ProgramRepository
         $program = $this->registry->get($aggregate->id->getValue(), Program::make());
 
         $this->execute(function () use ($aggregate, $program) {
-            $program->forceFill([
-                'id' => $aggregate->id->getValue(),
-                'company_id' => $aggregate->companyId->getValue(),
-                'title' => $aggregate->profile->getTitle(),
-                'description' => $aggregate->profile->getDescription(),
-                'reward_title' => $aggregate->reward->getTitle(),
-                'reward_target' => $aggregate->reward->getTarget(),
-                'active' => $aggregate->active,
-            ]);
-            $program->save();
-
-            $tasks = $aggregate->tasks->map(fn(TaskEntity $task) => [
-                'id' => $task->id->getValue(),
-                'company_id' => $aggregate->companyId->getValue(),
-                'program_id' => $aggregate->id->getValue(),
-                'title' => $task->profile->getTitle(),
-                'description' => $task->profile->getDescription(),
-                'repeatable' => $task->feature->isRepeatable(),
-                'active' => $task->active
-            ]);
-            $program->tasks()->sync($tasks->toArray());
+            $this->saveProgram($aggregate, $program);
+            $this->syncTasks($aggregate, $program);
         });
+    }
+
+    private function saveProgram(ProgramAggregate $aggregate, Program $program)
+    {
+        $program->forceFill([
+            'id' => $aggregate->id->getValue(),
+            'company_id' => $aggregate->companyId->getValue(),
+            'title' => $aggregate->profile->getTitle(),
+            'description' => $aggregate->profile->getDescription(),
+            'reward_title' => $aggregate->reward->getTitle(),
+            'reward_target' => $aggregate->reward->getTarget(),
+            'active' => $aggregate->active,
+        ]);
+        $program->save();
+    }
+
+    private function syncTasks(ProgramAggregate $aggregate, Program $program)
+    {
+        $items = $aggregate->tasks->map(fn(TaskEntity $item) => [
+            'id' => $item->id->getValue(),
+            'company_id' => $aggregate->companyId->getValue(),
+            'program_id' => $aggregate->id->getValue(),
+            'title' => $item->profile->getTitle(),
+            'description' => $item->profile->getDescription(),
+            'repeatable' => $item->feature->isRepeatable(),
+            'active' => $item->active
+        ]);
+        $program->tasks()->sync($items->toArray());
     }
 }

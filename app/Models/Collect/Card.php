@@ -4,12 +4,16 @@ namespace App\Models\Collect;
 
 use App\Models\Company;
 use App\Models\User;
+use Codderz\YokoLite\Infrastructure\Database\Model\HasManySyncableTrait;
+use Codderz\YokoLite\Infrastructure\Database\Model\OptimisticLockingTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Card extends Model
 {
-    use HasFactory;
+    use HasFactory,
+        HasManySyncableTrait,
+        OptimisticLockingTrait;
 
     public $table = 'collect_cards';
     public $keyType = 'string';
@@ -38,6 +42,6 @@ class Card extends Model
 
     public function achievements()
     {
-        return $this->hasMany(Achievement::class);
+        return $this->hasManySyncable(Achievement::class);
     }
 }

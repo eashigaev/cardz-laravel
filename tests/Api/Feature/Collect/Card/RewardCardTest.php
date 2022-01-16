@@ -2,6 +2,7 @@
 
 namespace Tests\Api\Feature\Collect\Card;
 
+use App\Models\Collect\Achievement;
 use App\Models\Collect\Card;
 use CardzApp\Api\Shared\Routes;
 use CardzApp\Modules\Collect\Domain\CardStatus;
@@ -24,8 +25,9 @@ class RewardCardTest extends TestCase
 
     public function test_action()
     {
-        $card = Card::factory()->withStatus(CardStatus::ACTIVE)->create(['balance' => 5]);
-        $card->program()->update(['active' => true, 'reward_target' => 5]);
+        $card = Card::factory()->withStatus(CardStatus::ACTIVE)
+            ->has(Achievement::factory()->count(3))->create();
+        $card->program()->update(['active' => true, 'reward_target' => 3]);
 
         $this->actingAsCompany($card->company);
 
@@ -36,7 +38,7 @@ class RewardCardTest extends TestCase
 
         $result = Card::query()->findOrFail($card->id);
         $this->assertArraySubset([
-            'balance' => 0,
+            'balance' => 3,
             'status' => CardStatus::REWARDED->getValue()
         ], $result->toArray());
     }
@@ -72,7 +74,7 @@ class RewardCardTest extends TestCase
 
     public function test_fail_when_card_balance_is_not_enough()
     {
-        $card = Card::factory()->withStatus(CardStatus::ACTIVE)->create(['balance' => 0]);
+        $card = Card::factory()->withStatus(CardStatus::ACTIVE)->create();
         $card->program()->update(['active' => true, 'reward_target' => 1]);
 
         $this->actingAsCompany($card->company);

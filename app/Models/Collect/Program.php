@@ -36,16 +36,4 @@ class Program extends Model
     {
         return $this->hasManySyncable(Task::class);
     }
-
-    //
-
-    public static function ofIdOrFail(string $programId)
-    {
-        return static::query()->with('tasks')->findOrFail($programId);
-    }
-
-    public static function ofTaskIdOrFail(string $taskId)
-    {
-        return static::query()->with('program', 'program.tasks')->findOrFail($taskId);
-    }
 }

@@ -2,15 +2,12 @@
 
 namespace CardzApp\Modules\Collect\Domain;
 
-use Codderz\YokoLite\Domain\OptimisticLockingTrait;
 use Codderz\YokoLite\Domain\Uuid\Uuid;
 use Codderz\YokoLite\Shared\Exception;
 use Illuminate\Support\Collection;
 
 class CardAggregate
 {
-    use OptimisticLockingTrait;
-
     public Uuid $id;
     public Uuid $companyId;
     public Uuid $programId;
@@ -50,11 +47,10 @@ class CardAggregate
         if (!$program->active) {
             throw Exception::of(Messages::PROGRAM_IS_NOT_ACTIVE);
         }
-        if ($this->balance < $program->reward->getTarget()) {
+        if ($this->getBalance() < $program->reward->getTarget()) {
             throw Exception::of(Messages::CARD_BALANCE_IS_NOT_ENOUGH);
         }
 
-        $this->balance -= $program->reward->getTarget();
         $this->status = CardStatus::REWARDED;
     }
 
@@ -74,6 +70,13 @@ class CardAggregate
         }
 
         $this->status = CardStatus::CANCELLED;
+    }
+
+    //
+
+    public function getBalance()
+    {
+        return $this->achievements->count();
     }
 
     //
