@@ -7,6 +7,7 @@ use App\Models\Collect\Task;
 use App\Models\Company;
 use Codderz\YokoLite\Domain\Uuid\UuidTestTrait;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
 
 class TaskFactory extends Factory
 {
@@ -26,5 +27,13 @@ class TaskFactory extends Factory
             'active' => $this->faker->boolean(),
             'repeatable' => $this->faker->boolean(),
         ];
+    }
+
+    public function forProgram(Model|Program $program)
+    {
+        return $this->state(fn() => [
+            'company_id' => $program->company_id,
+            'program_id' => $program->id,
+        ]);
     }
 }

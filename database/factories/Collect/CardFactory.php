@@ -9,6 +9,7 @@ use App\Models\User;
 use CardzApp\Modules\Collect\Domain\CardStatus;
 use Codderz\YokoLite\Domain\Uuid\UuidTestTrait;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
 
 class CardFactory extends Factory
 {
@@ -34,6 +35,14 @@ class CardFactory extends Factory
     {
         return $this->state(fn() => [
             'status' => $status->getValue()
+        ]);
+    }
+
+    public function forProgram(Model|Program $program)
+    {
+        return $this->state(fn() => [
+            'company_id' => $program->company_id,
+            'program_id' => $program->id,
         ]);
     }
 }

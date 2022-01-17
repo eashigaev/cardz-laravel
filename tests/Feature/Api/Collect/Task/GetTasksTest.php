@@ -24,7 +24,7 @@ class GetTasksTest extends TestCase
     public function test_action()
     {
         $program = Program::factory()->create();
-        $tasks = Task::factory()->for($program)->count(3)->create();
+        $tasks = Task::factory()->forProgram($program)->count(3)->create();
 
         $this->actingAsCompany($program->company);
 

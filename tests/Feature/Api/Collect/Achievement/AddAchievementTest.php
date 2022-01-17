@@ -28,9 +28,8 @@ class AddAchievementTest extends TestCase
         $task = Task::factory()->create(['active' => 1]);
         $task->program()->update(['active' => true, 'reward_target' => 2]);
 
-        $card = Card::factory()->withStatus(CardStatus::ACTIVE)
-            ->for($task->program)->for($task->company)
-            ->has(Achievement::factory()->count(1))->create();
+        $card = Card::factory()->withStatus(CardStatus::ACTIVE)->forProgram($task->program)->create();
+        Achievement::factory()->for($card)->create();
 
         $this->actingAsCompany($card->company);
 

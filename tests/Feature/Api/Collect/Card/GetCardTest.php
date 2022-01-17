@@ -24,7 +24,7 @@ class GetCardTest extends TestCase
     public function test_action()
     {
         $program = Program::factory()->create();
-        $card = Card::factory()->for($program)->for($program->company)->create();
+        $card = Card::factory()->forProgram($program)->create();
 
         $this->actingAsCompany($program->company);
 

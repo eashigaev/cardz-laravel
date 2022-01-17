@@ -26,7 +26,7 @@ class GetCardsTest extends TestCase
         Card::factory()->count(4)->create();
 
         $program = Program::factory()->create();
-        $cards = Card::factory()->for($program)->for($program->company)->count(4)->create();
+        $cards = Card::factory()->forProgram($program)->count(4)->create();
 
         $this->actingAsCompany($program->company);
 
@@ -55,7 +55,7 @@ class GetCardsTest extends TestCase
         Card::factory()->count(4)->create();
 
         $program = Program::factory()->create();
-        $cards = Card::factory()->for($program)->for($program->company)->count(12)->create();
+        $cards = Card::factory()->forProgram($program)->count(12)->create();
 
         $this->actingAsCompany($program->company);
 
