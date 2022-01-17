@@ -18,12 +18,11 @@ class CardFactory extends Factory
 
     public function definition()
     {
-        $company = Company::factory();
-
         return [
             'id' => $this->uuidGenerator()->getNextValue(),
-            'company_id' => $company,
-            'program_id' => Program::factory()->for($company),
+            'company_id' => Company::factory(),
+            'program_id' => fn($attrs) => Program::factory()
+                ->state(['company_id' => $attrs['company_id']]),
             'holder_id' => User::factory(),
             'balance' => $this->faker->numberBetween(1, 5),
             'comment' => $this->faker->realText(),

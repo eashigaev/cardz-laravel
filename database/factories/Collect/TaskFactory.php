@@ -16,12 +16,11 @@ class TaskFactory extends Factory
 
     public function definition()
     {
-        $company = Company::factory();
-
         return [
             'id' => $this->uuidGenerator()->getNextValue(),
-            'company_id' => $company,
-            'program_id' => fn() => Program::factory()->for($company),
+            'company_id' => Company::factory()->create(),
+            'program_id' => fn($attrs) => Program::factory()
+                ->state(['company_id' => $attrs['company_id']]),
             'title' => $this->faker->company(),
             'description' => $this->faker->sentence(),
             'active' => $this->faker->boolean(),
