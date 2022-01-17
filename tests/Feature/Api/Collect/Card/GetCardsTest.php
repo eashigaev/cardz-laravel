@@ -47,6 +47,28 @@ class GetCardsTest extends TestCase
                 'status' => $card->status
             ]);
         }
-        $response->assertJsonCount(4);
+        $response->assertJsonCount(4, 'items');
+    }
+
+    public function test_pagination()
+    {
+        Card::factory()->count(4)->create();
+
+        $program = Program::factory()->create();
+        $cards = Card::factory()->for($program)->for($program->company)->count(12)->create();
+
+        $this->actingAsCompany($program->company);
+
+        $response = $this->callJsonRoute(self::ROUTE, parameters: [
+            'program' => $program->id,
+            'page' => 2
+        ]);
+        $response->assertStatus(200);
+        $response->assertJsonFragment([
+            'page' => 2,
+            'count_items' => $cards->count(),
+            'count_pages' => 2,
+            'per_page' => 10
+        ]);
     }
 }

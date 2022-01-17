@@ -77,14 +77,14 @@ class CardService
 
     //
 
-    public function getCards(string $programId)
+    public function getCards(string $programId, int $page)
     {
         return Card::query()
             ->with('company', 'program')
             ->where('program_id', $programId)
             ->limit(100)
             ->orderBy('updated_at')
-            ->get();
+            ->paginate(perPage: 10, page: $page);
     }
 
     public function getCard(string $cardId)
