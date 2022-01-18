@@ -1,7 +1,8 @@
 <?php
 
-namespace CardzApp\Api\Collect\Transformers;
+namespace CardzApp\Api\Wallet\Transformers;
 
+use App\Models\Collect\Achievement;
 use App\Models\Collect\Card;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +13,7 @@ class CardTransformer
         return [
             'id' => $model->id,
             'company_id' => $model->company_id,
+            'company_title' => $model->company->title,
             'program_id' => $model->program_id,
             'program_title' => $model->program->title,
             'holder_id' => $model->holder_id,
@@ -24,8 +26,11 @@ class CardTransformer
     {
         return [
             ...$this->preview($model),
-            'comment' => $model->comment,
-            'holder_username' => $model->holder->username,
+            'achievements' => $model->achievements->map(fn(Achievement $item) => [
+                'id' => $item->id,
+                'task_title' => $item->task->title,
+                'created_at' => $item->created_at->toString(),
+            ])
         ];
     }
 }

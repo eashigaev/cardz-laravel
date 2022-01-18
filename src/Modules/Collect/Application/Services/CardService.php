@@ -80,7 +80,7 @@ class CardService
     public function getCards(string $programId, int $page)
     {
         return Card::query()
-            ->with('company', 'program')
+            ->with('program')
             ->where('program_id', $programId)
             ->limit(100)
             ->orderBy('updated_at')
@@ -90,7 +90,7 @@ class CardService
     public function getCard(string $cardId)
     {
         return Card::query()
-            ->with('company', 'program', 'holder')
+            ->with('program', 'holder')
             ->findOrFail($cardId);
     }
 }

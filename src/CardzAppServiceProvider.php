@@ -8,6 +8,7 @@ use CardzApp\Modules\Auth\AuthModuleServiceProvider;
 use CardzApp\Modules\Business\BusinessModuleServiceProvider;
 use CardzApp\Modules\Collect\CollectModuleServiceProvider;
 use CardzApp\Modules\Shared\SharedModuleServiceProvider;
+use CardzApp\Modules\Wallet\WalletModuleServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 class CardzAppServiceProvider extends ServiceProvider
@@ -21,7 +22,8 @@ class CardzAppServiceProvider extends ServiceProvider
             AuthModuleServiceProvider::class,
             BusinessModuleServiceProvider::class,
             CollectModuleServiceProvider::class,
-            SharedModuleServiceProvider::class
+            SharedModuleServiceProvider::class,
+            WalletModuleServiceProvider::class
         ];
     }
 

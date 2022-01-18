@@ -1,34 +1,34 @@
 <?php
 
-namespace Tests\Feature\Api\Collect\Card;
+namespace Tests\Feature\Api\Wallet;
 
 use App\Models\Collect\Card;
 use App\Models\Collect\Program;
+use App\Models\User;
 use CardzApp\Api\Shared\Routes;
-use CardzApp\Modules\Shared\Application\Actions;
 use Tests\Feature\Api\FeatureTestTrait;
 use Tests\TestCase;
 
-class GetCardsTest extends TestCase
+class GetOwnCardsTest extends TestCase
 {
-    private const ROUTE = Routes::COLLECT_GET_CARDS;
+    private const ROUTE = Routes::WALLET_GET_OWN_CARDS;
 
     use FeatureTestTrait;
 
     public function test_access()
     {
         $this->assertAuthenticatedRoute(self::ROUTE);
-        $this->assertAuthorizedRoute(self::ROUTE, Actions::COLLECT_GET_CARDS);
     }
 
     public function test_action()
     {
         Card::factory()->count(4)->create();
 
+        $holder = User::factory()->create();
         $program = Program::factory()->create();
-        $cards = Card::factory()->forProgram($program)->count(4)->create();
+        $cards = Card::factory()->forProgram($program)->for($holder, 'holder')->count(4)->create();
 
-        $this->actingAsCompany($program->company);
+        $this->actingAsSanctum($holder);
 
         $response = $this->callJsonRoute(self::ROUTE, parameters: [
             'program' => $program->id
@@ -39,6 +39,7 @@ class GetCardsTest extends TestCase
             $response->assertJsonFragment([
                 'id' => $card->id,
                 'company_id' => $program->company_id,
+                'company_title' => $program->company->title,
                 'program_id' => $program->id,
                 'program_title' => $program->title,
                 'holder_id' => $card->holder_id,
@@ -53,13 +54,13 @@ class GetCardsTest extends TestCase
     {
         Card::factory()->count(4)->create();
 
+        $holder = User::factory()->create();
         $program = Program::factory()->create();
-        $cards = Card::factory()->forProgram($program)->count(12)->create();
+        $cards = Card::factory()->forProgram($program)->for($holder, 'holder')->count(12)->create();
 
-        $this->actingAsCompany($program->company);
+        $this->actingAsSanctum($holder);
 
         $response = $this->callJsonRoute(self::ROUTE, parameters: [
-            'program' => $program->id,
             'page' => 2
         ]);
         $response->assertStatus(200);

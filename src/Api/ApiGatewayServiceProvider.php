@@ -16,5 +16,6 @@ class ApiGatewayServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/Account/account.routes.php');
         $this->loadRoutesFrom(__DIR__ . '/Business/business.routes.php');
         $this->loadRoutesFrom(__DIR__ . '/Collect/collect.routes.php');
+        $this->loadRoutesFrom(__DIR__ . '/Wallet/wallet.routes.php');
     }
 }

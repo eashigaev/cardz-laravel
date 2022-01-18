@@ -40,4 +40,7 @@ abstract class Actions
     const COLLECT_ADD_ACHIEVEMENT = 'api.v1.collect.addAchievement';
     const COLLECT_GET_ACHIEVEMENTS = 'api.v1.collect.getAchievements';
     const COLLECT_REMOVE_ACHIEVEMENT = 'api.v1.collect.removeAchievement';
+
+    const WALLET_GET_OWN_CARDS = 'api.v1.wallet.getOwnCards';
+    const WALLET_GET_OWN_CARD = 'api.v1.wallet.getOwnCard';
 }
