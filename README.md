@@ -1,62 +1,107 @@
-# Backend API for a demo-application "Cardz"
+# Backend API for sample application "Cardz"
 
-A demo-backend API for an imaginary mobile application or PWA. There are two main features - management and customer area.
+This is a demo API for a frontend, as a mobile app or PWA. An imaginary domain of one-time bonus cards (loyalty program)
+has been implemented. The application is intentionally small, so there is no need to understand a large domain.
+
+The main idea is to demonstrate a mix of useful approaches to enterprise application development with ready-made
+framework infrastructure. These approaches can be applied to various frameworks (e.g. Laravel, Symfony, Zend) and
+codebases.
+
+## Scenario
+
+A cafe launches the loyalty program "Buy 5 cups of coffee and get one cup for free". The cafe issues the disposal card
+to a customer, notes the purchased cups, and gives a bonus when the required number of cups is reached by the
+cardholder. Another example of the program can be "Buy any 3 dishes from the list and get a discount."
+
+## Glossary
+
+- Achievement - the fact that a task has been completed.
+- Task - some action that can be executed one or more times (optional). Can be active or inactive.
+- Program - a set of tasks and a specified number of tasks to complete. Can be active or inactive.
+- Card - a set of tasks that have been achieved by the holder. Can be cancelled by the holder, rejected, or rewarded.
+- Company - a business that offers programs and cards.
 
 ## Features
 
-- Scenario A: A cafe launches a bonus program "Buy 5 cups of coffee and get one cup for free". The cafe issues a virtual cards, notes the purchased cups and issues a bonus when the required number of cups is reached by any cardholder.
-- Scenario B: A restaurant makes a loyalty program "Buy any 3 dishes from the list and get a discount." The restaurant issues virtual cards, notes the purchased dishes and gives the discount when the conditions of the promotion are completed by any cardholder.
+- An authenticated user can found a company.
+- As company founders, users can invite and manage the staff (TODO).
+- As company founders or staff, users can manage programs, tasks, issues cards, and manages cards and achievements.
+- As customers, the users can view their own cards and achievements.
 
-Identification of customers and cards should be implemented on the frontend (QR-codes).
+Note: Customer and card identification must be implemented on the front-end (QR codes).
 
-### A company can:
+See endpoints [here](src/Api/endpoints.txt)
 
-- make loyalty programs
-- issue program-related cards to customers
-- manage data
-- check achievements and reward cards
+## Technical details
 
-TODO: company team (now owner only)
+- Monolith with modular structure and shared database
 
-### A customer can:
+The application is implemented as a monolith due to its small size. The division into modules is provided for the
+possibility of independent development of parts of the application, possibly by different teams, possibly in the form of
+microservices. Also, due to the small size, the database is common to all modules. At the moment, the more independent
+existence of modules seems complex. Integration between modules and possible data replication seem redundant and planned
+for the future.
 
-- view own cards and achievements
+- Layered module architecture
 
-### A program is:
+Each module has a layered architecture. A layered architecture gives us separation of concerns, guidance on source code
+organization, and ease of testing. This principle is best followed from the beginning of development.
 
-- a set of tasks
-- each task can be repeated or not
-- specified achievements amount for reward
+Infrastructure layer - contains all the classes responsible for performing technical tasks (the framework is considered
+as part of the infrastructure).
 
-## Details
+Application Layer − organizes domain objects to fulfill required use cases.
 
-The main idea was to combine usefull approaches of enterprise application development (can be used with any object-oriented web-framework) with power Laravel capabilities.
+Domain level - contains business objects, rules, invariants, and other things related to the domain where necessary (
+does not depend or minimally depends on the framework).
 
-- Modular structure with shared database (for simplicity)
-- Layered module architecture - Infrastructure, Application, Domain (framework ignorance, optional)
-- Detached API module - Backend For Frontend
-- Simple CQRS read-side - Eloquent models, transformers
+- Detached API module
+
+Implements an API gateway that is a single point of entry for all clients and forwards requests to the appropriate
+service or forks to multiple services. This is a kind of presentation layer in a layered architecture for all the
+modules together. If there is a significant difference in working with different clients, it will be quite easy to
+switch to a separate gateway for each frontend - Backend for Frontend.
+
+- Simple CQRS read-side
+
+A separate read model is used because possible changes to the query results are expected. In this project, Eloquent
+models and transformers are very handy for cross-table querying and data transformation. With the growth of the project,
+it is worth thinking about switching to a separate reading model with projectors. This may require the interface to be
+operational with eventual consistency.
+
 - DDD tactical patterns - aggregates, value objects and repositories, strategical patterns - the language, contexts
 
+Each module is a proposal for a future Bounded Context. So far, the scope of the application is quite small, and most of
+the modules have CRUD operations. However, in a module that works with programs and maps and assumes the main business
+logic (core domain), DDD tactical patterns are used - aggregates, value objects, repositories. Right now it's single "
+context", but it's possible one day we'll have to think about separating the contexts of specification and customer
+service.
 
 - Custom shared library for rapid development with Laravel
-- Custom Authorization over default Gates - primitive ABAC
-- A lot of Laravel features used - custom relation type, 
 
-## Testing
+The library contains the code required for the rapid development and testing of the application with Laravel. For
+example, there is ABAC authorization based on default Gates, borrowed code for custom relation type, and isolated event
+listener testing (with no events in the project).
 
-- With test development
-- Custom testing DSL - traits, methods, assertions
-- Feature tests for main functionality, unit tests for complex specifications
+- Testing
+
+For the convenience of testing, a simple test DSL is written - traits, methods, asserts. Feature tests for general
+functionality, unit tests for complex specifications. Now feature tests are a large part of the tests, due to the
+simplicity of the project. But dependency injection, modularity, layered architecture, and other applied solutions will
+allow in the future to move most of the checks down the testing pyramid to unit tests.
+
+- A lot of Laravel features used
 
 ## Installation
 
-Installation and test running are the same for any Laravel application (official documentation)
+Installation and test running are the same for any Laravel application (official documentation).
 
 ## Requirements
 
-PHP 8.1, PostgreSQL
+- PHP 8.1 (using named parameters, enums, etc.)
+- PostgreSQL
 
+# Laravel
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
@@ -92,44 +137,6 @@ modern web application frameworks, making it a breeze to get started with the fr
 If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video
 tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging
 into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in
-becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-- **[Romega Software](https://romegasoftware.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in
-the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by
-the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell
-via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
 ## License
 
