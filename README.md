@@ -1,34 +1,33 @@
 # Backend API for sample application "Cardz"
 
-This is a demo API for a frontend, as a mobile app or PWA. An imaginary domain of one-time bonus cards (loyalty program)
+This is a demo API for a frontend (a mobile app or PWA). An imaginary domain of one-time bonus cards (loyalty program)
 has been implemented. The application is intentionally small, so there is no need to understand a large domain.
 
-The main idea is to demonstrate a mix of useful approaches to enterprise application development with ready-made
-framework infrastructure. These approaches can be applied to various frameworks (e.g. Laravel, Symfony, Zend) and
-codebases.
+The main idea is to demonstrate a mix of useful approaches to enterprise application development with a ready-made
+web-framework. These approaches can be applied to the various frameworks (e.g. Laravel, Symfony, Zend) and codebases.
 
 ## Scenario
 
-A cafe launches the loyalty program "Buy 5 cups of coffee and get one cup for free". The cafe issues the disposal card
+A cafe launches the loyalty program "Buy 5 cups of coffee and get one cup for free". The cafe issues a disposable card
 to a customer, notes the purchased cups, and gives a bonus when the required number of cups is reached by the
-cardholder. Another example of the program can be "Buy any 3 dishes from the list and get a discount."
+cardholder. Another example of the program might be "Buy any 3 dishes from the list and get a discount."
 
 ## Glossary
 
-- Achievement - the fact that a task has been completed.
-- Task - some action that can be executed one or more times (optional). Can be active or inactive.
-- Program - a set of tasks and a specified number of tasks to complete. Can be active or inactive.
-- Card - a set of tasks that have been achieved by the holder. Can be cancelled by the holder, rejected, or rewarded.
+- Achievement - a fact that a task has been completed.
+- Task - some action that can be executed one or more times (optional). It can be active or inactive.
+- Program - a set of tasks and a specified number of tasks to complete. It can be active or inactive.
+- Card - a set of tasks that should be achieved by the holder. It can be cancelled by the holder, rejected, or rewarded.
 - Company - a business that offers programs and cards.
 
 ## Features
 
 - An authenticated user can found a company.
 - As company founders, users can invite and manage the staff (TODO).
-- As company founders or staff, users can manage programs, tasks, issues cards, and manages cards and achievements.
-- As customers, the users can view their own cards and achievements.
+- As company founders or staff, users can manage programs, tasks, issue cards, and manage cards and achievements.
+- As customers, users can view their cards and achievements.
 
-Note: Customer and card identification must be implemented on the front-end (QR codes).
+Note: Customer and card identification must be implemented on the frontend (QR codes).
 
 See endpoints [here](src/Api/endpoints.txt)
 
@@ -36,59 +35,64 @@ See endpoints [here](src/Api/endpoints.txt)
 
 - Monolith with modular structure and shared database
 
-The application is implemented as a monolith due to its small size. The division into modules is provided for the
-possibility of independent development of parts of the application, possibly by different teams, possibly in the form of
-microservices. Also, due to the small size, the database is common to all modules. At the moment, the more independent
-existence of modules seems complex. Integration between modules and possible data replication seem redundant and planned
-for the future.
+The application is implemented as a monolith due to its small size. The division into the modules is implemented to
+simplify the independent development of the application parts, possibly by different teams, perhaps in the form of
+microservices. Also, due to the small size, the database is shared between all modules. More module independence seems
+like an overcomplication at this point. Integration and possible data duplication between modules can be implemented
+later.
 
 - Layered module architecture
 
-Each module has a layered architecture. A layered architecture gives us separation of concerns, guidance on source code
-organization, and ease of testing. This principle is best followed from the beginning of development.
+See modules [here](src/Modules)
 
-Infrastructure layer - contains all the classes responsible for performing technical tasks (the framework is considered
-as part of the infrastructure).
+Each module has a layered architecture. The layered architecture is the separation of concerns among components. It
+provides guidance on source code organization and ease of testing. It is better to use this principle right from the
+start.
+
+Infrastructure layer - contains all the classes responsible for the technical stuff. The framework is a part of this
+layer.
 
 Application Layer − organizes domain objects to fulfill required use cases.
 
-Domain level - contains business objects, rules, invariants, and other things related to the domain where necessary (
-does not depend or minimally depends on the framework).
+Domain level - contains business objects, rules, invariants, and other things related to the domain. This layer may be
+absent in some modules. It should be isolated from the framework as much as possible.
 
-- Detached API module
+- Detached API gateway
 
-Implements an API gateway that is a single point of entry for all clients and forwards requests to the appropriate
-service or forks to multiple services. This is a kind of presentation layer in a layered architecture for all the
-modules together. If there is a significant difference in working with different clients, it will be quite easy to
-switch to a separate gateway for each frontend - Backend for Frontend.
+See gateway [here](src/Api)
+
+The API gateway is a single entry point that forwards requests to the appropriate service or splits them into multiple
+services. This is a kind of presentation layer of the layered architecture for all modules together. If there is a
+significant difference in working with different clients, it should be easy enough to make a separate gateway for every
+frontend - Backend for Frontend.
 
 - Simple CQRS read-side
 
-A separate read model is used because possible changes to the query results are expected. In this project, Eloquent
-models and transformers are very handy for cross-table querying and data transformation. With the growth of the project,
-it is worth thinking about switching to a separate reading model with projectors. This may require the interface to be
-operational with eventual consistency.
+A read model pattern is used to separate the application logic from data presentation. In this project, Eloquent models
+and transformers are very handy for cross-table querying and data transformation. The next step is the fully-separate
+read model with projectors. This may require the frontend to support eventual consistency.
 
-- DDD tactical patterns - aggregates, value objects and repositories, strategical patterns - the language, contexts
+- DDD tactical patterns
 
 Each module is a proposal for a future Bounded Context. So far, the scope of the application is quite small, and most of
-the modules have CRUD operations. However, in a module that works with programs and maps and assumes the main business
-logic (core domain), DDD tactical patterns are used - aggregates, value objects, repositories. Right now it's single "
-context", but it's possible one day we'll have to think about separating the contexts of specification and customer
-service.
+the modules have CRUD operations. However, the module with main business logic (core domain) implements some DDD
+tactical patterns - aggregates, value objects, repositories. This single context should probably be divided later into
+the specification and customer service.
 
 - Custom shared library for rapid development with Laravel
 
+See library [here](codderz/YokoLite)
+
 The library contains the code required for the rapid development and testing of the application with Laravel. For
-example, there is ABAC authorization based on default Gates, borrowed code for custom relation type, and isolated event
-listener testing (with no events in the project).
+example, there is an ABAC authorization based on default Gates, custom relation type, and advanced events testing.
 
 - Testing
 
-For the convenience of testing, a simple test DSL is written - traits, methods, asserts. Feature tests for general
-functionality, unit tests for complex specifications. Now feature tests are a large part of the tests, due to the
-simplicity of the project. But dependency injection, modularity, layered architecture, and other applied solutions will
-allow in the future to move most of the checks down the testing pyramid to unit tests.
+See tests [here](tests)
+
+For the convenience of testing, a simple test DSL is written - traits, methods, asserts. There are feature tests for
+essential use cases and unit tests for complex specifications. At the moment, the functionality of the application is
+guaranteed mostly by feature tests, but the majority of the tests will move down the testing pyramid later.
 
 - A lot of Laravel features used
 
