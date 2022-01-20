@@ -3,9 +3,9 @@
 namespace CardzApp\Modules\Collect\Application\Services;
 
 use App\Models\Collect\Task;
+use CardzApp\Modules\Collect\Application\Repositories\ProgramRepository;
 use CardzApp\Modules\Collect\Domain\TaskFeature;
 use CardzApp\Modules\Collect\Domain\TaskProfile;
-use CardzApp\Modules\Collect\Infrastructure\Repositories\ProgramRepository;
 use Codderz\YokoLite\Domain\Uuid\Uuid;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace CardzApp\Modules\Collect\Infrastructure\Repositories;
+namespace CardzApp\Modules\Collect\Application\Repositories;
 
 use App\Models\Collect\Card;
 use CardzApp\Modules\Collect\Domain\CardAggregate;

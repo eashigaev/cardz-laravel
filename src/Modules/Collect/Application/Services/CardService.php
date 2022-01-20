@@ -5,9 +5,9 @@ namespace CardzApp\Modules\Collect\Application\Services;
 use App\Models\Collect\Card;
 use App\Models\Collect\Program;
 use App\Models\User;
+use CardzApp\Modules\Collect\Application\Repositories\CardRepository;
+use CardzApp\Modules\Collect\Application\Repositories\ProgramRepository;
 use CardzApp\Modules\Collect\Domain\CardAggregate;
-use CardzApp\Modules\Collect\Infrastructure\Repositories\CardRepository;
-use CardzApp\Modules\Collect\Infrastructure\Repositories\ProgramRepository;
 use Codderz\YokoLite\Domain\Uuid\Uuid;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
 

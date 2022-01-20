@@ -3,8 +3,8 @@
 namespace CardzApp\Modules\Collect\Application\Services;
 
 use App\Models\Collect\Achievement;
-use CardzApp\Modules\Collect\Infrastructure\Repositories\CardRepository;
-use CardzApp\Modules\Collect\Infrastructure\Repositories\ProgramRepository;
+use CardzApp\Modules\Collect\Application\Repositories\CardRepository;
+use CardzApp\Modules\Collect\Application\Repositories\ProgramRepository;
 use Codderz\YokoLite\Domain\Uuid\Uuid;
 use Codderz\YokoLite\Domain\Uuid\UuidGenerator;
 

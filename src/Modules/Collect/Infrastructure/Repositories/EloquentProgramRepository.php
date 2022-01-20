@@ -4,6 +4,7 @@ namespace CardzApp\Modules\Collect\Infrastructure\Repositories;
 
 use App\Models\Collect\Program;
 use App\Models\Collect\Task;
+use CardzApp\Modules\Collect\Application\Repositories\ProgramRepository;
 use CardzApp\Modules\Collect\Domain\ProgramAggregate;
 use CardzApp\Modules\Collect\Domain\ProgramProfile;
 use CardzApp\Modules\Collect\Domain\ProgramReward;

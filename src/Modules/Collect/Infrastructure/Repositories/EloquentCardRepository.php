@@ -4,6 +4,7 @@ namespace CardzApp\Modules\Collect\Infrastructure\Repositories;
 
 use App\Models\Collect\Achievement;
 use App\Models\Collect\Card;
+use CardzApp\Modules\Collect\Application\Repositories\CardRepository;
 use CardzApp\Modules\Collect\Domain\AchievementEntity;
 use CardzApp\Modules\Collect\Domain\CardAggregate;
 use CardzApp\Modules\Collect\Domain\CardStatus;
