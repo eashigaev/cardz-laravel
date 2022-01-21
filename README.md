@@ -1,6 +1,6 @@
-# Backend API for sample application "Cardz"
+# Backend API for sample application "Cardz" (PHP, Laravel)
 
-This is a demo API for a frontend (a mobile app or PWA). An imaginary domain of one-time bonus cards (loyalty program)
+This is a demo API for a frontend (a mobile app or PWA). An imaginary domain of disposable bonus cards (loyalty program)
 has been implemented. The application is intentionally small, so there is no need to understand a large domain.
 
 The main idea is to demonstrate a mix of useful approaches to enterprise application development with a ready-made
